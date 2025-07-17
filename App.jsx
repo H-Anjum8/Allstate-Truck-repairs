@@ -6,11 +6,13 @@
  */
 
 import { StyleSheet, Text, View } from 'react-native';
+import { FONTS } from './src/theme/fonts';
 
 function App() {
   return (
     <View style={styles.container}>
-      <Text>wellcome</Text>
+      <Text style={{ fontFamily: FONTS.BOLD }}>wellcome</Text>
+      {/* <Text>WELLCOME</Text> */}
     </View>
   );
 }
