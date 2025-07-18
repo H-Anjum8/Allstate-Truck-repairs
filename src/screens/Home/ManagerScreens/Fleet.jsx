@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
-const ProviderProfile = () => {
+const Fleet = () => {
   return (
     <View>
-      <Text>ProviderProfile</Text>
+      <Text>Fleet</Text>
     </View>
   );
 };
 
-export default ProviderProfile;
+export default Fleet;
 
 const styles = StyleSheet.create({});

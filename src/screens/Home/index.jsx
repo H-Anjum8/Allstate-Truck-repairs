@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
-const ownerProfile = () => {
+const Home = () => {
   return (
     <View>
-      <Text>ownerProfile</Text>
+      <Text>Home</Text>
     </View>
   );
 };
 
-export default ownerProfile;
+export default Home;
 
 const styles = StyleSheet.create({});

@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
-const ProviderHome = () => {
+const UploadProfileImage = () => {
   return (
     <View>
-      <Text>ProviderHome</Text>
+      <Text>UploadProfileImage</Text>
     </View>
   );
 };
 
-export default ProviderHome;
+export default UploadProfileImage;
 
 const styles = StyleSheet.create({});

@@ -1,31 +1,16 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React from 'react';
+import { Provider } from 'react-redux';
+import AppNavigator from './src/navigation/AppNavigator'; // update path as needed
+import store from './src/store';
+import { Text } from 'react-native';
 
-import { StyleSheet, Text, View } from 'react-native';
-import SplashScreen from './src/screens/SplashScreen';
-import Login from './src/screens/Auth/Login';
-import { NavigationContainer } from '@react-navigation/native';
-
-function App() {
+const App = () => {
   return (
-    <NavigationContainer>
-      <View style={styles.container}>
-        {/* <Text style={{ fontFamily: FONTS.BOLD }}>wellcome</Text> */}
-        {/* <Text>WELLCOME</Text> */}
-        <Login />
-      </View>
-    </NavigationContainer>
+    <Provider store={store}>
+      <AppNavigator />
+      {/* <Text>wellcome hi</Text> */}
+    </Provider>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+};
 
 export default App;
