@@ -18,7 +18,7 @@ const Login = () => {
         description="Manage your appointments and keep track of upcoming sessions with clients."
         username="Your Appointments"
         showUsername={true}
-        usernameTextStyle={{ fontSize: width * 0.06 }}
+        // usernameTextStyle={{ fontSize: width * 0.06 }}
         onNotificationPress={() =>
           navigation.navigate('all_notifications_screen')
         }
