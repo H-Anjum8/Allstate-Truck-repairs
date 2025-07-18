@@ -6,13 +6,15 @@
  */
 
 import { StyleSheet, Text, View } from 'react-native';
-import { FONTS } from './src/theme/fonts';
+import SplashScreen from './src/screens/SplashScreen';
+import Login from './src/screens/Auth/Login';
 
 function App() {
   return (
     <View style={styles.container}>
-      <Text style={{ fontFamily: FONTS.BOLD }}>wellcome</Text>
+      {/* <Text style={{ fontFamily: FONTS.BOLD }}>wellcome</Text> */}
       {/* <Text>WELLCOME</Text> */}
+      <Login />
     </View>
   );
 }
