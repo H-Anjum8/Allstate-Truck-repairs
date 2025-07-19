@@ -8,11 +8,11 @@ export const FONTS = {
   HEAVYITALIC: 'SFPRODISPLAYHEAVYITALIC',
 
   // Light variants
-  LIGHT_ITALIC: 'RadikalTrial-SFPRODISPLAYLIGHTITALIC',
+  LIGHT_ITALIC: 'SFPRODISPLAYLIGHTITALIC',
 
   // Medium variants
+  // MEDIUM: 'SF Pro Display Medium',
   MEDIUM: 'SFPRODISPLAYMEDIUM',
-
   // Regular variants
   REGULAR: 'SFPRODISPLAYREGULAR',
 
@@ -34,8 +34,8 @@ export const createFontStyle = (fontFamily, fontSize = 14) => ({
 
 // Common text styles
 export const TextStyles = {
-  heading1: createFontStyle(FONTS.BOLD, 24),
-  heading2: createFontStyle(FONTS.BOLD, 20),
+  heading1: createFontStyle(FONTS.MEDIUM, 28),
+  heading2: createFontStyle(FONTS.MEDIUM, 20),
   heading3: createFontStyle(FONTS.MEDIUM, 18),
   body: createFontStyle(FONTS.REGULAR, 16),
   bodySmall: createFontStyle(FONTS.REGULAR, 14),

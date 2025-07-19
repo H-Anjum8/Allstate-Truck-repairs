@@ -6,6 +6,7 @@ import Routes, { getAuthScreens, getProtectedScreens } from '../utils/routlist';
 import { selectIsAuthenticated } from '../store/slices/authSlice';
 import BottomNavigation from './BottomNavigation'; // ✅ Unified component
 import BASE_COLORS from '../utils/colors';
+import Login from '../screens/Auth/Login';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,7 +23,7 @@ const AppNavigator = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator
+      {/* <Stack.Navigator
         screenOptions={{
           headerStyle: {
             backgroundColor: 'transparent',
@@ -54,7 +55,6 @@ const AppNavigator = () => {
           )
         ) : (
           <>
-            {/* ✅ Use the unified BottomNavigation here */}
             <Stack.Screen
               name={Routes.Dashboard.name}
               component={Routes.Dashboard.component}
@@ -70,22 +70,10 @@ const AppNavigator = () => {
                   options={route.options}
                 />
               ))}
-            {/* <Stack.Screen
-              name={Routes.Dashboard.name}
-              component={BottomNavigation}
-              options={Routes.Dashboard.options}
-            />
-            {getProtectedScreens().map(route => (
-              <Stack.Screen
-                key={route.name}
-                name={route.name}
-                component={route.component}
-                options={route.options}
-              />
-            ))} */}
           </>
         )}
-      </Stack.Navigator>
+      </Stack.Navigator> */}
+      <Login />
     </NavigationContainer>
   );
 };

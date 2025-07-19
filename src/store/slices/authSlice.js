@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  isAuthenticated: true,
+  isAuthenticated: false,
   role: 'manager', // 'user' | 'driver' | 'manager' | 'service_provider'
   user: null, // optional: you can store user profile data here
 };

@@ -136,13 +136,13 @@ const styles = StyleSheet.create({
   },
   usernameText: {
     ...TextStyles.heading2,
-    color: BASE_COLORS.WHITE,
+    color: BASE_COLORS.PRIMARY,
     fontFamily: FONTS.BOLD,
     fontSize: 27,
   },
   descriptionText: {
     ...TextStyles.bodySmall,
-    color: BASE_COLORS.TEXT_INVERSE,
+    color: BASE_COLORS.SECONDARY,
     fontFamily: FONTS.REGULAR,
     marginTop: 2,
   },
