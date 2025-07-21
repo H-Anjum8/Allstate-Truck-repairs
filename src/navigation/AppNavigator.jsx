@@ -23,7 +23,7 @@ const AppNavigator = () => {
 
   return (
     <NavigationContainer>
-      {/* <Stack.Navigator
+      <Stack.Navigator
         screenOptions={{
           headerStyle: {
             backgroundColor: 'transparent',
@@ -72,8 +72,7 @@ const AppNavigator = () => {
               ))}
           </>
         )}
-      </Stack.Navigator> */}
-      <Login />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };

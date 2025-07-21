@@ -7,32 +7,12 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-
-const { width } = Dimensions.get('window');
-
-const splashData = [
-  {
-    title: 'Truck Trouble? Help is Just a Tap Away',
-    description:
-      'Whether it’s a breakdown or routine maintenance, find trusted mechanics and assistance nearby in minutes – anytime, anywhere.',
-    button: 'Next',
-    image: require('../assets/truck.png'), // Replace with your actual image path
-  },
-  {
-    title: 'Mechanics You Can Trust',
-    description:
-      'We connect you with experienced, verified service providers who specialize in repairs, towing, diagnostics, and more.',
-    button: 'Next',
-    image: require('../assets/truck.png'),
-  },
-  {
-    title: 'Your Journey Starts Here',
-    description:
-      'Whether you’re a driver needing roadside help or a mechanic offering repair services – this app is built for you.',
-    button: 'Get Started',
-    image: require('../assets/truck.png'),
-  },
-];
+import BASE_COLORS from '../utils/colors';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
+import CustomButton from '../components/CustomButton';
+import { FONTS } from '../theme/fonts';
+import { splashData } from '../utils/staticData';
 
 const IntroductionScreen = ({ navigation }) => {
   const [index, setIndex] = useState(0);
@@ -41,9 +21,8 @@ const IntroductionScreen = ({ navigation }) => {
     if (index < splashData.length - 1) {
       setIndex(prev => prev + 1);
     } else {
-      // Navigate or close splash here
       console.log('Get Started Clicked');
-      // navigation.navigate('Home'); // Example
+      navigation.navigate('login_screen');
     }
   };
 
@@ -55,13 +34,36 @@ const IntroductionScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      {index > 0 && (
+        <TouchableOpacity
+          style={styles.icon}
+          onPress={() => setIndex(prev => prev - 1)}
+        >
+          <Ionicons name="chevron-back" size={24} color="black" />
+        </TouchableOpacity>
+      )}
       <Image source={image} style={styles.image} resizeMode="contain" />
+
+      <View style={styles.pagination}>
+        {splashData.map((_, i) => (
+          <View
+            key={i}
+            style={i === index ? styles.activeDot : styles.inactiveDot}
+          />
+        ))}
+      </View>
+
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.description}>{description}</Text>
 
-      <TouchableOpacity style={styles.button} onPress={handleNext}>
-        <Text style={styles.buttonText}>{button}</Text>
-      </TouchableOpacity>
+      <CustomButton
+        label={button}
+        onPress={handleNext}
+        style={[
+          styles.button,
+          index === splashData.length - 1 && styles.lastButton,
+        ]}
+      />
 
       {index < splashData.length - 1 && (
         <TouchableOpacity onPress={handleSkip}>
@@ -77,45 +79,78 @@ export default IntroductionScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: moderateScale(20),
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: BASE_COLORS.WHITE,
+    position: 'relative',
   },
   image: {
-    height: 250,
-    width: width * 0.8,
-    marginBottom: 30,
+    height: 333,
+    width: 352,
+    marginBottom: verticalScale(4),
+    marginTop: 60,
+  },
+  icon: {
+    justifyContent: 'left',
+    alignItems: 'left',
+    borderRadius: 50,
+    borderWidth: 2,
+    padding: 5,
+    position: 'absolute',
+    top: 18,
+    left: 20,
+  },
+  pagination: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: verticalScale(12),
+    gap: moderateScale(4),
+  },
+  activeDot: {
+    width: moderateScale(36),
+    height: moderateScale(6),
+    borderRadius: moderateScale(20),
+    backgroundColor: BASE_COLORS.SECONDARY,
+  },
+  inactiveDot: {
+    width: moderateScale(11),
+    height: moderateScale(6),
+    borderRadius: moderateScale(20),
+    backgroundColor: BASE_COLORS.SECONDARY,
+    opacity: 0.1,
   },
   title: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: '#000',
+    fontFamily: FONTS.MEDIUM,
+    fontSize: 22,
+    fontWeight: '500',
+    color: BASE_COLORS.TEXT_PRIMARY,
     textAlign: 'center',
-    marginBottom: 10,
+    marginBottom: verticalScale(6),
+    lineHeight: 31,
+    paddingHorizontal: moderateScale(5),
   },
   description: {
+    fontFamily: FONTS.REGULAR,
     textAlign: 'center',
-    fontSize: 14,
-    color: '#555',
-    marginBottom: 30,
+    fontSize: 11,
+    fontWeight: '400',
+    color: BASE_COLORS.TEXT_SECONDARY,
+    marginBottom: verticalScale(50),
+    lineHeight: moderateScale(16),
+    paddingHorizontal: moderateScale(10),
   },
   button: {
-    backgroundColor: '#e60000',
-    paddingVertical: 12,
-    paddingHorizontal: 30,
-    borderRadius: 8,
-    width: '100%',
-    marginBottom: 20,
+    marginTop: 0,
   },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    textAlign: 'center',
+  lastButton: {
+    marginTop: verticalScale(20),
   },
   skipText: {
     fontSize: 14,
-    color: '#888',
-    textDecorationLine: 'underline',
+    fontWeight: '400',
+    color: BASE_COLORS.TEXT_PRIMARY,
+    marginTop: verticalScale(-12),
   },
 });

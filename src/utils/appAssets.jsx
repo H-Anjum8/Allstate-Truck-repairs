@@ -1,5 +1,13 @@
 const images = {
   SPLASH_SCREEN: require('../assets/splash_screen.png'),
+  TIRE: require('../assets/tire.png'),
+  BRAKE: require('../assets/brake.png'),
+  BATTERY: require('../assets/battery.png'),
+  CLUTCH: require('../assets/clutch.png'),
+  RED_SEMITRUCK: require('../assets/red-semitruck.png'),
+  FRIENDLY_MECHANIC: require('../assets/friendly-mechanic.png'),
+  TWO_CHARACTERS: require('../assets/two-characters.png'),
+  GARAGE_LOGO: require('../assets/garage-logo.png'),
 };
 
 const icons = {
@@ -23,6 +31,8 @@ const icons = {
     active: require('../assets/bottomIcons/jobs_active.png'),
     inactive: require('../assets/bottomIcons/jobs_inactive.png'),
   },
+  AUTHENTIC_ICON: require('../assets/icons/authentic-icon.png'),
+  LOCATION_COLOURED: require('../assets/icons/location-colored.png'),
 };
 
 // Export assets

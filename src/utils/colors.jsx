@@ -15,7 +15,8 @@ export const BASE_COLORS = {
   GRAY: '#777777',
   LIGHT_GRAY: '#CCCCCC',
   EXTRA_LIGHT_GRAY: 'rgba(255, 255, 255, 0.10)',
-
+  BORDER_COLOR: '#EEEEEE',
+  GREEN: '#359814',
   // Common UI colors
 
   TEXT_PRIMARY: '#000654',
