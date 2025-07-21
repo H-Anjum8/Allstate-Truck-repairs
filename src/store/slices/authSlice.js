@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isAuthenticated: false,
-  role: 'manager', // 'user' | 'driver' | 'manager' | 'service_provider'
+  role: 'null', // 'user' | 'driver' | 'manager' | 'service_provider'
   user: null, // optional: you can store user profile data here
 };
 
@@ -11,7 +11,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     loginSuccess: (state, action) => {
-      state.isAuthenticated = false;
+      // state.isAuthenticated = false;
       state.role = action.payload.role;
       state.user = action.payload.user || null;
     },

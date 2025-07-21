@@ -6,14 +6,12 @@ import { categories } from '../../utils/staticData';
 import { featured } from '../../utils/staticData';
 import { FONTS } from '../../theme/fonts';
 import BASE_COLORS from '../../utils/colors';
+import DashboardHeader from '../../components/DashboardComponents/DashboardHeader';
 const Home = () => {
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.location}>📍 Ontario, Canada</Text>
-      <TextInput
-        placeholder="What service do you need?"
-        style={styles.search}
-      />
+      {/* dashboard Header  */}
+      <DashboardHeader />
 
       <ServiceListSection
         title="Featured Services"
@@ -38,7 +36,7 @@ const Home = () => {
       <ServiceListSection
         title="Nearby Services"
         data={featured}
-        marginBottom={80}
+        marginBottom={30}
       />
     </ScrollView>
   );
@@ -50,7 +48,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: '100%',
-    paddingTop: 40,
+    // paddingTop: 40,
     backgroundColor: BASE_COLORS.WHITE,
   },
   location: {
@@ -79,6 +77,6 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.BOLD,
   },
   viewAll: {
-    color: '#007bff',
+    color: BASE_COLORS.DARK_GRAY,
   },
 });

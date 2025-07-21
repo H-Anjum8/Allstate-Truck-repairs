@@ -14,6 +14,7 @@ import { ICONS } from './appAssets';
 import Setting from '../screens/Home/CommonScreens/Setting';
 import Fleet from '../screens/Home/ManagerScreens/Fleet';
 import MyJobs from '../screens/Home/DriverScreens/MyJobs';
+import RoleSelection from '../screens/RoleSelection';
 
 const Routes = {
   Splash: {
@@ -28,6 +29,15 @@ const Routes = {
   IntroductionScreen: {
     name: 'introduction',
     component: IntroductionScreen,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  RoleSelection: {
+    name: 'role_selection',
+    component: RoleSelection,
     options: {
       headerShown: false,
       gestureEnabled: false,
@@ -105,7 +115,7 @@ const Routes = {
       headerShown: false,
       gestureEnabled: false,
     },
-    authRequired: true,
+    authRequired: false,
   },
 };
 export const BOTTOM_ROUTES_USER = [

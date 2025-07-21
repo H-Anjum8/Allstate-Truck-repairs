@@ -22,7 +22,7 @@ const IntroductionScreen = ({ navigation }) => {
       setIndex(prev => prev + 1);
     } else {
       console.log('Get Started Clicked');
-      navigation.navigate('login_screen');
+      navigation.navigate('role_selection');
     }
   };
 

@@ -8,6 +8,8 @@ const images = {
   FRIENDLY_MECHANIC: require('../assets/friendly-mechanic.png'),
   TWO_CHARACTERS: require('../assets/two-characters.png'),
   GARAGE_LOGO: require('../assets/garage-logo.png'),
+  MACHANIC: require('../assets/machanic.png'),
+  OWNER: require('../assets/owner.png'),
 };
 
 const icons = {

@@ -66,7 +66,6 @@ const CustomHeader = ({
   // Header Layout
   backgroundColor = BASE_COLORS.TRANSPARENT,
   showShadow = false,
-  height = 506,
 }) => {
   // Text alignment styles
   const getTitleAlignmentStyle = () => {
@@ -107,7 +106,7 @@ const CustomHeader = ({
         style={[
           styles.container,
           showShadow && styles.shadowEffect,
-          { backgroundColor, height },
+          { backgroundColor },
           containerStyle,
         ]}
       >
@@ -212,8 +211,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     // alignItems: 'center',
-    marginTop: 20,
-    paddingHorizontal: 16,
+    marginTop: 16,
+    paddingHorizontal: 2,
   },
   shadowEffect: {
     ...Platform.select({
@@ -252,7 +251,7 @@ const styles = StyleSheet.create({
   centerArea: {
     // marginTop: 80,
     flex: 1,
-    paddingHorizontal: 6,
+    paddingHorizontal: 4,
     justifyContent: 'center',
     // backgroundColor: 'red',
   },
@@ -276,7 +275,7 @@ const styles = StyleSheet.create({
     color: BASE_COLORS.PRIMARY,
     fontFamily: FONTS.MEDIUM,
     fontSize: 28,
-    marginTop: 20,
+    marginTop: 8,
     fontWeight: 500,
     textAlign: 'left',
   },
@@ -285,7 +284,10 @@ const styles = StyleSheet.create({
     color: BASE_COLORS.TEXT_LIGHT,
     fontFamily: FONTS.REGULAR,
     fontWeight: 400,
-    marginTop: 2,
+    marginTop: 1,
+    fontSize: 13,
+    marginBottom: 20,
+    textAlign: 'left',
   },
   notificationBadge: {
     position: 'absolute',
