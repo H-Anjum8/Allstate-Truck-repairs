@@ -59,8 +59,8 @@ const CustomHeader = ({
 
   // Status Bar
   showStatusBar = true,
-  statusBarColor = BASE_COLORS.PRIMARY,
-  statusBarStyle = 'light-content',
+  statusBarColor = BASE_COLORS.WHITE,
+  statusBarStyle = 'dark-content',
   statusBarTranslucent = false,
 
   // Header Layout

@@ -73,14 +73,14 @@ export const getValidationSchema = formType => {
       });
     case 'payment':
       return Yup.object().shape({
-        name: Yup.string().required('Card holder name is required'),
+        cardHolderName: Yup.string().required('Card holder name is required'),
         cardNumber: Yup.string()
-          .matches(/^[0-9]{16}$/, 'Card number must be 16 digits')
+          .matches(/^\d{16}$/, 'Card number must be 16 digits')
           .required('Card number is required'),
-        cvv: Yup.string()
-          .matches(/^[0-9]{3,4}$/, 'CVV must be 3 or 4 digits')
-          .required('CVV is required'),
         expiryDate: Yup.string().required('Expiry date is required'),
+        cvv: Yup.string()
+          .matches(/^\d{3}$/, 'CVV must be 3 digits')
+          .required('CVV is required'),
       });
     case 'personal_information':
       return Yup.object().shape({

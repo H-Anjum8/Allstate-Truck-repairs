@@ -4,9 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useSelector } from 'react-redux';
 import Routes, { getAuthScreens, getProtectedScreens } from '../utils/routlist';
 import { selectIsAuthenticated } from '../store/slices/authSlice';
-import BottomNavigation from './BottomNavigation'; // ✅ Unified component
 import BASE_COLORS from '../utils/colors';
-import Login from '../screens/Auth/Login';
 
 const Stack = createNativeStackNavigator();
 
