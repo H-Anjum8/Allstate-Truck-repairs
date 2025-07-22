@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
   },
   signupText: {
     color: BASE_COLORS.TEXT_RED,
-    fontFamily: 'Poppins_600SemiBold',
+    fontFamily: FONTS.MEDIUM,
   },
   signupContainer: {
     flexDirection: 'row',

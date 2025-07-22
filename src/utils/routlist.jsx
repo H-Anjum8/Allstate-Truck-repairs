@@ -16,6 +16,11 @@ import MyJobs from '../screens/Home/DriverScreens/MyJobs';
 import RoleSelection from '../screens/RoleSelection';
 import UpdateEmail from '../screens/Auth/UpdateEmail';
 import ResetPassword from '../screens/Auth/ForgotPasswordScreens/ResetPassword';
+import ProfileSetup from '../screens/Auth/ProfileSetup';
+import SignupDone from '../screens/Auth/SignupDone';
+import SubscriptionScreen from '../screens/SubscriptionScreen';
+import Payment from '../screens/SubscriptionScreen/Payment';
+import SubcriptionDone from '../screens/SubscriptionScreen/SubcriptionDone';
 
 const Routes = {
   Splash: {
@@ -120,7 +125,51 @@ const Routes = {
     },
     authRequired: false,
   },
-
+  ProfileSetup: {
+    name: 'profile_setup',
+    component: ProfileSetup,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  SignupDone: {
+    name: 'signup_done',
+    component: SignupDone,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  SubscriptionScreen: {
+    name: 'subscription',
+    component: SubscriptionScreen,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  Payment: {
+    name: 'payment',
+    component: Payment,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  SubcriptionDone: {
+    name: 'subcription_done',
+    component: SubcriptionDone,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
   Dashboard: {
     name: 'dashboard',
     component: BottomNavigation,

@@ -38,7 +38,7 @@ const VerifyOTP = () => {
   const handleSubmit = values => {
     const finalCode = values.otp.join('');
     console.log('Entered Code:', finalCode);
-    navigation.navigate('reset_password');
+    navigation.navigate('upload_profile_image');
   };
 
   return (
@@ -136,7 +136,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: moderateScale(20),
     color: BASE_COLORS.WHITE,
-    fontFamily: 'Poppins_600SemiBold',
   },
   phoneMessage: {
     textAlign: 'center',

@@ -100,16 +100,7 @@ export const getValidationSchema = formType => {
           .oneOf([Yup.ref('newPassword')], 'Passwords must match')
           .required('Required'),
       });
-    case 'edit_profile':
-      return Yup.object().shape({
-        fullName: Yup.string().required('Full name is required'),
-        email: Yup.string()
-          .email('Invalid email address')
-          .required('Email is required'),
-        phone: Yup.string()
-          .matches(/^[0-9\-+()\s]*$/, 'Invalid phone number')
-          .required('Phone number is required'),
-      });
+
     case 'update_email':
       return Yup.object().shape({
         email: Yup.string()
@@ -140,6 +131,19 @@ export const getValidationSchema = formType => {
           .min(1, 'At least 4 images are required')
           .required('Images are required'),
         isFeatured: Yup.boolean(),
+      });
+    case 'edit_profile':
+      return Yup.object().shape({
+        fullName: Yup.string().required('Full name is required'),
+        email: Yup.string()
+          .email('Invalid email')
+          .required('Email is required'),
+        phone: Yup.string()
+          .matches(/^[0-9]{10,15}$/, 'Phone must be 10-15 digits')
+          .required('Phone number is required'),
+        vehicleType: Yup.string().required('Vehicle type is required'),
+        licensePlate: Yup.string().required('License plate is required'),
+        location: Yup.string().required('Location is required'),
       });
 
     default:

@@ -10,6 +10,7 @@ const images = {
   GARAGE_LOGO: require('../assets/garage-logo.png'),
   MACHANIC: require('../assets/machanic.png'),
   OWNER: require('../assets/owner.png'),
+  PROFILE: require('../assets/profile.jpg'),
 };
 
 const icons = {
@@ -35,6 +36,7 @@ const icons = {
   },
   AUTHENTIC_ICON: require('../assets/icons/authentic-icon.png'),
   LOCATION_COLOURED: require('../assets/icons/location-colored.png'),
+  TICK: require('../assets/icons/tick.png'),
 };
 
 // Export assets

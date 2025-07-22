@@ -293,7 +293,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     marginBottom: 20,
     marginRight: 0,
-    textAlign: 'center',
+    textAlign: 'left',
   },
   notificationBadge: {
     position: 'absolute',
