@@ -18,6 +18,7 @@ import { loginSuccess } from '../../store/slices/authSlice';
 import { useNavigation } from '@react-navigation/native';
 import CustomHeader from '../../components/CustomHeaders';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { FONTS } from '../../theme/fonts';
 const Login = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -116,9 +117,8 @@ export default Login;
 
 const styles = StyleSheet.create({
   errorText: {
-    color: COLORS.TEXT_RED,
+    color: BASE_COLORS.TEXT_RED,
     fontSize: 12,
-    fontFamily: 'Poppins_400Regular',
     marginBottom: 12,
     marginTop: -4,
   },
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   footerText: {
     textAlign: 'center',
     fontSize: 13,
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: FONTS.MEDIUM,
     color: COLORS.TEXT_TERNARY,
   },
   signupText: {
@@ -147,6 +147,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    // marginTop: 10,
   },
 });

@@ -251,15 +251,17 @@ const styles = StyleSheet.create({
   centerArea: {
     // marginTop: 80,
     flex: 1,
-    paddingHorizontal: 4,
+    paddingHorizontal: 2,
     justifyContent: 'center',
-    // backgroundColor: 'red',
+    textAlign: 'left',
+    alignItems: 'flex-start',
   },
   title: {
     ...TextStyles.heading1,
     color: BASE_COLORS.TEXT_INVERSE,
   },
   textContainer: {
+    width: '100%',
     flex: 1,
     gap: 2,
     marginTop: 10,
@@ -272,12 +274,15 @@ const styles = StyleSheet.create({
   },
   usernameText: {
     ...TextStyles.heading1,
-    color: BASE_COLORS.PRIMARY,
+    color: BASE_COLORS.TEXT_PRIMARY,
     fontFamily: FONTS.MEDIUM,
     fontSize: 28,
     marginTop: 8,
     fontWeight: 500,
     textAlign: 'left',
+    marginLeft: 0,
+    marginRight: 0,
+    alignSelf: 'flex-start',
   },
   descriptionText: {
     ...TextStyles.bodySmall,
@@ -287,7 +292,8 @@ const styles = StyleSheet.create({
     marginTop: 1,
     fontSize: 13,
     marginBottom: 20,
-    textAlign: 'left',
+    marginRight: 0,
+    textAlign: 'center',
   },
   notificationBadge: {
     position: 'absolute',

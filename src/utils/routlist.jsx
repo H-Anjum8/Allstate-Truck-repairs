@@ -3,7 +3,6 @@ import ForgotPassword from '../screens/Auth/ForgotPasswordScreens/ForgotPassword
 import VerifyOTP from '../screens/Auth/ForgotPasswordScreens/VerifyOTP';
 import Login from '../screens/Auth/Login';
 import Signup from '../screens/Auth/Signup';
-import SignupDone from '../screens/Auth/SignupDone';
 import SignupOTPVerify from '../screens/Auth/SignupOTPVerify';
 import UploadProfileImage from '../screens/Auth/UploadProfileImage';
 import Home from '../screens/Home';
@@ -15,6 +14,8 @@ import Setting from '../screens/Home/CommonScreens/Setting';
 import Fleet from '../screens/Home/ManagerScreens/Fleet';
 import MyJobs from '../screens/Home/DriverScreens/MyJobs';
 import RoleSelection from '../screens/RoleSelection';
+import UpdateEmail from '../screens/Auth/UpdateEmail';
+import ResetPassword from '../screens/Auth/ForgotPasswordScreens/ResetPassword';
 
 const Routes = {
   Splash: {
@@ -26,6 +27,7 @@ const Routes = {
     },
     authRequired: false,
   },
+
   IntroductionScreen: {
     name: 'introduction',
     component: IntroductionScreen,
@@ -81,9 +83,28 @@ const Routes = {
     },
     authRequired: false,
   },
+
   SignupOTPVerify: {
     name: 'signup_otp_verify',
     component: SignupOTPVerify,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  UpdateEmail: {
+    name: 'update_email',
+    component: UpdateEmail,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  ResetPassword: {
+    name: 'reset_password',
+    component: ResetPassword,
     options: {
       headerShown: false,
       gestureEnabled: false,
@@ -99,15 +120,7 @@ const Routes = {
     },
     authRequired: false,
   },
-  SignupDone: {
-    name: 'signup_done',
-    component: SignupDone,
-    options: {
-      headerShown: false,
-      gestureEnabled: false,
-    },
-    authRequired: false,
-  },
+
   Dashboard: {
     name: 'dashboard',
     component: BottomNavigation,

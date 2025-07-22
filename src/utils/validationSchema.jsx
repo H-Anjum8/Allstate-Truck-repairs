@@ -4,140 +4,120 @@ const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,6}$/;
 
 export const getValidationSchema = formType => {
   switch (formType) {
-    case 'user_signup':
+    case 'signup':
       return Yup.object().shape({
-        name: Yup.string().trim().required('Name is required'),
-        username: Yup.string().trim().required('Username is required'),
-        email: Yup.string()
-          .trim()
-          .matches(emailRegex, 'Invalid email format')
-          .required('Email is required'),
-        phone: Yup.string().required('Phone number is required'),
-        date_of_birth: Yup.string().required('Date of birth is required'),
-        time_of_birth: Yup.string().required('Time of birth is required'),
-        location_of_birth: Yup.string().required(
-          'Location of birth is required',
-        ),
-        gender: Yup.string().required('Gender is required'),
-      });
-    case 'provider_signup':
-      return Yup.object().shape({
-        name: Yup.string().trim().required('Name is required'),
-        username: Yup.string().trim().required('Username is required'),
-        email: Yup.string()
-          .trim()
-          .matches(emailRegex, 'Invalid email format')
-          .required('Email is required'),
-        phone: Yup.string().required('Phone number is required'),
+        fullName: Yup.string().required('Full name required'),
+        email: Yup.string().email('Invalid email').required('Email required'),
+        phone: Yup.string().required('Phone number required'),
+        password: Yup.string()
+          .min(6, 'Minimum 6 characters')
+          .required('Password required'),
+        confirmPassword: Yup.string()
+          .oneOf([Yup.ref('password'), null], 'Passwords must match')
+          .required('Confirm your password'),
       });
     case 'login':
       return Yup.object().shape({
         email: Yup.string()
-          .transform(value => value.trim()) // Apply trim during validation
-          .matches(emailRegex, 'Invalid email format')
-          .required('Email is required'),
-        password: Yup.string().required('Password is required'),
-      });
-
-    case 'otp_verification':
-      return Yup.object().shape({
-        otp: Yup.string()
-          .required('OTP is required')
-          .matches(/^\d{4}$/, 'Enter a valid 4-digit OTP'),
-      });
-    case 'introduction':
-      return Yup.object().shape({
-        name: Yup.string().trim().required('Name is required'),
-        location: Yup.string().trim().required('Location is required'),
-        languages: Yup.string()
-          .trim()
-          .required('Please select at least one language'),
-        gender: Yup.string().required('Please select your gender'),
-      });
-    case 'bio':
-      return Yup.object().shape({
-        bio: Yup.string().required('Bio is required'),
-      });
-    case 'pro_title':
-      return Yup.object().shape({
-        professionalTitle: Yup.string()
-          .required('Professional title is required')
-          .min(2, 'Title is too short'),
-      });
-    case 'educational_experience':
-      return Yup.object().shape({
-        edu_experience: Yup.string().required('Bio is required'),
-      });
-    case 'create_service':
-      return Yup.object().shape({
-        serviceName: Yup.string()
-          .required('Service name is required')
-          .min(3, 'Service name must be at least 3 characters'),
-
-        serviceDescription: Yup.string()
-          .required('Description is required')
-          .min(
-            20,
-            'Please provide a more detailed description (minimum 20 characters)',
+          .required('Phone number or email is required')
+          .test(
+            'email-or-phone',
+            'Enter a valid email or phone number',
+            value =>
+              !!value &&
+              (Yup.string().email().isValidSync(value) ||
+                /^[0-9]{10,14}$/.test(value)),
           ),
-
-        serviceRate: Yup.number()
-          .typeError('Rate must be a number')
-          .required('Rate is required')
-          .positive('Rate must be a positive number'),
-
-        availability: Yup.object()
-          .shape({
-            date: Yup.string().required('Date is required'),
-          })
-          .required('Availability date is required'),
-
-        startTime: Yup.string().required('Start time is required'),
-
-        endTime: Yup.string().required('End time is required'),
-
-        duration: Yup.string().required('Duration selection is required'),
-
-        serviceCategory: Yup.string().required('Category is required'),
-
-        serviceImage: Yup.string().nullable(),
+        password: Yup.string()
+          .min(6, 'Minimum 6 characters')
+          .required('Password required'),
       });
-
-    case 'profile_info':
-      return Yup.object().shape({
-        industry: Yup.string().trim().required('Industry/Service is required'),
-        job_title: Yup.string().trim().required('Job Title is required'),
-        business_name: Yup.string()
-          .trim()
-          .required('Business Name is required'),
-        business_address: Yup.string()
-          .trim()
-          .required('Business Address is required'),
-        website: Yup.string().nullable(),
-        company_description: Yup.string()
-          .trim()
-          .required('Company Description is required'),
-        mission_statement: Yup.string()
-          .trim()
-          .required('Vision Statement is required'),
-      });
-    case 'forgot_password':
+    case 'emailUpdate':
       return Yup.object().shape({
         email: Yup.string()
-          .transform(value => value.trim())
-          .matches(emailRegex, 'Invalid email format')
+          .email('Invalid email')
           .required('Email is required'),
       });
-    case 'create_new_password':
+    case 'verifyotp':
+      return Yup.object().shape({
+        otp: Yup.array()
+          .of(Yup.string().length(1, 'Must be 1 digit'))
+          .min(5, 'OTP must be 5 digits')
+          .max(5, 'OTP must be 5 digits')
+          .test('all-filled', 'Enter all 5 digits', value =>
+            value.every(v => v !== ''),
+          ),
+        otp: Yup.string()
+          .length(5, 'Enter 5 digit code')
+          .required('OTP is required'),
+      });
+    case 'newpassword':
       return Yup.object().shape({
         password: Yup.string()
           .min(6, 'Password must be at least 6 characters')
           .required('Password is required'),
         confirmPassword: Yup.string()
-          .oneOf([Yup.ref('password')], 'Passwords must match')
+          .oneOf([Yup.ref('password'), null], 'Passwords must match')
           .required('Confirm Password is required'),
       });
+    case 'signup_verify_otp':
+      return Yup.object().shape({
+        otp: Yup.array()
+          .of(
+            Yup.string().required(''), // Empty string means no per-digit error
+          )
+          .test('all-filled', 'Please enter all 6 digits', value => {
+            if (!value) return false;
+            return value.every(v => v !== '');
+          }),
+      });
+    case 'payment':
+      return Yup.object().shape({
+        name: Yup.string().required('Card holder name is required'),
+        cardNumber: Yup.string()
+          .matches(/^[0-9]{16}$/, 'Card number must be 16 digits')
+          .required('Card number is required'),
+        cvv: Yup.string()
+          .matches(/^[0-9]{3,4}$/, 'CVV must be 3 or 4 digits')
+          .required('CVV is required'),
+        expiryDate: Yup.string().required('Expiry date is required'),
+      });
+    case 'personal_information':
+      return Yup.object().shape({
+        fullName: Yup.string().required('Full Name is required'),
+        email: Yup.string()
+          .email('Invalid email')
+          .required('Email is required'),
+        phone: Yup.string()
+          .matches(/^[0-9\-+()\s]*$/, 'Invalid phone number')
+          .required('Phone number is required'),
+      });
+    case 'change_password':
+      return Yup.object().shape({
+        currentPassword: Yup.string().min(6, 'Too short!').required('Required'),
+        newPassword: Yup.string().min(6, 'Too short!').required('Required'),
+        confirmPassword: Yup.string()
+          .oneOf([Yup.ref('newPassword')], 'Passwords must match')
+          .required('Required'),
+      });
+    case 'edit_profile':
+      return Yup.object().shape({
+        fullName: Yup.string().required('Full name is required'),
+        email: Yup.string()
+          .email('Invalid email address')
+          .required('Email is required'),
+        phone: Yup.string()
+          .matches(/^[0-9\-+()\s]*$/, 'Invalid phone number')
+          .required('Phone number is required'),
+      });
     case 'update_email':
+      return Yup.object().shape({
+        email: Yup.string()
+          .transform(value => value.trim()) // Apply trim during validation
+          .matches(emailRegex, 'Invalid email format')
+          .required('Email is required'),
+      });
+    case 'add_email':
       return Yup.object().shape({
         email: Yup.string()
           .transform(value => value.trim()) // Apply trim during validation

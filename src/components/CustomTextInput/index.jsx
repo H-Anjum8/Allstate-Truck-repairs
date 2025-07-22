@@ -8,6 +8,7 @@ const CustomTextInput = ({
   iconName,
   secure,
   value,
+  iconColor,
   onChangeText,
 }) => {
   const [showPassword, setShowPassword] = useState(!secure);
@@ -17,7 +18,7 @@ const CustomTextInput = ({
       <Ionicons
         name={iconName}
         size={20}
-        color={COLORS.TEXT_INPUT_FIELD}
+        color={iconColor || COLORS.TEXT_INPUT_FIELD}
         style={styles.icon}
       />
       <TextInput
