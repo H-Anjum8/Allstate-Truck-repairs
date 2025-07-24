@@ -44,6 +44,7 @@ const UpdateEmail = () => {
             textAlign: 'left',
             fontSize: 10,
             paddingHorizontal: 2,
+            marginBottom: 25,
           }}
           showWelcomeText={false}
           showDescription={true}

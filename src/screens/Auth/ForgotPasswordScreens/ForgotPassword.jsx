@@ -37,9 +37,12 @@ const ForgotPassword = () => {
           description="Kindly provide the registered email to change the passcode."
           username="Enter Your Email"
           showWelcomeText={false}
+          usernameTextStyle={{ fontSize: 20, marginTop: 10 }}
           descriptionTextStyle={{
             textAlign: 'left',
             fontSize: 11,
+            marginTop: 4,
+            marginBottom: 30,
           }}
           showDescription
           showUsername
@@ -52,21 +55,28 @@ const ForgotPassword = () => {
         >
           {({ handleChange, handleSubmit, values, errors, touched }) => (
             <>
-              <CustomTextInput
-                placeholder="Enter your email"
-                iconName="mail-outline"
-                iconColor={BASE_COLORS.TEXT_RED}
-                value={values.email}
-                onChangeText={handleChange('email')}
-              />
-              {touched.email && errors.email && (
-                <Text style={styles.errorText}>{errors.email}</Text>
-              )}
-              <CustomButton
-                label="Submit"
-                onPress={handleSubmit}
-                style={{ marginHorizontal: 3, marginTop: 70 }}
-              />
+              <View
+                style={{
+                  height: 252,
+                  justifyContent: 'space-between',
+                }}
+              >
+                <CustomTextInput
+                  placeholder="Enter your email"
+                  iconName="mail-outline"
+                  iconColor={BASE_COLORS.TEXT_RED}
+                  value={values.email}
+                  onChangeText={handleChange('email')}
+                />
+                {touched.email && errors.email && (
+                  <Text style={styles.errorText}>{errors.email}</Text>
+                )}
+                <CustomButton
+                  label="Submit"
+                  onPress={handleSubmit}
+                  style={{ marginHorizontal: 3, height: 56 }}
+                />
+              </View>
             </>
           )}
         </Formik>

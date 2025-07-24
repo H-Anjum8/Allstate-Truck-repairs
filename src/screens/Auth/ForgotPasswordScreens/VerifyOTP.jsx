@@ -64,7 +64,7 @@ const VerifyOTP = () => {
               username="Email Verification"
               usernameTextStyle={{
                 textAlign: 'left',
-                marginTop: -4,
+
                 fontSize: 22,
               }}
               onNotificationPress={() =>
@@ -166,6 +166,7 @@ const styles = StyleSheet.create({
   emailText: {
     textAlign: 'left',
     marginHorizontal: 4,
+    marginTop: 2,
     marginBottom: verticalScale(30),
     fontSize: moderateScale(8),
     color: BASE_COLORS.TEXT_SECONDARY,
@@ -175,6 +176,7 @@ const styles = StyleSheet.create({
     color: BASE_COLORS.SECONDARY,
     fontFamily: FONTS.REGULAR,
     fontWeight: 'bold',
+    textDecorationLine: 'underline',
   },
   errorText: {
     color: 'red',

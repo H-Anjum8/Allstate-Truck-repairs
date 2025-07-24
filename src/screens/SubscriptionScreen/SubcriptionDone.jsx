@@ -9,7 +9,6 @@ import { FONTS } from '../../theme/fonts';
 
 const SubcriptionDone = () => {
   const navigation = useNavigation();
-
   return (
     <View style={styles.container}>
       {/* Center Icon */}
@@ -24,49 +23,56 @@ const SubcriptionDone = () => {
 
       {/* Subtext */}
       <Text style={styles.subText}>
-        Welcome to AllState Truck Repairs.{'\n'} Your account is now active.
+        {' '}
+        Welcome to AllState Truck {'\n'} Repairs. Your account is now {'\n'}{' '}
+        active.
       </Text>
 
       {/* Continue button */}
       <CustomButton
         label="Continue"
-        onPress={() => navigation.navigate('dashboard')}
-        style={{ marginHorizontal: 3, marginTop: 50, marginBottom: 0 }}
+        onPress={() => navigation.navigate('subscription')}
+        style={{
+          marginHorizontal: -4,
+          marginBottom: 50,
+          height: 54,
+        }}
+        textStyle={{ fontSize: 12 }}
       />
     </View>
   );
 };
 
 export default SubcriptionDone;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: BASE_COLORS.WHITE,
+    marginTop: 70,
     padding: 22,
     alignItems: 'center',
-    marginBottom: 80,
-    justifyContent: 'center',
+    // marginBottom: 82,
+    justifyContent: 'flex-end',
   },
   checkImage: {
     width: moderateScale(120),
     height: moderateScale(110),
     marginBottom: verticalScale(12),
-    marginTop: verticalScale(168),
+    marginTop: 75,
   },
   heading: {
-    fontSize: 28,
+    fontSize: 22,
     fontWeight: 600,
     fontFamily: FONTS.MEDIUM,
     color: BASE_COLORS.PRIMARY,
-    marginBottom: verticalScale(4),
+    marginBottom: verticalScale(2),
   },
   subText: {
     fontSize: 12,
     textAlign: 'center',
     fontFamily: FONTS.REGULAR,
     color: BASE_COLORS.TEXT_INPUT_FIELD,
-    marginBottom: verticalScale(170),
+    marginBottom: verticalScale(180),
     paddingHorizontal: moderateScale(10),
   },
 });

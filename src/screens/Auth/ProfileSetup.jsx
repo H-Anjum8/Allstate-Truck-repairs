@@ -83,6 +83,7 @@ const ProfileSetup = () => {
             username="Profile Setup"
             usernameTextStyle={{
               textAlign: 'center',
+              marginTop: 10,
               alignSelf: 'flex-center',
               marginTop: 10,
               fontSize: 22,
@@ -179,6 +180,7 @@ const ProfileSetup = () => {
                     )}
                     placeholderStyle={{ color: BASE_COLORS.TEXT_INPUT_FIELD }}
                     iconColor={BASE_COLORS.SECONDARY}
+                    selectedTextStyle={{ color: BASE_COLORS.TEXT_INPUT_FIELD }}
                   />
                   {touched.vehicleType && errors.vehicleType && (
                     <Text style={styles.errorText}>{errors.vehicleType}</Text>
@@ -217,6 +219,7 @@ const ProfileSetup = () => {
                     )}
                     placeholderStyle={{ color: BASE_COLORS.TEXT_INPUT_FIELD }}
                     iconColor={BASE_COLORS.SECONDARY}
+                    selectedTextStyle={{ color: BASE_COLORS.TEXT_INPUT_FIELD }}
                   />
                   {touched.location && errors.location && (
                     <Text style={styles.errorText}>{errors.location}</Text>
@@ -272,7 +275,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 8,
-    backgroundColor: '#fff', // ✅ Important for Android touch
     zIndex: 1000, // ✅ Helps on Android
   },
   errorText: {

@@ -166,7 +166,8 @@ const PaymentScreen = () => {
               <CustomButton
                 label="Pay & Activate Account"
                 onPress={handleSubmit}
-                style={{ marginHorizontal: 3, marginTop: 90, marginBottom: 0 }}
+                style={{ marginHorizontal: 3, marginTop: 70, height: 54 }}
+                textStyle={{ fontSize: 12 }}
               />
             </>
           )}
@@ -198,7 +199,8 @@ const styles = StyleSheet.create({
   secureRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: verticalScale(10),
+    marginTop: verticalScale(6),
+    marginBottom: 70,
   },
   secureText: {
     fontSize: 12,
@@ -216,6 +218,7 @@ const styles = StyleSheet.create({
   headerDescription: {
     textAlign: 'center',
     paddingHorizontal: 4,
+    marginBottom: 10,
   },
   errorText: {
     fontSize: 11,

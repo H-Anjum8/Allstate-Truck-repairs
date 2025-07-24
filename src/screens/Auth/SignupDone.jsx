@@ -33,6 +33,7 @@ const SignupDone = () => {
         label="Continue"
         onPress={() => navigation.navigate('subscription')}
         style={{ marginHorizontal: 3, marginTop: 30, height: 54 }}
+        textStyle={{ fontSize: 12 }}
       />
     </View>
   );

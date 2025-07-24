@@ -11,13 +11,14 @@ import CustomHeader from '../../components/CustomHeaders';
 import CustomButton from '../../components/CustomButton';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import BASE_COLORS from '../../utils/colors';
+import { FONTS } from '../../theme/fonts';
 
 const plans = [
   {
     id: '1',
     title: 'Free Plan',
     price: '',
-    description: 'Good for individuals\nwith limited needs',
+    description: 'Good for individuals \n with limited needs',
   },
   {
     id: '2',
@@ -56,55 +57,76 @@ const SubscriptionScreen = ({ navigation }) => {
       <CustomHeader
         username="Choose Your Plan"
         description="Secure Your Subscription to Unlock Powerful Features"
-        showUsername
-        showDescription
+        showWelcomeText={false}
+        showDescription={true}
+        showUsername={true}
         contentContainerStyle={{ alignItems: 'center' }}
         usernameTextStyle={{
           textAlign: 'center',
-          marginLeft: 30,
-          marginTop: -30,
+          alignSelf: 'flex-center',
+          fontSize: 22,
+          marginTop: -35,
         }}
-        descriptionTextStyle={{ textAlign: 'center', paddingHorizontal: '40' }}
-      />
-
-      <FlatList
-        data={plans}
-        keyExtractor={item => item.id}
-        renderItem={({ item }) => {
-          const isSelected = item.id === selectedPlanId;
-          return (
-            <TouchableOpacity
-              style={[styles.planBox, isSelected && styles.planBoxSelected]}
-              onPress={() => handleSelectPlan(item.id)}
-            >
-              <View style={styles.planHeader}>
-                <View style={styles.planLeft}>
-                  <Ionicons
-                    name={isSelected ? 'checkmark-circle' : 'ellipse-outline'}
-                    size={20}
-                    color={BASE_COLORS.SECONDARY}
-                  />
-                  <Text style={styles.planTitle}>{item.title}</Text>
-                </View>
-                <View style={styles.planRight}>
-                  {item.price !== '' && (
-                    <>
-                      <Text style={styles.planPrice}>{item.price}</Text>
-                      <Text style={styles.planDiscount}>{item.discount}</Text>
-                    </>
-                  )}
-                </View>
-              </View>
-              {item.description && item.id === '1' && (
-                <Text style={styles.planDescriptionBelow}>
-                  {item.description}
-                </Text>
-              )}
-            </TouchableOpacity>
-          );
+        descriptionTextStyle={{
+          textAlign: 'center',
+          height: 30,
+          paddingHorizontal: '50',
+          color: BASE_COLORS.GRAY,
+          marginBottom: 30,
+          fontSize: 11,
         }}
-        style={{ marginBottom: 20 }}
       />
+      <View>
+        <FlatList
+          data={plans}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => {
+            const isSelected = item.id === selectedPlanId;
+            return (
+              <TouchableOpacity
+                style={[styles.planBox, isSelected && styles.planBoxSelected]}
+                onPress={() => handleSelectPlan(item.id)}
+              >
+                <View style={styles.planHeader}>
+                  <View style={styles.planLeft}>
+                    <View
+                      style={[
+                        styles.iconWrapper,
+                        isSelected
+                          ? styles.selectedIconBackground
+                          : styles.unselectedIconBackground,
+                      ]}
+                    >
+                      <Ionicons
+                        name={
+                          isSelected ? 'checkmark-circle' : 'ellipse-outline'
+                        }
+                        size={20}
+                        color={BASE_COLORS.SECONDARY}
+                      />
+                    </View>
+                    <Text style={styles.planTitle}>{item.title}</Text>
+                  </View>
+                  <View style={styles.planRight}>
+                    {item.price !== '' && (
+                      <>
+                        <Text style={styles.planPrice}>{item.price}</Text>
+                        <Text style={styles.planDiscount}>{item.discount}</Text>
+                      </>
+                    )}
+                  </View>
+                </View>
+                {item.description && item.id === '1' && (
+                  <Text style={styles.planDescriptionBelow}>
+                    {item.description}
+                  </Text>
+                )}
+              </TouchableOpacity>
+            );
+          }}
+          style={{ marginBottom: 20 }}
+        />
+      </View>
 
       <View style={styles.benefitsSection}>
         {allBenefits.map((feature, index) => (
@@ -122,7 +144,8 @@ const SubscriptionScreen = ({ navigation }) => {
       <CustomButton
         label="Continue To Payment"
         onPress={() => navigation.navigate('payment')}
-        style={{ marginHorizontal: 3, marginTop: -8 }}
+        style={{ marginHorizontal: 3, marginTop: 10, height: 53 }}
+        textStyle={{ fontSize: 12 }}
       />
     </AuthWrapper>
   );
@@ -132,15 +155,17 @@ export default SubscriptionScreen;
 
 const styles = StyleSheet.create({
   planBox: {
-    borderWidth: 1.5,
-    borderColor: '#FFF1F1',
+    borderWidth: 1,
+    borderColor: BASE_COLORS.LIGHT_RED,
     borderRadius: 20,
-    padding: 15,
+    padding: 10,
     marginBottom: 7,
+    backfaceVisibility: BASE_COLORS.GRAYIESH,
+    // alignItems: 'center',
   },
   planBoxSelected: {
     borderColor: BASE_COLORS.TEXT_RED,
-    backgroundColor: '#FFF1F1',
+    backgroundColor: BASE_COLORS.LIGHT_RED,
   },
   planHeader: {
     flexDirection: 'row',
@@ -153,7 +178,7 @@ const styles = StyleSheet.create({
   },
   planTitle: {
     fontSize: 14,
-    fontFamily: 'Poppins_600SemiBold',
+    fontFamily: FONTS.REGULAR,
     marginLeft: 8,
     color: BASE_COLORS.TEXT_DARK,
   },
@@ -162,23 +187,21 @@ const styles = StyleSheet.create({
   },
   planPrice: {
     fontSize: 14,
-    fontFamily: 'Poppins_600SemiBold',
-    color: BASE_COLORS.TEXT_DARK,
+    color: BASE_COLORS.PRIMARY,
   },
   planDiscount: {
     fontSize: 11,
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: FONTS.REGULAR,
     color: BASE_COLORS.TEXT_RED,
   },
   planDescriptionBelow: {
-    fontSize: 11,
-    fontFamily: 'Poppins_400Regular',
+    fontSize: 10,
+    fontFamily: FONTS.REGULAR,
     color: BASE_COLORS.TEXT_RED,
     marginTop: -15,
     textAlign: 'right',
   },
   benefitsSection: {
-    marginTop: 10,
     marginBottom: 70,
   },
   benefitRow: {
@@ -189,7 +212,7 @@ const styles = StyleSheet.create({
   benefitText: {
     marginLeft: 8,
     fontSize: 12,
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: FONTS.REGULAR,
     color: BASE_COLORS.TEXT_SECONDARY,
   },
   buttonStyle: {
