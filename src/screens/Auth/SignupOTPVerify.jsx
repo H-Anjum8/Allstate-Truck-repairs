@@ -65,7 +65,7 @@ const VerifyOTP = () => {
               descriptionTextStyle={{
                 textAlign: 'left',
                 fontSize: 11,
-                marginTop: 4,
+                marginTop: 2,
               }}
               usernameTextStyle={{
                 textAlign: 'left',
@@ -104,7 +104,12 @@ const VerifyOTP = () => {
             <CustomButton
               label="Submit"
               onPress={handleSubmit}
-              style={{ marginHorizontal: 3, marginTop: 50, marginBottom: 0 }}
+              style={{
+                marginHorizontal: 3,
+                marginTop: 70,
+                marginBottom: 0,
+                height: 54,
+              }}
             />
 
             <Text style={styles.resendText}>
@@ -129,12 +134,12 @@ const styles = StyleSheet.create({
   codeContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginHorizontal: moderateScale(10),
-    marginTop: 44,
+    marginHorizontal: moderateScale(5),
+    marginTop: 38,
   },
   codeInput: {
-    width: moderateScale(46),
-    height: moderateScale(46),
+    width: moderateScale(49),
+    height: moderateScale(49),
     borderWidth: 1,
     borderColor: BASE_COLORS.LIGHT_RED,
     borderRadius: 10,
@@ -144,7 +149,7 @@ const styles = StyleSheet.create({
   },
   phoneMessage: {
     textAlign: 'center',
-    marginTop: verticalScale(20),
+    marginTop: verticalScale(18),
     fontSize: moderateScale(10),
     color: BASE_COLORS.TEXT_SECONDARY,
     fontFamily: FONTS.MEDIUM,
@@ -156,9 +161,9 @@ const styles = StyleSheet.create({
   resendText: {
     textAlign: 'left',
     marginHorizontal: 4,
-    marginTop: verticalScale(10),
+    marginTop: verticalScale(13),
     fontSize: moderateScale(10),
-    color: BASE_COLORS.TEXT_SECONDARY,
+    color: BASE_COLORS.TEXT_GRAY,
     fontFamily: FONTS.REGULAR,
   },
   emailText: {

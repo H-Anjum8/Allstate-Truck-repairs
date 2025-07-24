@@ -83,8 +83,9 @@ const ProfileSetup = () => {
             username="Profile Setup"
             usernameTextStyle={{
               textAlign: 'center',
-              marginLeft: 80,
-              fontSize: 24,
+              alignSelf: 'flex-center',
+              marginTop: 10,
+              fontSize: 22,
             }}
             showUsername
             showDescription={false}
@@ -225,7 +226,7 @@ const ProfileSetup = () => {
                 <CustomButton
                   label="Save"
                   onPress={handleSubmit}
-                  style={{ marginHorizontal: 3, marginTop: 50 }}
+                  style={{ marginHorizontal: 3, marginTop: 48 }}
                 />
               </>
             )}
@@ -242,18 +243,18 @@ export default ProfileSetup;
 const styles = StyleSheet.create({
   profileImageContainer: {
     alignItems: 'center',
-    marginBottom: 20,
-    marginTop: 10,
+    marginBottom: 28,
+    marginTop: 20,
   },
   profileImage: {
-    width: 120,
-    height: 120,
+    width: 96,
+    height: 96,
     borderRadius: 20,
   },
   editIcon: {
     position: 'absolute',
-    right: 95,
-    bottom: 85,
+    right: 106,
+    bottom: 65,
     backgroundColor: BASE_COLORS.WHITE,
     borderRadius: 50,
     padding: 4,

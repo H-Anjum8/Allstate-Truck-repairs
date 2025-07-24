@@ -54,6 +54,12 @@ const UploadProfileImage = () => {
           onLeftPress={() => navigation.goBack()}
           description="Choose from your gallery"
           username="Upload Profile Photo"
+          usernameTextStyle={{ fontSize: 22, marginTop: 12 }}
+          descriptionTextStyle={{
+            textAlign: 'left',
+            marginTop: 4,
+            marginBottom: 12,
+          }}
           showWelcomeText={false}
           showDescription={true}
           showUsername={true}
@@ -78,7 +84,7 @@ const UploadProfileImage = () => {
         <CustomButton
           label="Continue"
           onPress={() => navigation.navigate('profile_setup')}
-          style={styles.continueButton}
+          style={{ marginTop: 25, height: 54 }}
         />
 
         {/* Skip For Now */}
@@ -96,11 +102,11 @@ const styles = StyleSheet.create({
   imageWrapper: {
     alignSelf: 'center',
     width: moderateScale(310),
-    height: moderateScale(280),
+    height: moderateScale(300),
     borderRadius: 18,
     borderWidth: 1,
     borderColor: BASE_COLORS.LIGHT_GRAY,
-    marginTop: 30,
+    marginTop: 0,
   },
   image: {
     width: '100%',
@@ -110,14 +116,14 @@ const styles = StyleSheet.create({
   changeText: {
     textAlign: 'center',
     color: BASE_COLORS.TEXT_TERNARY,
-    fontSize: 14,
+    fontSize: 12,
     fontFamily: FONTS.MEDIUM,
     marginTop: 10,
   },
   bold: {
     fontFamily: FONTS.MEDIUM,
     color: BASE_COLORS.TEXT_BLACK,
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: 'bold',
   },
   continueButton: {
@@ -127,7 +133,8 @@ const styles = StyleSheet.create({
   skipText: {
     textAlign: 'center',
     color: BASE_COLORS.TEXT_PRIMARY,
-    fontSize: 14,
+    fontWeight: 'semi-bold',
+    fontSize: 12,
     fontFamily: FONTS.MEDIUM,
     marginTop: -12,
   },

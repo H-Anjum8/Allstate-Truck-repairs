@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     alignItems: 'center',
     marginBottom: 7,
-    height: 52,
+    height: 54,
   },
   icon: {
     marginRight: 8,

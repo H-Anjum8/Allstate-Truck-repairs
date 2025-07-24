@@ -39,7 +39,12 @@ const UpdateEmail = () => {
           onLeftPress={() => navigation.goBack()}
           description="It seems like you didn’t receive the email. Please enter a new email address, and we’ll send the verification code again."
           username="Update Your Email "
-          descriptionTextStyle={{ textAlign: 'left', fontSize: 12 }}
+          usernameTextStyle={{ fontSize: 22, marginTop: -4 }}
+          descriptionTextStyle={{
+            textAlign: 'left',
+            fontSize: 10,
+            paddingHorizontal: 2,
+          }}
           showWelcomeText={false}
           showDescription={true}
           showUsername={true}
@@ -52,22 +57,29 @@ const UpdateEmail = () => {
         >
           {({ handleChange, handleSubmit, values, errors, touched }) => (
             <>
-              <CustomTextInput
-                placeholder="Enter your email"
-                iconName="mail"
-                iconColor={BASE_COLORS.TEXT_RED}
-                value={values.email}
-                onChangeText={handleChange('email')}
-              />
-              {touched.email && errors.email && (
-                <Text style={styles.errorText}>{errors.email}</Text>
-              )}
+              <View
+                style={{
+                  height: 254,
+                  justifyContent: 'space-between',
+                }}
+              >
+                <CustomTextInput
+                  placeholder="Enter your email"
+                  iconName="mail-outline"
+                  iconColor={BASE_COLORS.TEXT_RED}
+                  value={values.email}
+                  onChangeText={handleChange('email')}
+                />
+                {touched.email && errors.email && (
+                  <Text style={styles.errorText}>{errors.email}</Text>
+                )}
 
-              <CustomButton
-                label="Submit"
-                onPress={handleSubmit}
-                style={{ marginHorizontal: 3, marginTop: 60 }}
-              />
+                <CustomButton
+                  label="Submit"
+                  onPress={handleSubmit}
+                  style={{ marginHorizontal: 3 }}
+                />
+              </View>
             </>
           )}
         </Formik>

@@ -32,7 +32,7 @@ const SignupDone = () => {
       <CustomButton
         label="Continue"
         onPress={() => navigation.navigate('subscription')}
-        style={{ marginHorizontal: 3, marginTop: 50, marginBottom: 0 }}
+        style={{ marginHorizontal: 3, marginTop: 30, height: 54 }}
       />
     </View>
   );
@@ -44,23 +44,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: BASE_COLORS.WHITE,
+    marginTop: 70,
     padding: 22,
     alignItems: 'center',
-    marginBottom: 80,
+    // marginBottom: 82,
     justifyContent: 'center',
   },
   checkImage: {
     width: moderateScale(120),
     height: moderateScale(110),
     marginBottom: verticalScale(12),
-    marginTop: verticalScale(168),
+    marginTop: 60,
   },
   heading: {
-    fontSize: 28,
+    fontSize: 22,
     fontWeight: 600,
     fontFamily: FONTS.MEDIUM,
     color: BASE_COLORS.PRIMARY,
-    marginBottom: verticalScale(4),
+    marginBottom: verticalScale(2),
   },
   subText: {
     fontSize: 12,

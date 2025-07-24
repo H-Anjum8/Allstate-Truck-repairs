@@ -64,7 +64,8 @@ const VerifyOTP = () => {
               username="Email Verification"
               usernameTextStyle={{
                 textAlign: 'left',
-                fontSize: 24,
+                marginTop: -4,
+                fontSize: 22,
               }}
               onNotificationPress={() =>
                 navigation.navigate('all_notifications_screen')
@@ -77,6 +78,7 @@ const VerifyOTP = () => {
                 <Text style={styles.resendLink}> info@gmail.com</Text>
               </Text>
             </TouchableOpacity>
+
             {/* 5 Digit Code Boxes */}
             <View style={styles.codeContainer}>
               {values.otp.map((digit, index) => (
@@ -99,13 +101,12 @@ const VerifyOTP = () => {
             {errors.otp && touched.otp && (
               <Text style={styles.errorText}>{errors.otp}</Text>
             )}
-
             <Text style={styles.phoneMessage}>Resend Code</Text>
 
             <CustomButton
               label="Submit"
               onPress={handleSubmit}
-              style={{ marginHorizontal: 3, marginTop: 50, marginBottom: 0 }}
+              style={{ marginHorizontal: 3, marginTop: 66, marginBottom: 0 }}
             />
 
             <Text style={styles.resendText}>
@@ -130,13 +131,14 @@ const styles = StyleSheet.create({
   codeContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginHorizontal: moderateScale(10),
+    marginHorizontal: moderateScale(5),
+    marginTop: 20,
   },
   codeInput: {
-    width: moderateScale(45),
-    height: moderateScale(45),
-    borderWidth: 1.5,
-    borderColor: BASE_COLORS.SECONDARY,
+    width: moderateScale(49),
+    height: moderateScale(49),
+    borderWidth: 1,
+    borderColor: BASE_COLORS.LIGHT_RED,
     borderRadius: 10,
     textAlign: 'center',
     fontSize: moderateScale(20),
@@ -144,7 +146,7 @@ const styles = StyleSheet.create({
   },
   phoneMessage: {
     textAlign: 'center',
-    marginTop: verticalScale(20),
+    marginTop: verticalScale(18),
     fontSize: moderateScale(10),
     color: BASE_COLORS.TEXT_SECONDARY,
     fontFamily: FONTS.MEDIUM,
@@ -156,22 +158,23 @@ const styles = StyleSheet.create({
   resendText: {
     textAlign: 'left',
     marginHorizontal: 4,
-    marginTop: verticalScale(10),
+    marginTop: verticalScale(13),
     fontSize: moderateScale(10),
-    color: BASE_COLORS.TEXT_SECONDARY,
+    color: BASE_COLORS.TEXT_GRAY,
     fontFamily: FONTS.REGULAR,
   },
   emailText: {
     textAlign: 'left',
     marginHorizontal: 4,
     marginBottom: verticalScale(30),
-    fontSize: moderateScale(12),
+    fontSize: moderateScale(8),
     color: BASE_COLORS.TEXT_SECONDARY,
     fontFamily: FONTS.REGULAR,
   },
   resendLink: {
     color: BASE_COLORS.SECONDARY,
     fontFamily: FONTS.REGULAR,
+    fontWeight: 'bold',
   },
   errorText: {
     color: 'red',

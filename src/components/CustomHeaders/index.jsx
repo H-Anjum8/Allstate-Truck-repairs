@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 50,
-    borderWidth: 2,
+    borderWidth: 1.5,
   },
   headericons: {
     flexDirection: 'row',
@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
     color: BASE_COLORS.TEXT_PRIMARY,
     fontFamily: FONTS.MEDIUM,
     fontSize: 28,
-
+    marginTop: 0,
     fontWeight: 500,
     marginLeft: 0,
     marginRight: 0,
@@ -291,6 +291,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginBottom: 20,
     marginRight: 0,
+    paddingHorizontal: 0,
     textAlign: 'left',
   },
   notificationBadge: {
