@@ -17,6 +17,7 @@ import CustomButton from '../../components/CustomButton';
 import AuthWrapper from '../../components/AuthWrapper';
 import CustomHeader from '../../components/CustomHeaders';
 import { getValidationSchema } from '../../utils/validationSchema';
+import { FONTS } from '../../theme/fonts';
 
 const Signup = () => {
   const navigation = useNavigation();
@@ -44,7 +45,11 @@ const Signup = () => {
           username="Create Your Account"
           description="Start your journey towards fast & hassle free Truck Repairs. "
           usernameTextStyle={{ fontSize: 24 }}
-          descriptionTextStyle={{ textAlign: 'left', fontSize: 11 }}
+          descriptionTextStyle={{
+            textAlign: 'left',
+            fontSize: 11,
+            marginBottom: 30,
+          }}
           onNotificationPress={() =>
             navigation.navigate('all_notifications_screen')
           }
@@ -137,7 +142,7 @@ const Signup = () => {
                   {agreeTerms && (
                     <Ionicons
                       name="checkmark"
-                      size={moderateScale(14)}
+                      size={moderateScale(10)}
                       color="#fff"
                     />
                   )}
@@ -158,7 +163,12 @@ const Signup = () => {
                 label="Sign Up"
                 disabled={!agreeTerms}
                 onPress={handleSubmit}
-                style={{ marginHorizontal: 3, marginTop: 30, marginBottom: 6 }}
+                style={{
+                  marginHorizontal: 3,
+                  marginTop: 14,
+                  marginBottom: 6,
+                  height: 55,
+                }}
               />
             </>
           )}
@@ -201,11 +211,12 @@ const styles = StyleSheet.create({
   checkboxRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     marginVertical: verticalScale(16),
   },
   checkbox: {
-    width: moderateScale(17),
-    height: moderateScale(17),
+    width: moderateScale(14),
+    height: moderateScale(14),
     borderRadius: 8,
     borderWidth: 1.5,
     borderColor: BASE_COLORS.SECONDARY,
@@ -216,9 +227,9 @@ const styles = StyleSheet.create({
   },
   termsText: {
     flex: 1,
-    fontSize: moderateScale(12),
-    fontFamily: 'Poppins_400Regular',
-    color: BASE_COLORS.TEXT_SECONDARY,
+    fontSize: moderateScale(10),
+    fontFamily: FONTS.MEDIUM,
+    color: BASE_COLORS.TEXT_GRAY,
     marginBottom: 16,
   },
   linkText: {

@@ -48,6 +48,7 @@ const CustomHeader = ({
   centerComponent = null,
 
   // Styling
+
   containerStyle = {},
   contentContainerStyle = {},
   textContainerStyle = {},
@@ -232,13 +233,14 @@ const styles = StyleSheet.create({
     height: 40,
     justifyContent: 'center',
     alignItems: 'flex-start',
+    marginTop: -6,
   },
   rightSideContainer: {
     alignItems: 'flex-end',
   },
   iconButton: {
-    minWidth: 40,
-    height: 40,
+    minWidth: 30,
+    height: 30,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 50,
@@ -250,11 +252,8 @@ const styles = StyleSheet.create({
   },
   centerArea: {
     // marginTop: 80,
-    flex: 1,
-    paddingHorizontal: 2,
-    justifyContent: 'center',
-    textAlign: 'left',
-    alignItems: 'flex-start',
+
+    paddingHorizontal: 4,
   },
   title: {
     ...TextStyles.heading1,
@@ -263,7 +262,7 @@ const styles = StyleSheet.create({
   textContainer: {
     width: '100%',
     flex: 1,
-    gap: 2,
+    // gap: 2,
     marginTop: 10,
   },
   welcomeText: {
@@ -277,9 +276,8 @@ const styles = StyleSheet.create({
     color: BASE_COLORS.TEXT_PRIMARY,
     fontFamily: FONTS.MEDIUM,
     fontSize: 28,
-    marginTop: 8,
+
     fontWeight: 500,
-    textAlign: 'left',
     marginLeft: 0,
     marginRight: 0,
     alignSelf: 'flex-start',
@@ -290,7 +288,7 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.REGULAR,
     fontWeight: 400,
     marginTop: 1,
-    fontSize: 13,
+    fontSize: 12,
     marginBottom: 20,
     marginRight: 0,
     textAlign: 'left',

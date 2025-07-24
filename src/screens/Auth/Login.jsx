@@ -36,6 +36,9 @@ const Login = ({ route }) => {
           onLeftPress={() => navigation.goBack()}
           description="Log in to connect with trusted mechanics and get your truck back on the road—fast and hassle-free."
           username="Welcome Back !"
+          usernameTextStyle={{
+            fontSize: 24,
+          }}
           showWelcomeText={false}
           showDescription={true}
           showUsername={true}
@@ -96,7 +99,7 @@ const Login = ({ route }) => {
               <CustomButton
                 label="Login"
                 onPress={handleSubmit}
-                style={{ marginHorizontal: 3, marginBottom: 6 }}
+                style={{ marginHorizontal: 3, marginBottom: 6, marginTop: 47 }}
               />
             </>
           )}

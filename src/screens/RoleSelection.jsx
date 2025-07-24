@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Image,
   KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
@@ -17,6 +18,7 @@ import AuthWrapper from '../components/AuthWrapper';
 import CustomHeader from '../components/CustomHeaders';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CustomButton from '../components/CustomButton';
+
 const RoleSelection = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -38,23 +40,27 @@ const RoleSelection = () => {
     <AuthWrapper>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={{ flex: 1 }}
       >
         <CustomHeader
-          leftIcon={<Ionicons name="chevron-back" size={24} color="black" />}
+          leftIcon={<Ionicons name="chevron-back" size={22} color="black" />}
           onLeftPress={() => navigation.goBack()}
           showWelcomeText={false}
           showDescription={true}
           showUsername={true}
           username="Let’s Get You Started"
           description="Whether you're a truck owner looking for help, or a mechanic ready to provide service—we’ve got you covered."
-          usernameTextStyle={{ textAlign: 'center', fontSize: 24 }}
+          usernameTextStyle={{
+            fontSize: 24,
+            alignSelf: 'center',
+          }}
           descriptionTextStyle={{ textAlign: 'center' }}
           onNotificationPress={() =>
             navigation.navigate('all_notifications_screen')
           }
-          contentContainerStyle={{ alignItems: 'flex-start' }}
         />
-        <View style={{ flexDirection: 'column' }}>
+
+        <View style={styles.container}>
           <View>
             <TouchableOpacity
               style={[
@@ -68,7 +74,6 @@ const RoleSelection = () => {
                 style={styles.image}
                 resizeMode="contain"
               />
-
               <Text
                 style={[
                   styles.roleText,
@@ -91,7 +96,6 @@ const RoleSelection = () => {
               ]}
               onPress={() => handleSelect('mechanic')}
             >
-              {' '}
               <Image
                 source={IMAGES.MACHANIC}
                 style={styles.image}
@@ -112,11 +116,14 @@ const RoleSelection = () => {
               </Text>
             </TouchableOpacity>
           </View>
-          <CustomButton
-            label="Continue"
-            onPress={handleContinue}
-            style={{ marginHorizontal: 3, marginTop: 190 }}
-          />
+
+          <View style={styles.footer}>
+            <CustomButton
+              label="Continue"
+              onPress={handleContinue}
+              style={{ marginHorizontal: 3 }}
+            />
+          </View>
         </View>
       </KeyboardAvoidingView>
     </AuthWrapper>
@@ -126,51 +133,33 @@ const RoleSelection = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 24,
-    justifyContent: 'center',
-    backgroundColor: '#fff',
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: BASE_COLORS.PRIMARY,
-  },
-  subtitle: {
-    fontSize: 14,
-    textAlign: 'center',
-    marginVertical: 16,
-    color: '#444',
+    justifyContent: 'space-between',
+    paddingBottom: 20,
+    marginTop: 10,
   },
   roleButton: {
-    padding: 14,
+    padding: 16,
     marginVertical: 6,
     borderRadius: 16,
-    backgroundColor: BASE_COLORS.LIGHT_GRAY,
+    backgroundColor: BASE_COLORS.GRAYIESH,
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: BASE_COLORS.LIGHT_GRAY,
   },
   selectedButton: {
     backgroundColor: BASE_COLORS.PRIMARY,
   },
   roleText: {
-    fontWeight: 'bold',
+    fontWeight: 500,
     fontSize: 16,
-  },
-  continueButton: {
-    backgroundColor: BASE_COLORS.TEXT_RED,
-    padding: 16,
-    borderRadius: 12,
-    marginTop: 30,
-  },
-  continueText: {
-    color: '#fff',
-    textAlign: 'center',
-    fontWeight: '600',
   },
   image: {
     width: 60,
     height: 60,
     marginBottom: 4,
+  },
+  footer: {
+    // marginTop: 20,
   },
 });
 

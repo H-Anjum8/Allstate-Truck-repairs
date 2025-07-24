@@ -62,7 +62,11 @@ const VerifyOTP = () => {
               showUsername={true}
               username="Email Verification"
               description="Enter the 6-digit code sent to your email/phone"
-              descriptionTextStyle={{ textAlign: 'left', fontSize: 11 }}
+              descriptionTextStyle={{
+                textAlign: 'left',
+                fontSize: 11,
+                marginTop: 4,
+              }}
               usernameTextStyle={{
                 textAlign: 'left',
                 fontSize: 24,
@@ -126,12 +130,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginHorizontal: moderateScale(10),
+    marginTop: 44,
   },
   codeInput: {
-    width: moderateScale(45),
-    height: moderateScale(45),
-    borderWidth: 1.5,
-    borderColor: BASE_COLORS.SECONDARY,
+    width: moderateScale(46),
+    height: moderateScale(46),
+    borderWidth: 1,
+    borderColor: BASE_COLORS.LIGHT_RED,
     borderRadius: 10,
     textAlign: 'center',
     fontSize: moderateScale(20),

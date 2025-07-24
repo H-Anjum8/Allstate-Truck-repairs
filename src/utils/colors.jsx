@@ -10,10 +10,12 @@ export const BASE_COLORS = {
 
   // Neutrals
   WHITE: '#FFFFFF',
+  LIGHT_RED: '#f8b7b9',
   BLACK: '#000000',
   DARK_GRAY: '#333333',
   GRAY: '#777777',
   LIGHT_GRAY: '#CCCCCC',
+  GRAYIESH: '#e5e6ee',
   EXTRA_LIGHT_GRAY: 'rgba(255, 255, 255, 0.10)',
   BORDER_COLOR: '#EEEEEE',
   GREEN: '#359814',
@@ -24,6 +26,7 @@ export const BASE_COLORS = {
   TEXT_TERNARY: '#333333',
   TEXT_LIGHT: '#6C6C6C',
   TEXT_INPUT_FIELD: '#858585',
+  TEXT_GRAY: '#B8B8B8',
   TEXT_WHITE: '#FFFFFF',
   TEXT_BLACK: '#000000',
   TEXT_RED: '#EC1C24',
