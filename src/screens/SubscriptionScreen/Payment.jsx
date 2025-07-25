@@ -22,6 +22,7 @@ import CustomTextInput from '../../components/CustomTextInput';
 import CustomButton from '../../components/CustomButton';
 import BASE_COLORS from '../../utils/colors';
 import { getValidationSchema } from '../../utils/validationSchema';
+import { FONTS } from '../../theme/fonts';
 
 const PaymentScreen = () => {
   const navigation = useNavigation();
@@ -185,7 +186,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     marginTop: 10,
     marginLeft: 4,
-    fontFamily: 'Poppins_500Medium',
+    fontFamily: FONTS.REGULAR,
     color: BASE_COLORS.TEXT_DARK,
   },
   row: {
@@ -204,7 +205,7 @@ const styles = StyleSheet.create({
   },
   secureText: {
     fontSize: 12,
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: FONTS.REGULAR,
     color: BASE_COLORS.TEXT_LIGHT,
   },
   lockIcon: {

@@ -1,6 +1,7 @@
 import { ImageBackground, StyleSheet, View } from 'react-native';
 import React from 'react';
 import { IMAGES } from '../utils/appAssets';
+import BASE_COLORS from '../utils/colors';
 
 const SplashScreen = () => {
   return (
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
-    backgroundColor: '#000654',
+    backgroundColor: BASE_COLORS.PRIMARY,
   },
   overlay: {
     flex: 1,

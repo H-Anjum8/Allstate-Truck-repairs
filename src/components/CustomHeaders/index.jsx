@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 50,
-    borderWidth: 1.5,
+    borderWidth: 1,
   },
   headericons: {
     flexDirection: 'row',

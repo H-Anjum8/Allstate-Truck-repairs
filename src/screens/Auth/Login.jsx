@@ -23,8 +23,6 @@ const Login = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  // Get role from route params or fallback to 'truck_owner'
-  // const role = route?.params?.role || 'truck_owner';
   const role = useSelector(state => state.auth.role);
   return (
     <AuthWrapper>

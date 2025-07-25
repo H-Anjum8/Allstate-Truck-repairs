@@ -12,38 +12,7 @@ import CustomButton from '../../components/CustomButton';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import BASE_COLORS from '../../utils/colors';
 import { FONTS } from '../../theme/fonts';
-
-const plans = [
-  {
-    id: '1',
-    title: 'Free Plan',
-    price: '',
-    description: 'Good for individuals \n with limited needs',
-  },
-  {
-    id: '2',
-    title: 'Pro Driver',
-    price: '$24.99',
-    discount: 'Save 20%',
-  },
-  {
-    id: '3',
-    title: 'Fleet Pro',
-    price: '$49.99',
-    discount: 'Save 15%',
-  },
-];
-
-const allBenefits = [
-  'View nearby mechanics',
-  'Book appointments',
-  'Promotions / discounts access',
-  'Priority bookings',
-  'Driver Management',
-  'Vehicle registration',
-  'Centralized fleet dashboard',
-  'Customer support priority',
-];
+import { allBenefits, plans } from '../../utils/staticData';
 
 const SubscriptionScreen = ({ navigation }) => {
   const [selectedPlanId, setSelectedPlanId] = useState('3');
@@ -98,11 +67,13 @@ const SubscriptionScreen = ({ navigation }) => {
                       ]}
                     >
                       <Ionicons
-                        name={
-                          isSelected ? 'checkmark-circle' : 'ellipse-outline'
-                        }
+                        name={isSelected ? 'checkmark-circle' : 'ellipse'}
                         size={20}
-                        color={BASE_COLORS.SECONDARY}
+                        color={
+                          isSelected
+                            ? BASE_COLORS.SECONDARY
+                            : BASE_COLORS.LIGHT_RED
+                        }
                       />
                     </View>
                     <Text style={styles.planTitle}>{item.title}</Text>
@@ -132,8 +103,8 @@ const SubscriptionScreen = ({ navigation }) => {
         {allBenefits.map((feature, index) => (
           <View key={index} style={styles.benefitRow}>
             <Ionicons
-              name="checkmark"
-              size={16}
+              name="checkmark-sharp"
+              size={17}
               color={BASE_COLORS.SECONDARY}
             />
             <Text style={styles.benefitText}>{feature}</Text>
@@ -190,7 +161,7 @@ const styles = StyleSheet.create({
     color: BASE_COLORS.PRIMARY,
   },
   planDiscount: {
-    fontSize: 11,
+    fontSize: 9,
     fontFamily: FONTS.REGULAR,
     color: BASE_COLORS.TEXT_RED,
   },

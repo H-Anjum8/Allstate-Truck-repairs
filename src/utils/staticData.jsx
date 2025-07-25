@@ -51,3 +51,47 @@ export const categories = [
   { icon: IMAGES.BATTERY, title: 'Battery Jumpstart' },
   { icon: IMAGES.CLUTCH, title: 'Clutch Repair' },
 ];
+
+export const plans = [
+  {
+    id: '1',
+    title: 'Free Plan',
+    price: '',
+    description: 'Good for individuals \n with limited needs',
+  },
+  {
+    id: '2',
+    title: 'Pro Driver',
+    price: '$24.99',
+    discount: 'Save 20%',
+  },
+  {
+    id: '3',
+    title: 'Fleet Pro',
+    price: '$49.99',
+    discount: 'Save 15%',
+  },
+];
+
+export const allBenefits = [
+  'View nearby mechanics',
+  'Book appointments',
+  'Promotions / discounts access',
+  'Priority bookings',
+  'Driver Management',
+  'Vehicle registration',
+  'Centralized fleet dashboard',
+  'Customer support priority',
+];
+
+export const vehicleTypes = [
+  { label: 'Truck', value: 'truck' },
+  { label: 'Car', value: 'car' },
+  { label: 'Motorcycle', value: 'motorcycle' },
+];
+
+export const locations = [
+  { label: 'Lahore', value: 'lahore' },
+  { label: 'Karachi', value: 'karachi' },
+  { label: 'Islamabad', value: 'islamabad' },
+];

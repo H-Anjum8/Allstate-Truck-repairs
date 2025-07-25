@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '400',
     fontSize: 15,
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: FONTS.REGULAR,
     color: BASE_COLORS.TEXT_TERNARY,
   },
   signupText: {
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
   errorText: {
     color: BASE_COLORS.TEXT_RED,
     fontSize: 12,
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: FONTS.REGULAR,
     marginBottom: 5,
     marginTop: -4,
   },

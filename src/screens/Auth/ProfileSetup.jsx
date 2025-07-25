@@ -23,18 +23,7 @@ import CustomButton from '../../components/CustomButton';
 import BASE_COLORS from '../../utils/colors';
 import { IMAGES } from '../../utils/appAssets';
 import { getValidationSchema } from '../../utils/validationSchema';
-
-const vehicleTypes = [
-  { label: 'Truck', value: 'truck' },
-  { label: 'Car', value: 'car' },
-  { label: 'Motorcycle', value: 'motorcycle' },
-];
-
-const locations = [
-  { label: 'Lahore', value: 'lahore' },
-  { label: 'Karachi', value: 'karachi' },
-  { label: 'Islamabad', value: 'islamabad' },
-];
+import { vehicleTypes, locations } from '../../utils/staticData';
 
 const ProfileSetup = () => {
   const navigation = useNavigation();

@@ -32,7 +32,7 @@ const IntroductionScreen = ({ navigation }) => {
           style={styles.icon}
           onPress={() => setIndex(prev => prev - 1)}
         >
-          <Ionicons name="chevron-back" size={24} color="black" />
+          <Ionicons name="chevron-back" size={20} color="black" />
         </TouchableOpacity>
       )}
 
@@ -95,10 +95,11 @@ const styles = StyleSheet.create({
     top: 18,
     left: 20,
     borderRadius: 50,
-    borderWidth: 2,
-    padding: 5,
+    borderWidth: 1.5,
+    padding: 2,
     zIndex: 1,
   },
+
   contentWrapper: {
     flex: 1,
     justifyContent: 'center',
@@ -141,9 +142,10 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: '400',
     color: BASE_COLORS.TEXT_SECONDARY,
-    marginBottom: verticalScale(20),
-    lineHeight: moderateScale(16),
+    marginBottom: verticalScale(26),
+    // lineHeight: moderateScale(16),
     paddingHorizontal: moderateScale(10),
+    marginHorizontal: moderateScale(16),
   },
   skipText: {
     fontSize: 12,
