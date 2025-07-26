@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
-import ServiceCard from './ServiceCard';
+import GarageCard from './GarageCard';
 import { FONTS } from '../../theme/fonts';
 import BASE_COLORS from '../../utils/colors';
 import { featured } from '../../utils/staticData';
@@ -20,7 +20,7 @@ const ServiceListSection = ({ title, marginBottom }) => {
       </View>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {featured.map((service, index) => (
-          <ServiceCard key={index} {...service} />
+          <GarageCard key={index} {...service} />
         ))}
       </ScrollView>
     </View>

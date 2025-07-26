@@ -28,7 +28,7 @@ export const featured = [
   {
     name: "Doug's Garage",
     garage_logo: IMAGES.GARAGE_LOGO,
-    authentic_icon: ICONS.AUTHENTIC_ICON,
+    authentic_icon: ICONS.VERIFY,
     rating: '4.9',
     address:
       'Doug’s Roadside Garage offers fast, reliable, and certified roadside repair services for commercial trucks and trailers.',

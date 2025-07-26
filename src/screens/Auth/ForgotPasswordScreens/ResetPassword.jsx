@@ -36,10 +36,15 @@ const ResetPassword = () => {
           onLeftPress={() => navigation.goBack()}
           description="Your new password will be different from the existing & previous ones."
           username="New Password"
+          usernameTextStyle={{
+            marginTop: -4,
+            fontSize: 24,
+          }}
           descriptionTextStyle={{
             textAlign: 'left',
-            // marginRight: 20,
+            marginTop: 6,
             fontSize: 11,
+            color: BASE_COLORS.BLACK,
           }}
           showWelcomeText={false}
           showDescription
@@ -70,10 +75,9 @@ const ResetPassword = () => {
                 {touched.password && errors.password && (
                   <Text style={styles.errorText}>{errors.password}</Text>
                 )}
-              </View>
 
-              {/* Confirm Password Label + Input */}
-              <View style={styles.inputGroup}>
+                {/* Confirm Password Label + Input */}
+
                 <Text style={styles.inputLabel}>Confirm Password</Text>
                 <CustomTextInput
                   placeholder="Confirm your password"
@@ -90,7 +94,12 @@ const ResetPassword = () => {
               <CustomButton
                 label="Confirm"
                 onPress={handleSubmit}
-                style={{ marginHorizontal: 3, marginTop: 50, marginBottom: 0 }}
+                style={{
+                  marginHorizontal: 3,
+                  marginTop: 4,
+                  height: 54,
+                  marginBottom: 0,
+                }}
               />
             </>
           )}
@@ -104,12 +113,14 @@ export default ResetPassword;
 
 const styles = StyleSheet.create({
   inputGroup: {
+    marginTop: 30,
     marginBottom: 16,
   },
   inputLabel: {
     fontSize: 14,
     fontFamily: FONTS.MEDIUM,
     color: '#000',
+    marginTop: 4,
     marginBottom: 6,
     marginLeft: 4,
   },

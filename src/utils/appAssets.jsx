@@ -11,6 +11,8 @@ const images = {
   MACHANIC: require('../assets/machanic.png'),
   OWNER: require('../assets/owner.png'),
   PROFILE: require('../assets/profile.jpg'),
+  GARAGE_LOGO: require('../assets/garage-logo.png'),
+  HEADER_BG: require('../assets/headerBackground.png'),
 };
 
 const icons = {
@@ -34,9 +36,9 @@ const icons = {
     active: require('../assets/bottomIcons/jobs_active.png'),
     inactive: require('../assets/bottomIcons/jobs_inactive.png'),
   },
-  AUTHENTIC_ICON: require('../assets/icons/authentic-icon.png'),
   LOCATION_COLOURED: require('../assets/icons/location-colored.png'),
   TICK: require('../assets/icons/tick.png'),
+  VERIFY: require('../assets/icons/verify.png'),
 };
 
 // Export assets

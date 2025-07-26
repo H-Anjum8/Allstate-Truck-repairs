@@ -21,6 +21,7 @@ import SignupDone from '../screens/Auth/SignupDone';
 import SubscriptionScreen from '../screens/SubscriptionScreen';
 import Payment from '../screens/SubscriptionScreen/Payment';
 import SubcriptionDone from '../screens/SubscriptionScreen/SubcriptionDone';
+import GarageDetails from '../screens/Home/CommonScreens/GarageDetails';
 
 const Routes = {
   Splash: {
@@ -170,9 +171,19 @@ const Routes = {
     },
     authRequired: false,
   },
+  // dashboard Screens
   Dashboard: {
     name: 'dashboard',
     component: BottomNavigation,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  GarageDtails: {
+    name: 'garage_details',
+    component: GarageDetails,
     options: {
       headerShown: false,
       gestureEnabled: false,

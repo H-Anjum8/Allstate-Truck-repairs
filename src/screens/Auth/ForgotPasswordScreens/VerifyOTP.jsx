@@ -39,7 +39,7 @@ const VerifyOTP = () => {
   const handleSubmit = values => {
     const finalCode = values.otp.join('');
     console.log('Entered Code:', finalCode);
-    navigation.navigate('upload_profile_image');
+    navigation.navigate('reset_password');
   };
 
   return (
