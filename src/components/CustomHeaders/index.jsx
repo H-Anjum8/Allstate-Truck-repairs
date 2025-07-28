@@ -281,6 +281,7 @@ const styles = StyleSheet.create({
     marginLeft: 0,
     marginRight: 0,
     alignSelf: 'flex-start',
+    fontFamily: FONTS.BOLD,
   },
   descriptionText: {
     ...TextStyles.bodySmall,

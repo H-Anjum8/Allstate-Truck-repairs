@@ -13,6 +13,10 @@ const images = {
   PROFILE: require('../assets/profile.jpg'),
   GARAGE_LOGO: require('../assets/garage-logo.png'),
   HEADER_BG: require('../assets/headerBackground.png'),
+  USER1: require('../assets/user1.png'),
+  USER2: require('../assets/user2.png'),
+  USER3: require('../assets/user3.png'),
+  EDIT_PROFILE: require('../assets/edit_profile.png'),
 };
 
 const icons = {
@@ -39,6 +43,7 @@ const icons = {
   LOCATION_COLOURED: require('../assets/icons/location-colored.png'),
   TICK: require('../assets/icons/tick.png'),
   VERIFY: require('../assets/icons/verify.png'),
+  GREEN_TICK: require('../assets/icons/green-tick.png'),
 };
 
 // Export assets

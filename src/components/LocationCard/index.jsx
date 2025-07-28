@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   text: { flex: 1, color: BASE_COLORS.WHITE, marginLeft: 8, fontSize: 10 },
   button: {
     paddingHorizontal: 4,
-    paddingVertical: 4,
+    paddingVertical: 7,
     borderRadius: 5,
     borderWidth: 0.4,
     borderColor: BASE_COLORS.WHITE,

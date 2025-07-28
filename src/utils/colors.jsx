@@ -18,6 +18,8 @@ export const BASE_COLORS = {
   GRAYIESH: '#e5e6ee',
   EXTRA_LIGHT_GRAY: 'rgba(255, 255, 255, 0.10)',
   BORDER_COLOR: '#EEEEEE',
+  TABLE_BACKGROUND: '#FAFAFA',
+  LIGHT_BLUE: '#e5e8f9',
   GREEN: '#359814',
   // Common UI colors
   TEXT_LIGHTGRAY: '#ADAAAA',
@@ -38,3 +40,45 @@ export const BASE_COLORS = {
 
 // export default BASE_COLORS;
 export default BASE_COLORS;
+// Base colors
+// export const BASE_COLORS = {
+//   // Brand Primary Colors
+//   PRIMARY: '#000654',
+//   PRIMARY_DARK: '',
+//   PRIMARY_LIGHT: '#00043D',
+//   SECONDARY: '#EC1C24',
+//   SECONDARY_DARK: '',
+//   SECONDARY_LIGHT: '',
+
+//   // Neutrals
+//   WHITE: '#FFFFFF',
+//   LIGHT_RED: '#f8b7b9',
+//   BLACK: '#000000',
+//   LIGHT_BLACK: '#0000001A',
+//   BLACKISH: '#00000080',
+//   DARK_GRAY: '#333333',
+//   GRAY: '#777777',
+//   LIGHT_GRAY: '#CCCCCC',
+//   GRAYIESH: '#e5e6ee',
+//   EXTRA_LIGHT_GRAY: 'rgba(255, 255, 255, 0.10)',
+//   BORDER_COLOR: '#EEEEEE',
+//   GREEN: '#359814',
+//   // Common UI colors
+//   TEXT_LIGHTGRAY: '#ADAAAA',
+//   TEXT_PRIMARY: '#000654',
+//   TEXT_SECONDARY: '#2F2F2F',
+//   TEXT_TERNARY: '#333333',
+//   TEXT_LIGHT: '#6C6C6C',
+//   TEXT_INPUT_FIELD: '#858585',
+//   TEXT_GRAY: '#B8B8B8',
+//   TEXT_WHITE: '#FFFFFF',
+//   TEXT_BLACK: '#000000',
+//   TEXT_RED: '#EC1C24',
+//   TEXT_GREEN: '#359814',
+//   DISABLED: '#CCCCCC',
+//   TRANSPARENT: 'transparent',
+//   TEXT_INVERSE: '#FFFFFF',
+// };
+
+// // export default BASE_COLORS;
+// export default BASE_COLORS;

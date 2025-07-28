@@ -22,6 +22,14 @@ import SubscriptionScreen from '../screens/SubscriptionScreen';
 import Payment from '../screens/SubscriptionScreen/Payment';
 import SubcriptionDone from '../screens/SubscriptionScreen/SubcriptionDone';
 import GarageDetails from '../screens/Home/CommonScreens/GarageDetails';
+import ServiceSelection from '../screens/Home/CommonScreens/ServiceSelection';
+
+import BookingDone from '../screens/Home/HomeScreens/BookingDone';
+import CardDetails from '../screens/Home/HomeScreens/CardDetails';
+import PaymentMethod from '../screens/Home/HomeScreens/PaymentMethod';
+import RequestBooking from '../screens/Home/HomeScreens/RequestBooking';
+import BookingDetails from '../screens/Home/HomeScreens/BookingDetails';
+import ConfirmBooking from '../screens/Home/HomeScreens/ConfirmBooking';
 
 const Routes = {
   Splash: {
@@ -184,6 +192,70 @@ const Routes = {
   GarageDtails: {
     name: 'garage_details',
     component: GarageDetails,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  ServiceSelection: {
+    name: 'service_selection',
+    component: ServiceSelection,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  BookingDetails: {
+    name: 'booking_details',
+    component: BookingDetails,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  ConfirmBooking: {
+    name: 'confirm_booking',
+    component: ConfirmBooking,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+
+  RequestBooking: {
+    name: 'request_booking',
+    component: RequestBooking,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  PaymentMethod: {
+    name: 'payment_method',
+    component: PaymentMethod,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  CardDetails: {
+    name: 'card_details',
+    component: CardDetails,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  BookingDone: {
+    name: 'booking_done',
+    component: BookingDone,
     options: {
       headerShown: false,
       gestureEnabled: false,
