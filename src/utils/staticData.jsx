@@ -133,32 +133,32 @@ export const menuItems = [
   {
     title: 'Personal Information',
     icon: 'person-outline',
-    nav_link: 'personal_info_screen',
+    nav_link: 'personal_info',
   },
   {
     title: 'Subscription Plan',
     icon: 'card-outline',
-    nav_link: 'subscription_plan_screen',
+    nav_link: 'subscription_plan',
   },
   {
     title: 'Change Password',
     icon: 'key-outline',
-    nav_link: 'change_password_screen',
+    nav_link: 'change_password',
   },
   {
     title: 'Privacy Policy',
     icon: 'shield-checkmark-outline',
-    nav_link: 'privacy_policy_screen',
+    nav_link: 'privacy_policy',
   },
   {
     title: 'Terms & Conditions',
     icon: 'document-text-outline',
-    nav_link: 'terms_screen',
+    nav_link: 'terms_conditions',
   },
   {
     title: 'Contact Support',
     icon: 'headset-outline',
-    nav_link: 'support_screen',
+    nav_link: 'contact_support',
   },
   {
     title: 'Delete Account',

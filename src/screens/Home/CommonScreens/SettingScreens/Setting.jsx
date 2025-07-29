@@ -12,12 +12,12 @@ import { moderateScale, verticalScale } from 'react-native-size-matters';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import AuthWrapper from '../../../components/AuthWrapper';
-import CustomButton from '../../../components/CustomButton';
-import BASE_COLORS from '../../../utils/colors';
-import { FONTS } from '../../../theme/fonts';
-import appAssets, { IMAGES } from '../../../utils/appAssets';
-import { menuItems } from '../../../utils/staticData';
+import CustomButton from '../../../../components/CustomButton';
+import BASE_COLORS from '../../../../utils/colors';
+import { FONTS } from '../../../../theme/fonts';
+import appAssets, { IMAGES } from '../../../../utils/appAssets';
+import { menuItems } from '../../../../utils/staticData';
+import AuthWrapper from '../../../../components/AuthWrapper';
 
 const Setting = () => {
   const navigation = useNavigation();
@@ -143,8 +143,6 @@ export default Setting;
 
 const styles = StyleSheet.create({
   scrollContainer: {
-    padding: moderateScale(20),
-    paddingBottom: verticalScale(20),
     paddingTop: verticalScale(20),
   },
   profileHeader: {

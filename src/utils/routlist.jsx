@@ -10,7 +10,6 @@ import Booking from '../screens/Home/CommonScreens/Booking';
 import IntroductionScreen from '../screens/IntroductionScreen';
 import SplashScreen from '../screens/SplashScreen';
 import { ICONS } from './appAssets';
-import Setting from '../screens/Home/CommonScreens/Setting';
 import Fleet from '../screens/Home/ManagerScreens/Fleet';
 import MyJobs from '../screens/Home/DriverScreens/MyJobs';
 import RoleSelection from '../screens/RoleSelection';
@@ -23,13 +22,20 @@ import Payment from '../screens/SubscriptionScreen/Payment';
 import SubcriptionDone from '../screens/SubscriptionScreen/SubcriptionDone';
 import GarageDetails from '../screens/Home/CommonScreens/GarageDetails';
 import ServiceSelection from '../screens/Home/CommonScreens/ServiceSelection';
-
 import BookingDone from '../screens/Home/HomeScreens/BookingDone';
 import CardDetails from '../screens/Home/HomeScreens/CardDetails';
 import PaymentMethod from '../screens/Home/HomeScreens/PaymentMethod';
 import RequestBooking from '../screens/Home/HomeScreens/RequestBooking';
 import BookingDetails from '../screens/Home/HomeScreens/BookingDetails';
 import ConfirmBooking from '../screens/Home/HomeScreens/ConfirmBooking';
+import Setting from '../screens/Home/CommonScreens/SettingScreens/Setting';
+import PersonalInfo from '../screens/Home/CommonScreens/SettingScreens/PersonalInfo';
+import ContactSupport from '../screens/Home/CommonScreens/SettingScreens/ContactSupport';
+import SubscriptionPlan from '../screens/Home/CommonScreens/SettingScreens/SubscriptionPlan';
+import TermsAndConditions from '../screens/Home/CommonScreens/SettingScreens/TermsAndConditions';
+import PrivacyPolicy from '../screens/Home/CommonScreens/SettingScreens/PrivacyPolicy';
+import ChangePassword from '../screens/Home/CommonScreens/SettingScreens/ChangePassword';
+import EditProfile from '../screens/Home/CommonScreens/SettingScreens/EditProfile';
 
 const Routes = {
   Splash: {
@@ -256,6 +262,70 @@ const Routes = {
   BookingDone: {
     name: 'booking_done',
     component: BookingDone,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+
+  EditProfile: {
+    name: 'edit_profile',
+    component: EditProfile,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  PersonalInfo: {
+    name: 'personal_info',
+    component: PersonalInfo,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  ContactSupport: {
+    name: 'contact_support',
+    component: ContactSupport,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  SubscriptionPlan: {
+    name: 'subscription_plan',
+    component: SubscriptionPlan,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  TermsAndConditions: {
+    name: 'terms_conditions',
+    component: TermsAndConditions,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  PrivacyPolicy: {
+    name: 'privacy_policy',
+    component: PrivacyPolicy,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  ChangePassword: {
+    name: 'change_password',
+    component: ChangePassword,
     options: {
       headerShown: false,
       gestureEnabled: false,

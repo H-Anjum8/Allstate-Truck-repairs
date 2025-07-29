@@ -84,12 +84,15 @@ export const getValidationSchema = formType => {
       });
     case 'personal_information':
       return Yup.object().shape({
-        fullName: Yup.string().required('Full Name is required'),
+        name: Yup.string().required('Name is required'),
         email: Yup.string()
-          .email('Invalid email')
+          .email('Enter a valid email')
           .required('Email is required'),
         phone: Yup.string()
-          .matches(/^[0-9\-+()\s]*$/, 'Invalid phone number')
+          .matches(
+            /^\d{3}[-–]\d{3}[-–]\d{4}$/,
+            'Phone must be in 111–111–1111 format',
+          )
           .required('Phone number is required'),
       });
     case 'change_password':
@@ -132,7 +135,7 @@ export const getValidationSchema = formType => {
           .required('Images are required'),
         isFeatured: Yup.boolean(),
       });
-    case 'edit_profile':
+    case 'setup_profile':
       return Yup.object().shape({
         fullName: Yup.string().required('Full name is required'),
         email: Yup.string()
@@ -145,7 +148,20 @@ export const getValidationSchema = formType => {
         licensePlate: Yup.string().required('License plate is required'),
         location: Yup.string().required('Location is required'),
       });
+    case 'edit_profile':
+      return Yup.object().shape({
+        name: Yup.string().required('Name is required'),
+        email: Yup.string()
+          .email('Invalid email')
+          .required('Email is required'),
+        phone: Yup.string().required('Phone number is required'),
+      });
 
+    case 'contact_support':
+      return Yup.object().shape({
+        subject: Yup.string().required('Subject is required'),
+        message: Yup.string().required('Message is required'),
+      });
     default:
       return Yup.object();
   }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import COLORS from '../../utils/colors';
+import COLORS, { BASE_COLORS } from '../../utils/colors';
 
 const CustomTextInput = ({
   placeholder,
@@ -28,6 +28,7 @@ const CustomTextInput = ({
         secureTextEntry={!showPassword}
         value={value}
         onChangeText={onChangeText}
+        color={BASE_COLORS.BLACK}
       />
       {secure && (
         <TouchableOpacity onPress={() => setShowPassword(prev => !prev)}>
