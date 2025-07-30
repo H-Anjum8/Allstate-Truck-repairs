@@ -6,7 +6,6 @@ import Signup from '../screens/Auth/Signup';
 import SignupOTPVerify from '../screens/Auth/SignupOTPVerify';
 import UploadProfileImage from '../screens/Auth/UploadProfileImage';
 import Home from '../screens/Home';
-import Booking from '../screens/Home/CommonScreens/Booking';
 import IntroductionScreen from '../screens/IntroductionScreen';
 import SplashScreen from '../screens/SplashScreen';
 import { ICONS } from './appAssets';
@@ -36,6 +35,15 @@ import TermsAndConditions from '../screens/Home/CommonScreens/SettingScreens/Ter
 import PrivacyPolicy from '../screens/Home/CommonScreens/SettingScreens/PrivacyPolicy';
 import ChangePassword from '../screens/Home/CommonScreens/SettingScreens/ChangePassword';
 import EditProfile from '../screens/Home/CommonScreens/SettingScreens/EditProfile';
+import FilterScreen from '../screens/Home/CommonScreens/FilterScreen';
+import FilterResultScreen from '../screens/Home/CommonScreens/FilterResultScreen';
+import Bookings from '../screens/Home/HomeScreens/MyBookingScreens/MyBookings';
+import MyBookings from '../screens/Home/HomeScreens/MyBookingScreens/MyBookings';
+import MyBookingDetails from '../screens/Home/HomeScreens/MyBookingScreens/MyBookingDetails';
+import BookingDetailCompleted from '../screens/Home/HomeScreens/MyBookingScreens/MyBookingCompleted';
+import MyBookingCompleted from '../screens/Home/HomeScreens/MyBookingScreens/MyBookingCompleted';
+import PastBookingCompleted from '../screens/Home/HomeScreens/MyBookingScreens/PastBookingCompleted';
+import PastBookingCanceled from '../screens/Home/HomeScreens/MyBookingScreens/PastBookingCanceled';
 
 const Routes = {
   Splash: {
@@ -195,6 +203,25 @@ const Routes = {
     },
     authRequired: false,
   },
+  FilterScreen: {
+    name: 'filter_screen',
+    component: FilterScreen,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  FilterResultScreen: {
+    name: 'filter_result',
+    component: FilterResultScreen,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+
   GarageDtails: {
     name: 'garage_details',
     component: GarageDetails,
@@ -269,6 +296,46 @@ const Routes = {
     authRequired: false,
   },
 
+  // MyBookings Screens
+  MyBookingDetails: {
+    name: 'my_booking_details',
+    component: MyBookingDetails,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  MyBookingCompleted: {
+    name: 'my_booking_completed',
+    component: MyBookingCompleted,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  PastBookingCompleted: {
+    name: 'past_booking_completed',
+    component: PastBookingCompleted,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  PastBookingCanceled: {
+    name: 'past_booking_canceled',
+    component: PastBookingCanceled,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+
+  // Settings Screens
+
   EditProfile: {
     name: 'edit_profile',
     component: EditProfile,
@@ -342,10 +409,10 @@ export const BOTTOM_ROUTES_USER = [
     options: { headerShown: false, gestureEnabled: false },
   },
   {
-    name: 'booking',
-    component: Booking,
-    icon: ICONS.BOOKING,
-    label: 'Booking',
+    name: 'my_bookings',
+    component: MyBookings,
+    icon: ICONS.JOBS,
+    label: 'My Bookings',
     options: { headerShown: false, gestureEnabled: false },
   },
   {
@@ -366,10 +433,10 @@ export const BOTTOM_ROUTES_MANAGER = [
     options: { headerShown: false, gestureEnabled: false },
   },
   {
-    name: 'booking',
-    component: Booking,
+    name: 'bookings',
+    component: MyBookings,
     icon: ICONS.BOOKING,
-    label: 'Booking',
+    label: 'Bookings',
     options: { headerShown: false, gestureEnabled: false },
   },
   {

@@ -87,7 +87,7 @@ const ContactSupportScreen = () => {
               <CustomButton
                 label="Submit"
                 onPress={handleSubmit}
-                style={{ marginHorizontal: 3, marginTop: 60, height: 53 }}
+                style={{ marginHorizontal: 3, marginTop: 40, height: 53 }}
                 textStyle={{ fontSize: 12 }}
               />
             </>

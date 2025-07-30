@@ -12,10 +12,12 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ICONS, IMAGES } from '../../utils/appAssets';
 import BASE_COLORS from '../../utils/colors';
+import { useNavigation } from '@react-navigation/native';
 
 const { width } = Dimensions.get('window');
 
 export default function GarageHeader({ onBackPress }) {
+  const navigation = useNavigation();
   return (
     <ImageBackground
       source={IMAGES.HEADER_BG}
@@ -24,7 +26,10 @@ export default function GarageHeader({ onBackPress }) {
       imageStyle={styles.bgImage}
     >
       <SafeAreaView style={styles.safeArea}>
-        <TouchableOpacity style={styles.backButton} onPress={onBackPress}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
           <Ionicons name="chevron-back" size={18} color={BASE_COLORS.WHITE} />
         </TouchableOpacity>
 

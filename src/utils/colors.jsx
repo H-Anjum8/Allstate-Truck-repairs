@@ -25,6 +25,7 @@ export const BASE_COLORS = {
   TABLE_BACKGROUND: '#FAFAFA',
   LIGHT_BLUE: '#e5e8f9',
   GREEN: '#359814',
+  STAR: '#D9D9D9',
   // Common UI colors
   TEXT_LIGHTGRAY: '#ADAAAA',
   TEXT_PRIMARY: '#000654',

@@ -42,6 +42,8 @@ const GarageDetails = () => {
                 title={s.title}
                 time={s.time}
                 price={s.price}
+                originalPrice={s.originalPrice}
+                discounted={s.discounted}
               />
             ))}
           </View>

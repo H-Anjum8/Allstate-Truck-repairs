@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   View,
   Text,
@@ -9,13 +8,14 @@ import {
   ImageBackground,
   StatusBar,
 } from 'react-native';
+import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import BASE_COLORS from '../../utils/colors'; // adjust path
-import { FONTS } from '../../theme/fonts'; // adjust path
+import { FONTS } from '../../theme/fonts';
+import BASE_COLORS from '../../utils/colors';
 import { useNavigation } from '@react-navigation/native';
 
-const DashboardHeader = () => {
+const FilterScreenHeader = () => {
   const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -34,15 +34,17 @@ const DashboardHeader = () => {
         {/* Top Row */}
         <View style={styles.topRow}>
           <View>
-            <Text style={styles.locationText}>Location</Text>
-            <View style={styles.locationContainer}>
-              <Ionicons name="location-sharp" size={20} color="red" />
-              <Text style={styles.locationAddressText}>Ontario, Canada</Text>
-            </View>
+            <TouchableOpacity
+              style={styles.backButton}
+              onPress={() => navigation.goBack()}
+            >
+              <Ionicons
+                name="chevron-back"
+                size={18}
+                color={BASE_COLORS.WHITE}
+              />
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity style={styles.notificationButton}>
-            <Ionicons name="notifications-outline" size={20} color="#000" />
-          </TouchableOpacity>
         </View>
 
         {/* Search Row */}
@@ -66,7 +68,7 @@ const DashboardHeader = () => {
           >
             <MaterialIcons
               name="tune"
-              size={20}
+              size={16}
               color={BASE_COLORS.WHITE}
               style={{ transform: [{ rotate: '90deg' }] }}
             />
@@ -77,25 +79,28 @@ const DashboardHeader = () => {
   );
 };
 
+export default FilterScreenHeader;
+
 const styles = StyleSheet.create({
   safeArea: {
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
+    // borderBottomLeftRadius: 10,
+    // borderBottomRightRadius: 10,
     overflow: 'hidden',
   },
   backgroundImage: {
     paddingHorizontal: 16,
     paddingTop: 30,
-    paddingBottom: 20,
+    paddingBottom: 26,
   },
   imageStyle: {
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
   },
   topRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginTop: -1,
   },
   locationContainer: {
     flexDirection: 'row',
@@ -120,7 +125,7 @@ const styles = StyleSheet.create({
   },
   searchRow: {
     flexDirection: 'row',
-    marginTop: 16,
+    marginTop: 20,
     alignItems: 'center',
   },
   searchInputContainer: {
@@ -130,7 +135,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 12,
     paddingHorizontal: 10,
-    height: 44,
+    height: 38,
   },
   searchIcon: {
     marginRight: 6,
@@ -147,6 +152,10 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 12,
   },
+  backButton: {
+    padding: 4,
+    borderWidth: 1,
+    borderRadius: 20,
+    borderColor: BASE_COLORS.WHITE,
+  },
 });
-
-export default DashboardHeader;

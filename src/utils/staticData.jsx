@@ -43,6 +43,60 @@ export const featured = [
       'Doug’s Roadside Garage offers fast, reliable, and certified roadside repair services for commercial trucks and trailers.',
     location: '456 Repair Lane, Springfield, IL',
   },
+  {
+    name: "Doug's Garage",
+    garage_logo: IMAGES.GARAGE_LOGO,
+    authentic_icon: ICONS.VERIFY,
+    rating: '4.9',
+    address:
+      'Doug’s Roadside Garage offers fast, reliable, and certified roadside repair services for commercial trucks and trailers.',
+    location: '456 Repair Lane, Springfield, IL',
+  },
+  {
+    name: "Doug's Garage",
+    garage_logo: IMAGES.GARAGE_LOGO,
+    authentic_icon: ICONS.AUTHENTIC_ICON,
+    rating: '4.9',
+    address:
+      'Doug’s Roadside Garage offers fast, reliable, and certified roadside repair services for commercial trucks and trailers.',
+    location: '456 Repair Lane, Springfield, IL',
+  },
+  {
+    name: "Doug's Garage",
+    garage_logo: IMAGES.GARAGE_LOGO,
+    authentic_icon: ICONS.VERIFY,
+    rating: '4.9',
+    address:
+      'Doug’s Roadside Garage offers fast, reliable, and certified roadside repair services for commercial trucks and trailers.',
+    location: '456 Repair Lane, Springfield, IL',
+  },
+  {
+    name: "Doug's Garage",
+    garage_logo: IMAGES.GARAGE_LOGO,
+    authentic_icon: ICONS.AUTHENTIC_ICON,
+    rating: '4.9',
+    address:
+      'Doug’s Roadside Garage offers fast, reliable, and certified roadside repair services for commercial trucks and trailers.',
+    location: '456 Repair Lane, Springfield, IL',
+  },
+  {
+    name: "Doug's Garage",
+    garage_logo: IMAGES.GARAGE_LOGO,
+    authentic_icon: ICONS.VERIFY,
+    rating: '4.9',
+    address:
+      'Doug’s Roadside Garage offers fast, reliable, and certified roadside repair services for commercial trucks and trailers.',
+    location: '456 Repair Lane, Springfield, IL',
+  },
+  {
+    name: "Doug's Garage",
+    garage_logo: IMAGES.GARAGE_LOGO,
+    authentic_icon: ICONS.AUTHENTIC_ICON,
+    rating: '4.9',
+    address:
+      'Doug’s Roadside Garage offers fast, reliable, and certified roadside repair services for commercial trucks and trailers.',
+    location: '456 Repair Lane, Springfield, IL',
+  },
 ];
 
 export const categories = [
@@ -97,11 +151,35 @@ export const locations = [
 ];
 
 export const services = [
-  { title: 'Brake Service', time: '1 hr. Estimated Time', price: 89 },
-  { title: 'Tire Replacement', time: '1 hr. Estimated Time', price: 99 },
-  { title: 'Oil Change', time: '30 min. Estimated Time', price: 69 },
-  { title: 'Suspension Check', time: '90 min. Estimated Time', price: 120 },
+  {
+    title: 'Battery Jumpstart',
+    time: '1 hr. Estimated Time',
+    price: '89',
+    originalPrice: '99',
+    discounted: true,
+  },
+  {
+    title: 'Tire Replacement',
+    time: '1 hr. Estimated Time',
+    price: '99',
+    originalPrice: '109',
+    discounted: true,
+  },
+  {
+    title: 'Oil Change',
+    time: '30 min. Estimated Time',
+    price: '69',
+    originalPrice: '79',
+    discounted: false,
+  },
+  {
+    title: 'Suspension Check',
+    time: '90 min. Estimated Time',
+    price: '120',
+    discounted: true, // or just omit originalPrice
+  },
 ];
+
 export const reviews = [
   {
     name: 'Mike J.',

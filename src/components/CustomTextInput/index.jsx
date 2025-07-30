@@ -10,6 +10,10 @@ const CustomTextInput = ({
   value,
   iconColor,
   onChangeText,
+  multiline,
+  numberOfLines,
+  inputContainerStyle,
+  textInputStyle,
 }) => {
   const [showPassword, setShowPassword] = useState(!secure);
 
@@ -22,13 +26,16 @@ const CustomTextInput = ({
         style={styles.icon}
       />
       <TextInput
-        style={styles.input}
+        style={[styles.input, textInputStyle]}
         placeholder={placeholder}
         placeholderTextColor={COLORS.TEXT_INPUT_FIELD}
         secureTextEntry={!showPassword}
         value={value}
         onChangeText={onChangeText}
         color={BASE_COLORS.BLACK}
+        multiline={multiline}
+        numberOfLines={numberOfLines}
+        textAlignVertical={multiline ? 'top' : 'center'}
       />
       {secure && (
         <TouchableOpacity onPress={() => setShowPassword(prev => !prev)}>
@@ -54,7 +61,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     alignItems: 'center',
     marginBottom: 7,
-    height: 54,
   },
   icon: {
     marginRight: 8,
