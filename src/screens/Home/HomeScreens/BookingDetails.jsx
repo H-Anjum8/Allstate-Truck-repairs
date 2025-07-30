@@ -19,21 +19,7 @@ import BASE_COLORS from '../../../utils/colors';
 import { useNavigation } from '@react-navigation/native';
 import { FONTS } from '../../../theme/fonts';
 import CustomButton from '../../../components/CustomButton';
-
-const garageservices = [
-  { id: 1, name: 'Tire Replacement & Rotation', price: 99 },
-  { id: 2, name: 'Oil Change', price: 69 },
-  { id: 3, name: 'Suspension Check', price: 120 },
-];
-
-const slotData = {
-  '2025-07-10': [],
-  '2025-07-11': {
-    1: ['10:00 AM - 12:30 PM', '01:00 PM - 02:30 PM'],
-    2: ['03:00 PM - 03:30 PM', '04:00 PM - 04:30 PM'],
-    3: ['05:00 PM - 06:30 PM', '07:00 PM - 08:30 PM'],
-  },
-};
+import { garageservices, slotData } from '../../../utils/staticData';
 
 export default function BookingDetails() {
   const Navigation = useNavigation();

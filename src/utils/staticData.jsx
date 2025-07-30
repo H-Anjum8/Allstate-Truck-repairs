@@ -291,3 +291,102 @@ export const initialServices = [
     added: true,
   },
 ];
+
+export const booking = [
+  {
+    id: '1',
+    status: 'Confirmed',
+    name: 'Doug’s Roadside Garage',
+    address: '456 Repair Lane, Springfield, IL',
+    amount: '$288',
+    type: 'upcoming',
+  },
+  {
+    id: '2',
+    status: 'Pending',
+    name: 'QuickFix Auto Hub',
+    address: 'City Diesel Experts – Dallas, TX',
+    amount: '$135',
+    type: 'upcoming',
+  },
+  {
+    id: '3',
+    status: 'Completed',
+    name: 'TorqueLine Garage',
+    address: 'City Diesel Experts – Dallas, TX',
+    amount: '$135',
+    type: 'past',
+  },
+  {
+    id: '4',
+    status: 'Canceled',
+    name: 'TorqueLine Garage',
+    address: 'City Diesel Experts – Dallas, TX',
+    amount: '$135',
+    type: 'past',
+  },
+  {
+    id: '5',
+    status: 'Confirmed',
+    name: 'Doug’s Roadside Garage',
+    address: '456 Repair Lane, Springfield, IL',
+    amount: '$288',
+    type: 'upcoming',
+  },
+  {
+    id: '6',
+    status: 'Pending',
+    name: 'QuickFix Auto Hub',
+    address: 'City Diesel Experts – Dallas, TX',
+    amount: '$135',
+    type: 'upcoming',
+  },
+  {
+    id: '7',
+    status: 'Canceled',
+    name: 'QuickFix Auto Hub',
+    address: 'City Diesel Experts – Dallas, TX',
+    amount: '$105',
+    type: 'past',
+  },
+];
+
+export const slotData = {
+  '2025-07-10': [],
+  '2025-07-11': {
+    1: ['10:00 AM - 12:30 PM', '01:00 PM - 02:30 PM'],
+    2: ['03:00 PM - 03:30 PM', '04:00 PM - 04:30 PM'],
+    3: ['05:00 PM - 06:30 PM', '07:00 PM - 08:30 PM'],
+  },
+  '2025-07-12': {
+    1: ['10:00 AM - 12:30 PM', '01:00 PM - 02:30 PM'],
+    2: ['03:00 PM - 03:30 PM', '04:00 PM - 04:30 PM'],
+    3: ['05:00 PM - 06:30 PM', '07:00 PM - 08:30 PM'],
+  },
+  '2025-07-13': {
+    1: ['10:00 AM - 12:30 PM', '01:00 PM - 02:30 PM'],
+    2: ['03:00 PM - 03:30 PM', '04:00 PM - 04:30 PM'],
+    3: ['05:00 PM - 06:30 PM', '07:00 PM - 08:30 PM'],
+  },
+  '2025-07-14': {
+    1: ['10:00 AM - 12:30 PM', '01:00 PM - 02:30 PM'],
+    2: ['03:00 PM - 03:30 PM', '04:00 PM - 04:30 PM'],
+    3: ['05:00 PM - 06:30 PM', '07:00 PM - 08:30 PM'],
+  },
+};
+
+export const serviceTypes = [
+  'Oil Change',
+  'Brake Pad Replacement',
+  'Battery Jumpstart',
+  'Suspension Check',
+  'Tire Replacement',
+];
+
+export const filterTags = [
+  'Oil Change',
+  'Battery Jumpstart',
+  'Tire Replacement',
+  'Smog Check',
+  'Brake Inspection',
+];

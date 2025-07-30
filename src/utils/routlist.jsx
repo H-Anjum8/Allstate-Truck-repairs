@@ -37,13 +37,12 @@ import ChangePassword from '../screens/Home/CommonScreens/SettingScreens/ChangeP
 import EditProfile from '../screens/Home/CommonScreens/SettingScreens/EditProfile';
 import FilterScreen from '../screens/Home/CommonScreens/FilterScreen';
 import FilterResultScreen from '../screens/Home/CommonScreens/FilterResultScreen';
-import Bookings from '../screens/Home/HomeScreens/MyBookingScreens/MyBookings';
 import MyBookings from '../screens/Home/HomeScreens/MyBookingScreens/MyBookings';
 import MyBookingDetails from '../screens/Home/HomeScreens/MyBookingScreens/MyBookingDetails';
-import BookingDetailCompleted from '../screens/Home/HomeScreens/MyBookingScreens/MyBookingCompleted';
 import MyBookingCompleted from '../screens/Home/HomeScreens/MyBookingScreens/MyBookingCompleted';
 import PastBookingCompleted from '../screens/Home/HomeScreens/MyBookingScreens/PastBookingCompleted';
 import PastBookingCanceled from '../screens/Home/HomeScreens/MyBookingScreens/PastBookingCanceled';
+import Bookings from '../screens/Home/ManagerScreens/Bookings';
 
 const Routes = {
   Splash: {
@@ -434,7 +433,7 @@ export const BOTTOM_ROUTES_MANAGER = [
   },
   {
     name: 'bookings',
-    component: MyBookings,
+    component: Bookings,
     icon: ICONS.BOOKING,
     label: 'Bookings',
     options: { headerShown: false, gestureEnabled: false },

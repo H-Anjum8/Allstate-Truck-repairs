@@ -14,65 +14,7 @@ import CustomHeader from '../../../../components/CustomHeaders';
 import { FONTS } from '../../../../theme/fonts';
 import BASE_COLORS from '../../../../utils/colors';
 import CustomButton from '../../../../components/CustomButton';
-
-const booking = [
-  {
-    id: '1',
-    status: 'Confirmed',
-    name: 'Doug’s Roadside Garage',
-    address: '456 Repair Lane, Springfield, IL',
-    amount: '$288',
-    type: 'upcoming',
-  },
-  {
-    id: '2',
-    status: 'Pending',
-    name: 'QuickFix Auto Hub',
-    address: 'City Diesel Experts – Dallas, TX',
-    amount: '$135',
-    type: 'upcoming',
-  },
-  {
-    id: '3',
-    status: 'Completed',
-    name: 'TorqueLine Garage',
-    address: 'City Diesel Experts – Dallas, TX',
-    amount: '$135',
-    type: 'past',
-  },
-  {
-    id: '4',
-    status: 'Canceled',
-    name: 'TorqueLine Garage',
-    address: 'City Diesel Experts – Dallas, TX',
-    amount: '$135',
-    type: 'past',
-  },
-  {
-    id: '5',
-    status: 'Confirmed',
-    name: 'Doug’s Roadside Garage',
-    address: '456 Repair Lane, Springfield, IL',
-    amount: '$288',
-    type: 'upcoming',
-  },
-  {
-    id: '6',
-    status: 'Pending',
-    name: 'QuickFix Auto Hub',
-    address: 'City Diesel Experts – Dallas, TX',
-    amount: '$135',
-    type: 'upcoming',
-  },
-  {
-    id: '7',
-    status: 'Canceled',
-    name: 'QuickFix Auto Hub',
-    address: 'City Diesel Experts – Dallas, TX',
-    amount: '$105',
-    type: 'past',
-  },
-];
+import { booking } from '../../../../utils/staticData';
 
 const MyBookings = () => {
   const navigation = useNavigation();

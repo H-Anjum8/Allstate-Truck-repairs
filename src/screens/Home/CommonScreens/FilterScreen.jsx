@@ -15,14 +15,7 @@ import BASE_COLORS from '../../../utils/colors';
 import { useNavigation } from '@react-navigation/native';
 import { FONTS } from '../../../theme/fonts';
 import CustomButton from '../../../components/CustomButton';
-
-const serviceTypes = [
-  'Oil Change',
-  'Brake Pad Replacement',
-  'Battery Jumpstart',
-  'Suspension Check',
-  'Tire Replacement',
-];
+import { serviceTypes } from '../../../utils/staticData';
 
 const FilterScreen = () => {
   const navigation = useNavigation();

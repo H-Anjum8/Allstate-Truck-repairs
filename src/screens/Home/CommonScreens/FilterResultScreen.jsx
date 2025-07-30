@@ -9,19 +9,11 @@ import {
   SafeAreaView,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { featured } from '../../../utils/staticData';
+import { featured, filterTags } from '../../../utils/staticData';
 import BASE_COLORS from '../../../utils/colors';
 import { FONTS } from '../../../theme/fonts';
 import FilterGarageCard from '../../../components/DashboardComponents/FilterGarageCard';
 import FilterScreenHeader from '../../../components/DashboardComponents/FilterScreenHeader';
-
-const filterTags = [
-  'Oil Change',
-  'Battery Jumpstart',
-  'Tire Replacement',
-  'Smog Check',
-  'Brake Inspection',
-];
 
 export default function FilterResultScreen() {
   const [selectedFilters, setSelectedFilters] = useState(filterTags);
