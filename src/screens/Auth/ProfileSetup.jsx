@@ -103,7 +103,7 @@ const ProfileSetup = () => {
             validationSchema={getValidationSchema('setup_profile')}
             onSubmit={values => {
               console.log('Form Submitted', values);
-              navigation.navigate('signup_done');
+              navigation.navigate('upload_profile_image');
             }}
           >
             {({

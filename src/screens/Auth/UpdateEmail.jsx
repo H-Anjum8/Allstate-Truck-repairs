@@ -19,14 +19,23 @@ import CustomButton from '../../components/CustomButton';
 import { loginSuccess } from '../../store/slices/authSlice';
 import { getValidationSchema } from '../../utils/validationSchema';
 import BASE_COLORS from '../../utils/colors';
+import { useRoute } from '@react-navigation/native';
 
 const UpdateEmail = () => {
+  const route = useRoute();
+  const { type } = route.params || {};
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const role = useSelector(state => state.auth.role);
 
   const handleLogin = values => {
-    navigation.navigate('login_screen');
+    // navigation.navigate('login_screen');
+    // navigation.navigate('verify_otp');
+    if (type === 'signup_otp_verify') {
+      navigation.navigate('signup_otp_verify');
+    } else {
+      navigation.navigate('verify_otp');
+    }
   };
 
   return (
@@ -53,7 +62,7 @@ const UpdateEmail = () => {
 
         <Formik
           initialValues={{ email: '' }}
-          validationSchema={getValidationSchema('login')}
+          validationSchema={getValidationSchema('update_email')}
           onSubmit={handleLogin}
         >
           {({ handleChange, handleSubmit, values, errors, touched }) => (

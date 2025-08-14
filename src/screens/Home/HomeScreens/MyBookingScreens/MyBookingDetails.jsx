@@ -278,7 +278,7 @@ const styles = StyleSheet.create({
     color: BASE_COLORS.WHITE,
     flex: 1,
     marginHorizontal: 10,
-    fontSize: 13,
+    fontSize: 10.5,
   },
   directionBtn: {
     backgroundColor: BASE_COLORS.PRIMARY,

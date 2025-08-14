@@ -13,6 +13,7 @@ const FilterGarageCard = ({
   garage_logo,
   authentic_icon,
   location,
+  label,
 }) => {
   const Navigation = useNavigation();
   return (
@@ -45,7 +46,7 @@ const FilterGarageCard = ({
         <Text style={styles.location}>{location}</Text>
       </View>
       <CustomButton
-        label="View Services"
+        label={label}
         onPress={() => Navigation.navigate('garage_details')}
         icon={<Ionicons name="arrow-forward" size={20} color="white" />}
         iconPosition="right"

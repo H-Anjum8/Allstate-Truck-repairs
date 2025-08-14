@@ -10,7 +10,7 @@ import IntroductionScreen from '../screens/IntroductionScreen';
 import SplashScreen from '../screens/SplashScreen';
 import { ICONS } from './appAssets';
 import Fleet from '../screens/Home/ManagerScreens/Fleet';
-import MyJobs from '../screens/Home/DriverScreens/MyJobs';
+// import MyJobs from '../screens/Home/DriverScreens/MyJobs';
 import RoleSelection from '../screens/RoleSelection';
 import UpdateEmail from '../screens/Auth/UpdateEmail';
 import ResetPassword from '../screens/Auth/ForgotPasswordScreens/ResetPassword';
@@ -43,6 +43,7 @@ import MyBookingCompleted from '../screens/Home/HomeScreens/MyBookingScreens/MyB
 import PastBookingCompleted from '../screens/Home/HomeScreens/MyBookingScreens/PastBookingCompleted';
 import PastBookingCanceled from '../screens/Home/HomeScreens/MyBookingScreens/PastBookingCanceled';
 import Bookings from '../screens/Home/ManagerScreens/Bookings';
+import Messages from '../screens/Home/CommonScreens/MessagesScreens/Messages';
 
 const Routes = {
   Splash: {
@@ -408,10 +409,24 @@ export const BOTTOM_ROUTES_USER = [
     options: { headerShown: false, gestureEnabled: false },
   },
   {
+    name: 'messages',
+    component: Messages,
+    icon: ICONS.MESSAGES,
+    label: 'Messages',
+    options: { headerShown: false, gestureEnabled: false },
+  },
+  {
     name: 'my_bookings',
     component: MyBookings,
-    icon: ICONS.JOBS,
-    label: 'My Bookings',
+    icon: ICONS.BOOKING,
+    label: 'Bookings',
+    options: { headerShown: false, gestureEnabled: false },
+  },
+  {
+    name: 'fleet',
+    component: Fleet,
+    icon: ICONS.FLEET,
+    label: 'Fleet',
     options: { headerShown: false, gestureEnabled: false },
   },
   {
@@ -438,13 +453,13 @@ export const BOTTOM_ROUTES_MANAGER = [
     label: 'Bookings',
     options: { headerShown: false, gestureEnabled: false },
   },
-  {
-    name: 'fleet',
-    component: Fleet,
-    icon: ICONS.FLEET,
-    label: 'Fleet',
-    options: { headerShown: false, gestureEnabled: false },
-  },
+  // {
+  //   name: 'fleet',
+  //   component: Fleet,
+  //   icon: ICONS.FLEET,
+  //   label: 'Fleet',
+  //   options: { headerShown: false, gestureEnabled: false },
+  // },
   {
     name: 'setting',
     component: Setting,
@@ -454,30 +469,30 @@ export const BOTTOM_ROUTES_MANAGER = [
   },
 ];
 
-export const BOTTOM_ROUTES_DRIVER = [
-  {
-    name: 'home',
-    component: Home,
-    icon: ICONS.HOME,
-    label: 'Home',
-    options: { headerShown: false, gestureEnabled: false },
-  },
-  {
-    name: 'jobs',
-    component: MyJobs,
-    icon: ICONS.JOBS,
-    label: 'My Jobs',
-    options: { headerShown: false, gestureEnabled: false },
-  },
+// export const BOTTOM_ROUTES_DRIVER = [
+//   {
+//     name: 'home',
+//     component: Home,
+//     icon: ICONS.HOME,
+//     label: 'Home',
+//     options: { headerShown: false, gestureEnabled: false },
+//   },
+//   {
+//     name: 'jobs',
+//     component: MyJobs,
+//     icon: ICONS.JOBS,
+//     label: 'My Jobs',
+//     options: { headerShown: false, gestureEnabled: false },
+//   },
 
-  {
-    name: 'setting',
-    component: Setting,
-    icon: ICONS.SETTING,
-    label: 'Setting',
-    options: { headerShown: false, gestureEnabled: false },
-  },
-];
+//   {
+//     name: 'setting',
+//     component: Setting,
+//     icon: ICONS.SETTING,
+//     label: 'Setting',
+//     options: { headerShown: false, gestureEnabled: false },
+//   },
+// ];
 
 export const getAuthScreens = () => {
   return Object.values(Routes).filter(route => !route.authRequired);

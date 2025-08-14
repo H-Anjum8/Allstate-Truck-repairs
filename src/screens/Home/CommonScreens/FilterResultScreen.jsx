@@ -54,7 +54,7 @@ export default function FilterResultScreen() {
         contentContainerStyle={styles.cardList}
         renderItem={({ item }) => (
           <View style={styles.cardWrapper}>
-            <FilterGarageCard {...item} />
+            <FilterGarageCard {...item} label="View Services" />
           </View>
         )}
         showsVerticalScrollIndicator={false}

@@ -82,8 +82,8 @@ const UploadProfileImage = () => {
 
         {/* Continue Button */}
         <CustomButton
-          label="Continue"
-          onPress={() => navigation.navigate('profile_setup')}
+          label="Upload"
+          onPress={() => navigation.navigate('signup_done')}
           style={{ marginTop: 25, height: 54 }}
         />
 

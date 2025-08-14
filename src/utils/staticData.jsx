@@ -250,11 +250,10 @@ export const methods = [
   { key: 'paypal', label: 'PayPal' },
   { key: 'wallet', label: 'Mobile Wallet (Apple Pay, Google Pay)' },
 ];
-
 export const garageservices = [
-  { name: 'Tire Replacement & Rotation', price: 99 },
-  { name: 'Oil Change', price: 69 },
-  { name: 'Suspension Check', price: 120 },
+  { id: 1, name: 'Tire Replacement & Rotation', price: 99 },
+  { id: 2, name: 'Oil Change', price: 69 },
+  { id: 3, name: 'Suspension Check', price: 120 },
 ];
 
 export const initialServices = [
@@ -354,21 +353,6 @@ export const booking = [
 export const slotData = {
   '2025-07-10': [],
   '2025-07-11': {
-    1: ['10:00 AM - 12:30 PM', '01:00 PM - 02:30 PM'],
-    2: ['03:00 PM - 03:30 PM', '04:00 PM - 04:30 PM'],
-    3: ['05:00 PM - 06:30 PM', '07:00 PM - 08:30 PM'],
-  },
-  '2025-07-12': {
-    1: ['10:00 AM - 12:30 PM', '01:00 PM - 02:30 PM'],
-    2: ['03:00 PM - 03:30 PM', '04:00 PM - 04:30 PM'],
-    3: ['05:00 PM - 06:30 PM', '07:00 PM - 08:30 PM'],
-  },
-  '2025-07-13': {
-    1: ['10:00 AM - 12:30 PM', '01:00 PM - 02:30 PM'],
-    2: ['03:00 PM - 03:30 PM', '04:00 PM - 04:30 PM'],
-    3: ['05:00 PM - 06:30 PM', '07:00 PM - 08:30 PM'],
-  },
-  '2025-07-14': {
     1: ['10:00 AM - 12:30 PM', '01:00 PM - 02:30 PM'],
     2: ['03:00 PM - 03:30 PM', '04:00 PM - 04:30 PM'],
     3: ['05:00 PM - 06:30 PM', '07:00 PM - 08:30 PM'],

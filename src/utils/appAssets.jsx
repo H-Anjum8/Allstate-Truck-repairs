@@ -40,6 +40,10 @@ const icons = {
     active: require('../assets/bottomIcons/jobs_active.png'),
     inactive: require('../assets/bottomIcons/jobs_inactive.png'),
   },
+  MESSAGES: {
+    active: require('../assets/bottomIcons/messages_active.png'),
+    inactive: require('../assets/bottomIcons/messages_inactive.png'),
+  },
   LOCATION_COLOURED: require('../assets/icons/location-colored.png'),
   TICK: require('../assets/icons/tick.png'),
   VERIFY: require('../assets/icons/verify.png'),

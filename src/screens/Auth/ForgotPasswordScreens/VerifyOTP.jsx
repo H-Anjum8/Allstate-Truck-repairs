@@ -113,7 +113,10 @@ const VerifyOTP = () => {
               Didn't receive the email? Check your spam filter or try {'\n'}
               <Text
                 style={styles.resendLink}
-                onPress={() => navigation.navigate('update_email')}
+                onPress={() =>
+                  navigation.navigate('update_email', { type: 'verify_otp' })
+                }
+                // onPress={() => navigation.navigate('update_email')}
               >
                 another email address.
               </Text>

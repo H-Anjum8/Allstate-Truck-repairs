@@ -19,7 +19,7 @@ import BASE_COLORS from '../../../utils/colors';
 import { useNavigation } from '@react-navigation/native';
 import { FONTS } from '../../../theme/fonts';
 import CustomButton from '../../../components/CustomButton';
-import { garageservices, slotData } from '../../../utils/staticData';
+import { slotData, garageservices } from '../../../utils/staticData';
 
 export default function BookingDetails() {
   const Navigation = useNavigation();

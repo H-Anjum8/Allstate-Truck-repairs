@@ -38,7 +38,7 @@ const VerifyOTP = () => {
   const handleSubmit = values => {
     const finalCode = values.otp.join('');
     console.log('Entered Code:', finalCode);
-    navigation.navigate('upload_profile_image');
+    navigation.navigate('profile_setup');
   };
 
   return (
@@ -116,7 +116,13 @@ const VerifyOTP = () => {
               Didn't receive the email? Check your spam filter or try {'\n'}
               <Text
                 style={styles.resendLink}
-                onPress={() => navigation.navigate('update_email')}
+                // navigation.navigate('UpdateEmail', { type: 'signup_otp_verify' });
+                onPress={() =>
+                  navigation.navigate('update_email', {
+                    type: 'signup_otp_verify',
+                  })
+                }
+                // onPress={() => navigation.navigate('update_email')}
               >
                 another email address.
               </Text>
