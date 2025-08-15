@@ -44,6 +44,7 @@ import PastBookingCompleted from '../screens/Home/HomeScreens/MyBookingScreens/P
 import PastBookingCanceled from '../screens/Home/HomeScreens/MyBookingScreens/PastBookingCanceled';
 import Bookings from '../screens/Home/ManagerScreens/Bookings';
 import Messages from '../screens/Home/CommonScreens/MessagesScreens/Messages';
+import EmergencyServices from '../screens/Home/HomeScreens/EmergencyServices';
 
 const Routes = {
   Splash: {
@@ -393,6 +394,16 @@ const Routes = {
   ChangePassword: {
     name: 'change_password',
     component: ChangePassword,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  // emergency screens
+  EmergencyServices: {
+    name: 'emergency_services',
+    component: EmergencyServices,
     options: {
       headerShown: false,
       gestureEnabled: false,

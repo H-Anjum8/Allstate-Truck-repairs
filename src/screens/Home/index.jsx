@@ -7,11 +7,13 @@ import { featured } from '../../utils/staticData';
 import { FONTS } from '../../theme/fonts';
 import BASE_COLORS from '../../utils/colors';
 import DashboardHeader from '../../components/DashboardComponents/DashboardHeader';
+import EmergencyServices from './HomeScreens/EmergencyServices';
 const Home = () => {
   return (
     <ScrollView style={styles.container}>
+      <EmergencyServices />
       {/* dashboard Header  */}
-      <DashboardHeader />
+      {/* <DashboardHeader />
 
       <ServiceListSection
         title="Featured Services"
@@ -37,7 +39,7 @@ const Home = () => {
         title="Nearby Services"
         data={featured}
         marginBottom={30}
-      />
+      /> */}
     </ScrollView>
   );
 };
