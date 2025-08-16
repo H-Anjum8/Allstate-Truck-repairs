@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { moderateScale } from 'react-native-size-matters';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import AuthWrapper from '../../../../components/AuthWrapper';
 import CustomHeader from '../../../../components/CustomHeaders';
 import { FONTS } from '../../../../theme/fonts';

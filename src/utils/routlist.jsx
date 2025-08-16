@@ -45,6 +45,7 @@ import PastBookingCanceled from '../screens/Home/HomeScreens/MyBookingScreens/Pa
 import Bookings from '../screens/Home/ManagerScreens/Bookings';
 import Messages from '../screens/Home/CommonScreens/MessagesScreens/Messages';
 import EmergencyServices from '../screens/Home/HomeScreens/EmergencyServices';
+import EmergencyServiceBooking from '../screens/Home/HomeScreens/EmergencyServices/EmergencyServiceBooking';
 
 const Routes = {
   Splash: {
@@ -297,6 +298,15 @@ const Routes = {
     authRequired: false,
   },
 
+  MyBookings: {
+    name: 'my_bookings',
+    component: MyBookings,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
   // MyBookings Screens
   MyBookingDetails: {
     name: 'my_booking_details',
@@ -404,6 +414,15 @@ const Routes = {
   EmergencyServices: {
     name: 'emergency_services',
     component: EmergencyServices,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  EmergencyServiceBooking: {
+    name: 'emergency_booking',
+    component: EmergencyServiceBooking,
     options: {
       headerShown: false,
       gestureEnabled: false,

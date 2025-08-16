@@ -29,8 +29,6 @@ const UpdateEmail = () => {
   const role = useSelector(state => state.auth.role);
 
   const handleLogin = values => {
-    // navigation.navigate('login_screen');
-    // navigation.navigate('verify_otp');
     if (type === 'signup_otp_verify') {
       navigation.navigate('signup_otp_verify');
     } else {

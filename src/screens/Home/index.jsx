@@ -1,45 +1,79 @@
-import React from 'react';
-import { View, Text, ScrollView, StyleSheet, TextInput } from 'react-native';
-import ServiceListSection from '../../components/DashboardComponents/ServiceListSection';
-import PopularCategoryCard from '../../components/DashboardComponents/PopularCategoryCard';
-import { categories } from '../../utils/staticData';
-import { featured } from '../../utils/staticData';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { FONTS } from '../../theme/fonts';
 import BASE_COLORS from '../../utils/colors';
 import DashboardHeader from '../../components/DashboardComponents/DashboardHeader';
-import EmergencyServices from './HomeScreens/EmergencyServices';
+import HomeView from './HomeScreens/HomeView';
+import MapViewScreen from './HomeScreens/MapViewScreen';
+
 const Home = () => {
+  const [selectedTab, setSelectedTab] = useState('map');
   return (
     <ScrollView style={styles.container}>
-      <EmergencyServices />
       {/* dashboard Header  */}
-      {/* <DashboardHeader />
+      <DashboardHeader />
+      <View style={{ flex: 1 }}>
+        {/* Custom Tabs */}
+        <View style={styles.tabWrapper}>
+          <TouchableOpacity
+            style={[
+              styles.tabButton,
+              selectedTab === 'map' && styles.activeTab,
+            ]}
+            onPress={() => setSelectedTab('map')}
+          >
+            <Text
+              style={[
+                styles.tabText,
+                selectedTab === 'map' && styles.activeText,
+              ]}
+            >
+              Map View
+            </Text>
+          </TouchableOpacity>
 
-      <ServiceListSection
-        title="Featured Services"
-        data={featured}
-        marginBottom={20}
-      />
+          <TouchableOpacity
+            style={[
+              styles.tabButton,
+              selectedTab === 'services' && styles.activeTab,
+            ]}
+            onPress={() => setSelectedTab('services')}
+          >
+            <Text
+              style={[
+                styles.tabText,
+                selectedTab === 'services' && styles.activeText,
+              ]}
+            >
+              Services
+            </Text>
+          </TouchableOpacity>
+        </View>
 
-      <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>Popular Categories</Text>
-        <Text style={styles.viewAll}>View All</Text>
+        {/* Content */}
+        {selectedTab === 'map' ? <MapViewScreen /> : <HomeView />}
+
+        {/* Emergency Button */}
+        <TouchableOpacity style={styles.emergencyBtn}>
+          <Ionicons name="alert-circle" size={32} color="#fff" />
+        </TouchableOpacity>
+
+        {/* Copilot Icon */}
+        {/* <TouchableOpacity style={styles.copilotBtn}>
+          <Image
+            source={require('../../assets/copilot.png')}
+            style={{ width: 40, height: 40 }}
+          />
+        </TouchableOpacity> */}
       </View>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={{ marginBottom: 20, paddingHorizontal: 10 }}
-      >
-        {categories.map((cat, index) => (
-          <PopularCategoryCard key={index} {...cat} />
-        ))}
-      </ScrollView>
-
-      <ServiceListSection
-        title="Nearby Services"
-        data={featured}
-        marginBottom={30}
-      /> */}
     </ScrollView>
   );
 };
@@ -47,38 +81,48 @@ const Home = () => {
 export default Home;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    height: '100%',
-    // paddingTop: 40,
-    backgroundColor: BASE_COLORS.WHITE,
-  },
-  location: {
-    fontSize: 14,
-    color: 'gray',
-    paddingHorizontal: 12,
-    marginBottom: 8,
-  },
-  search: {
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    padding: 10,
-    marginHorizontal: 12,
-    marginBottom: 20,
-  },
-  sectionHeader: {
+  tabWrapper: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 18,
-    marginBottom: 10,
+
+    borderRadius: 50,
+    padding: 4,
+    margin: 10,
+    justifyContent: 'center',
   },
-  sectionTitle: {
+  tabButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 48,
+    borderBottomColor: BASE_COLORS.GRAYIESH,
+    borderBottomWidth: 3,
+  },
+  activeTab: {
+    color: BASE_COLORS.SECONDARY,
+    borderBottomColor: BASE_COLORS.SECONDARY,
+    borderBottomWidth: 3,
+  },
+  tabText: {
+    color: BASE_COLORS.BLACK,
     fontWeight: 'bold',
-    fontSize: 16,
-    fontWeight: 700,
-    fontFamily: FONTS.BOLD,
   },
-  viewAll: {
-    color: BASE_COLORS.DARK_GRAY,
+  activeText: {
+    color: BASE_COLORS.SECONDARY,
+  },
+  emergencyBtn: {
+    position: 'absolute',
+    bottom: 90,
+    right: 20,
+    backgroundColor: 'red',
+    borderRadius: 30,
+    padding: 12,
+    elevation: 5,
+  },
+  copilotBtn: {
+    position: 'absolute',
+    bottom: 30,
+    right: 20,
+    backgroundColor: BASE_COLORS.WHITE,
+    borderRadius: 30,
+    padding: 5,
+    elevation: 5,
   },
 });

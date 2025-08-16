@@ -62,11 +62,14 @@ export default EmergencyServices;
 
 const styles = StyleSheet.create({
   cardList: {
+    backgroundColor: 'red',
     paddingBottom: 3,
+    // width: '50%',
+
     // paddingHorizontal: 6,
   },
   cardWrapper: {
-    width: '50%',
-    padding: 6,
+    // width: '0%',
+    padding: 2,
   },
 });

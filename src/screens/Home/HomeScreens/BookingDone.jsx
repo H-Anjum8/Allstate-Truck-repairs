@@ -9,6 +9,7 @@ import { FONTS } from '../../../theme/fonts';
 
 const BookingDone = () => {
   const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       {/* Center Icon */}
@@ -27,8 +28,8 @@ const BookingDone = () => {
       </Text>
       {/* Continue button */}
       <CustomButton
-        label="Continue"
-        onPress={() => navigation.navigate('dashboard')}
+        label="View Bookings"
+        onPress={() => navigation.navigate('my_bookings')}
         style={{
           marginHorizontal: -4,
           marginTop: 60,

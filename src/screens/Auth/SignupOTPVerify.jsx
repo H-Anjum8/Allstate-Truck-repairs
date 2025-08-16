@@ -122,7 +122,6 @@ const VerifyOTP = () => {
                     type: 'signup_otp_verify',
                   })
                 }
-                // onPress={() => navigation.navigate('update_email')}
               >
                 another email address.
               </Text>
