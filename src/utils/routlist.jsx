@@ -46,6 +46,9 @@ import Bookings from '../screens/Home/ManagerScreens/Bookings';
 import Messages from '../screens/Home/CommonScreens/MessagesScreens/Messages';
 import EmergencyServices from '../screens/Home/HomeScreens/EmergencyServices';
 import EmergencyServiceBooking from '../screens/Home/HomeScreens/EmergencyServices/EmergencyServiceBooking';
+import CategoriesScreen from '../screens/Home/HomeScreens/MapViewScreen/CategoriesScreen';
+import AddStopsScreen from '../screens/Home/HomeScreens/MapViewScreen/AddStopsScreen';
+import AddGaragesScreen from '../screens/Home/HomeScreens/MapViewScreen/AddGaragesScreen';
 
 const Routes = {
   Splash: {
@@ -423,6 +426,33 @@ const Routes = {
   EmergencyServiceBooking: {
     name: 'emergency_booking',
     component: EmergencyServiceBooking,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  CategoriesScreen: {
+    name: 'categories_screen',
+    component: CategoriesScreen,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  AddStopsScreen: {
+    name: 'addStops_screen',
+    component: AddStopsScreen,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  AddGaragesScreen: {
+    name: 'addGarages_screen',
+    component: AddGaragesScreen,
     options: {
       headerShown: false,
       gestureEnabled: false,

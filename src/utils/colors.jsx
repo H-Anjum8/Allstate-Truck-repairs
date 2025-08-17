@@ -26,6 +26,7 @@ export const BASE_COLORS = {
   LIGHT_BLUE: '#e5e8f9',
   GREEN: '#359814',
   STAR: '#D9D9D9',
+  PINK: '#fef4f4',
   // Common UI colors
   TEXT_LIGHTGRAY: '#ADAAAA',
   TEXT_PRIMARY: '#000654',

@@ -48,6 +48,17 @@ const icons = {
   TICK: require('../assets/icons/tick.png'),
   VERIFY: require('../assets/icons/verify.png'),
   GREEN_TICK: require('../assets/icons/green-tick.png'),
+  TRUCK: require('../assets/icons/truck_stop.png'),
+  PARKING: require('../assets/icons/parking.png'),
+  REPAIR: require('../assets/icons/repair.png'),
+  MORE: require('../assets/icons/more.png'),
+  EMERGENCY: require('../assets/icons/emergency.png'),
+  COPILOT: require('../assets/icons/copilot.png'),
+  WEATHER: require('../assets/icons/weather.png'),
+  FUEL_STATION: require('../assets/icons/fuel_station.png'),
+  GARAGES: require('../assets/icons/garages.png'),
+  HOTLE: require('../assets/icons/hotle.png'),
+  ADD_LOCATION: require('../assets/icons/add_location.png'),
 };
 
 // Export assets
