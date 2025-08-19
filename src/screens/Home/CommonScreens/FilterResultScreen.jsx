@@ -26,7 +26,7 @@ export default function FilterResultScreen() {
     <SafeAreaView style={styles.container}>
       <FilterScreenHeader />
       {/* Result Count */}
-      <Text style={styles.resultsText}>{featured.length} Results</Text> */}
+      <Text style={styles.resultsText}>{featured.length} Results</Text>
       {/* Selected Filter Tags */}
       <ScrollView
         horizontal

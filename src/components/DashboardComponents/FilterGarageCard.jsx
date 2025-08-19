@@ -14,8 +14,18 @@ const FilterGarageCard = ({
   authentic_icon,
   location,
   label,
+  textstyle,
+  type,
 }) => {
-  const Navigation = useNavigation();
+  const handleBtn = values => {
+    if (type === 'emergency_services') {
+      navigation.navigate('emergency_booking');
+    } else {
+      navigation.navigate('garage_details');
+    }
+  };
+
+  const navigation = useNavigation();
   return (
     <View style={styles.card}>
       <View style={styles.cardHeader}>
@@ -36,7 +46,7 @@ const FilterGarageCard = ({
         <Text style={styles.rating}>⭐ {rating}</Text>
       </View>
 
-      <Text style={styles.address}>{address}</Text>
+      <Text style={[styles.address, textstyle]}>{address}</Text>
       <View style={styles.locationContent}>
         <Image
           source={ICONS.LOCATION_COLOURED}
@@ -47,8 +57,8 @@ const FilterGarageCard = ({
       </View>
       <CustomButton
         label={label}
-        onPress={() => Navigation.navigate('garage_details')}
-        icon={<Ionicons name="arrow-forward" size={20} color="white" />}
+        onPress={handleBtn}
+        icon={<Ionicons name="arrow-forward" size={10} color="white" />}
         iconPosition="right"
         iconGap={30}
         style={{
@@ -110,7 +120,7 @@ const styles = StyleSheet.create({
     width: 16,
   },
   name: {
-    fontWeight: 500,
+    fontWeight: '500',
     fontFamily: FONTS.MEDIUM,
     fontSize: 10,
   },

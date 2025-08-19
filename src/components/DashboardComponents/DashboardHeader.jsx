@@ -66,7 +66,7 @@ const DashboardHeader = () => {
           >
             <MaterialIcons
               name="tune"
-              size={20}
+              size={17}
               color={BASE_COLORS.WHITE}
               style={{ transform: [{ rotate: '90deg' }] }}
             />
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     paddingHorizontal: 16,
-    paddingTop: 30,
+    paddingTop: 26,
     paddingBottom: 20,
   },
   imageStyle: {
@@ -114,23 +114,24 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.MEDIUM,
   },
   notificationButton: {
-    backgroundColor: '#fff',
+    backgroundColor: BASE_COLORS.WHITE,
     padding: 10,
     borderRadius: 12,
   },
   searchRow: {
     flexDirection: 'row',
-    marginTop: 16,
+    marginTop: 12,
     alignItems: 'center',
+    marginBottom: 2,
   },
   searchInputContainer: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: BASE_COLORS.WHITE,
     borderRadius: 12,
     paddingHorizontal: 10,
-    height: 44,
+    height: 38,
   },
   searchIcon: {
     marginRight: 6,

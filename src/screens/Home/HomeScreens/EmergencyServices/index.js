@@ -1,4 +1,5 @@
 import {
+  Platform,
   FlatList,
   KeyboardAvoidingView,
   StyleSheet,
@@ -6,14 +7,17 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import AuthWrapper from '../../../../components/AuthWrapper';
-import CustomHeader from '../../../../components/CustomHeaders';
+import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Color } from 'react-native/types_generated/Libraries/Animated/AnimatedExports';
+
 import BASE_COLORS from '../../../../utils/colors';
 import { featured } from '../../../../utils/staticData';
 import FilterGarageCard from '../../../../components/DashboardComponents/FilterGarageCard';
+import AuthWrapper from '../../../../components/AuthWrapper';
+import CustomHeader from '../../../../components/CustomHeaders';
+
 const EmergencyServices = () => {
+  const navigation = useNavigation();
   return (
     <AuthWrapper>
       <KeyboardAvoidingView
@@ -47,7 +51,12 @@ const EmergencyServices = () => {
           contentContainerStyle={styles.cardList}
           renderItem={({ item }) => (
             <View style={styles.cardWrapper}>
-              <FilterGarageCard {...item} label="Book Now" />
+              <FilterGarageCard
+                {...item}
+                label="Book Now"
+                textstyle={{ fontSize: 10 }}
+                type="emergency_services"
+              />
             </View>
           )}
           showsVerticalScrollIndicator={false}

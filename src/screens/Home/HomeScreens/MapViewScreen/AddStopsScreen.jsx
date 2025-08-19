@@ -29,8 +29,9 @@ const AddStopsScreen = () => {
   return (
     <AuthWrapper>
       <MyBookingHeader
-        title="Categories"
+        title="Add Stops"
         onBackPress={() => navigation.goBack()}
+        style={{ marginBottom: -8 }}
       />
 
       {/* Search Bar */}
@@ -44,7 +45,7 @@ const AddStopsScreen = () => {
         <TextInput
           style={styles.searchInput}
           placeholder="Search for places..."
-          placeholderTextColor="#8e8e93"
+          placeholderTextColor={BASE_COLORS.LIGHT_GRAY}
         />
       </View>
 
@@ -72,32 +73,13 @@ const AddStopsScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingTop: 10,
-    paddingBottom: 15,
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
   searchBarContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 6,
     backgroundColor: BASE_COLORS.WHITE,
     borderRadius: 10,
     paddingHorizontal: 10,
     marginBottom: 20,
-
-    // ✅ Android Shadow
     elevation: 5,
   },
   searchIcon: {
@@ -106,9 +88,10 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     height: 50,
+    fontSize: 12,
   },
   categoriesContainer: {
-    marginHorizontal: 16,
+    marginHorizontal: 10,
   },
   categoryRow: {
     flexDirection: 'row',
@@ -131,7 +114,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
   },
-  categoriesContainer: {},
+  categoriesContainer: {
+    marginHorizontal: -10,
+  },
   categoryRow: {
     justifyContent: 'space-between',
     marginBottom: 10,
@@ -145,8 +130,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   categoryImage: {
-    width: 40,
-    height: 40,
+    width: 22,
+    height: 22,
   },
   categoryText: {
     marginTop: 5,

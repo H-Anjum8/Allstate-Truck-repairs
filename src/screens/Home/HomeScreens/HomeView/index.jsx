@@ -13,7 +13,7 @@ const HomeView = () => {
       <ServiceListSection
         title="Featured Services"
         data={featured}
-        marginBottom={20}
+        marginBottom={2}
       />
 
       <View style={styles.sectionHeader}>
@@ -23,7 +23,7 @@ const HomeView = () => {
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        style={{ marginBottom: 20, paddingHorizontal: 10 }}
+        style={{ marginBottom: 1, paddingHorizontal: 10 }}
       >
         {categories.map((cat, index) => (
           <PopularCategoryCard key={index} {...cat} />
@@ -42,7 +42,11 @@ const HomeView = () => {
 export default HomeView;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, height: '100%', backgroundColor: BASE_COLORS.WHITE },
+  container: {
+    flex: 1,
+    height: '100%',
+    backgroundColor: BASE_COLORS.BORDER_COLOR,
+  },
   location: {
     fontSize: 14,
     color: 'gray',
@@ -60,13 +64,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 18,
-    marginBottom: 10,
+    marginBottom: 6,
   },
   sectionTitle: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 13,
 
     fontFamily: FONTS.BOLD,
   },
-  viewAll: { color: BASE_COLORS.DARK_GRAY },
+  viewAll: { color: BASE_COLORS.DARK_GRAY, fontSize: 11 },
 });

@@ -8,7 +8,7 @@ export const BASE_COLORS = {
   SECONDARY_DARK: '',
   SECONDARY_LIGHT: '',
   PRIMARY_SEMI: '#0006541A',
-
+  CHAT: '#E9E9EB',
   // Neutrals
   LIGHT_GREEN: '#D4EAD6',
   LIGHT_BLACK: '#0000001A',
@@ -27,6 +27,8 @@ export const BASE_COLORS = {
   GREEN: '#359814',
   STAR: '#D9D9D9',
   PINK: '#fef4f4',
+  RED_BG: '#FFECEC',
+  PRIMARY_BG: '#0006541A',
   // Common UI colors
   TEXT_LIGHTGRAY: '#ADAAAA',
   TEXT_PRIMARY: '#000654',

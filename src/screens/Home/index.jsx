@@ -62,9 +62,9 @@ const Home = () => {
         {selectedTab === 'map' ? <MapViewScreen /> : <HomeView />}
 
         {/* Emergency Button */}
-        <TouchableOpacity style={styles.emergencyBtn}>
+        {/* <TouchableOpacity style={styles.emergencyBtn}>
           <Ionicons name="alert-circle" size={32} color="#fff" />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         {/* Copilot Icon */}
         {/* <TouchableOpacity style={styles.copilotBtn}>
@@ -85,12 +85,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
 
     borderRadius: 50,
-    padding: 4,
-    margin: 10,
+    paddingTop: 4,
+    marginHorizontal: 10,
     justifyContent: 'center',
   },
   tabButton: {
-    paddingVertical: 8,
+    paddingVertical: 4,
     paddingHorizontal: 48,
     borderBottomColor: BASE_COLORS.GRAYIESH,
     borderBottomWidth: 3,

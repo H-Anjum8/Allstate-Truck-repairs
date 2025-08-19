@@ -10,7 +10,7 @@ const ServiceListSection = ({ title, marginBottom }) => {
     <View
       style={{
         marginBottom,
-        paddingVertical: 10,
+        paddingVertical: 2,
         paddingHorizontal: 14,
       }}
     >
@@ -37,12 +37,12 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   title: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    fontWeight: 700,
+    fontSize: 14,
+
     fontFamily: FONTS.BOLD,
   },
   viewAll: {
     color: BASE_COLORS.DARK_GRAY,
+    fontSize: 11,
   },
 });

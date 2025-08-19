@@ -22,12 +22,17 @@ import AuthWrapper from '../../../../components/AuthWrapper';
 const Setting = () => {
   const navigation = useNavigation();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const handleLogoutConfirm = () => {
     setShowLogoutModal(false);
     navigation.navigate('login_screen');
   };
-
+  const handleDeleteConfirm = () => {
+    setShowDeleteModal(false);
+    // TODO: Add delete account API call here
+    navigation.navigate('login_screen');
+  };
   return (
     <AuthWrapper>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -72,7 +77,13 @@ const Setting = () => {
             <TouchableOpacity
               key={index}
               style={styles.menuItem}
-              onPress={() => navigation.navigate(item.nav_link)}
+              onPress={() => {
+                if (item.title === 'Delete Account') {
+                  setShowDeleteModal(true); // ✅ open modal instead of navigate
+                } else {
+                  navigation.navigate(item.nav_link);
+                }
+              }}
             >
               <View style={styles.menuItemLeft}>
                 <Ionicons
@@ -92,6 +103,31 @@ const Setting = () => {
           ))}
         </View>
 
+        {/* Invite & Earn Rewards Section */}
+        <TouchableOpacity
+          style={styles.inviteContainer}
+          activeOpacity={0.8}
+          onPress={() => navigation.navigate('invite_friends')}
+        >
+          <Ionicons
+            name="gift-outline"
+            size={moderateScale(20)}
+            color={BASE_COLORS.SECONDARY}
+            style={{ marginRight: moderateScale(10) }}
+          />
+          <View style={{ flex: 1 }}>
+            <Text style={styles.inviteTitle}>Invite & Earn Rewards</Text>
+            <Text style={styles.inviteSubtitle}>
+              Refer a friend and earn rewards
+            </Text>
+          </View>
+          <Ionicons
+            name="chevron-forward-outline"
+            size={moderateScale(18)}
+            color={BASE_COLORS.SECONDARY}
+          />
+        </TouchableOpacity>
+
         {/* Logout Button */}
         <CustomButton
           label="Log Out"
@@ -106,7 +142,33 @@ const Setting = () => {
           }
         />
       </ScrollView>
-
+      {/* Delete Modal  */}
+      <Modal
+        transparent
+        visible={showDeleteModal}
+        animationType="fade"
+        onRequestClose={() => setShowDeleteModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer1}>
+            <Text style={styles.modalTitle}>Delete Account</Text>
+            <Text style={styles.modaldetail}>
+              Deleting your account will permanently remove your {'\n'} profile
+              and all associated data from the AllState Truck{'\n'}
+              Repairs app. This action cannot be undone.
+            </Text>
+            <View style={styles.optionRow}>
+              <TouchableOpacity onPress={() => setShowDeleteModal(false)}>
+                <Text style={styles.cancelText}>Cancel</Text>
+              </TouchableOpacity>
+              <View style={styles.separator} />
+              <TouchableOpacity onPress={handleDeleteConfirm}>
+                <Text style={styles.logoutText}>Delete</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
       {/* Logout Modal */}
       <Modal
         transparent
@@ -227,11 +289,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  modalContainer: {
+  modalContainer1: {
     backgroundColor: BASE_COLORS.WHITE,
     padding: moderateScale(15),
     borderRadius: moderateScale(12),
     width: '70%',
+    alignItems: 'center',
+  },
+  modalContainer1: {
+    backgroundColor: BASE_COLORS.WHITE,
+    padding: moderateScale(15),
+    borderRadius: moderateScale(12),
+    width: '90%',
     alignItems: 'center',
   },
   modalTitle: {
@@ -254,6 +323,24 @@ const styles = StyleSheet.create({
     marginTop: verticalScale(10),
     alignItems: 'center',
     width: '100%',
+  },
+  inviteContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: BASE_COLORS.RED_BG,
+    padding: moderateScale(12),
+    borderRadius: moderateScale(12),
+    marginTop: verticalScale(16),
+  },
+  inviteTitle: {
+    fontSize: moderateScale(13),
+    fontFamily: FONTS.MEDIUM,
+    color: BASE_COLORS.BLACK,
+  },
+  inviteSubtitle: {
+    fontSize: moderateScale(11),
+    fontFamily: FONTS.REGULAR,
+    color: BASE_COLORS.DARK_GRAY,
   },
   cancelText: {
     fontSize: moderateScale(14),

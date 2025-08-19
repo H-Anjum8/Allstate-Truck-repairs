@@ -17,6 +17,15 @@ const images = {
   USER2: require('../assets/user2.png'),
   USER3: require('../assets/user3.png'),
   EDIT_PROFILE: require('../assets/edit_profile.png'),
+  INVITEFRIENDS: require('../assets/inviteFriends.png'),
+  // USER1: require('../assets/user1.jpg'),
+  // USER2: require('../assets/user2.jpg'),
+  // USER3: require('../assets/user3.jpg'),
+  // USER4: require('../assets/user4.jpg'),
+  // USER5: require('../assets/user5.jpg'),
+  // USER6: require('../assets/user6.jpg'),
+  // USER7: require('../assets/user7.jpg'),
+  // USER8: require('../assets/user8.jpg'),
 };
 
 const icons = {

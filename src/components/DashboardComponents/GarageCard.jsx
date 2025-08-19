@@ -54,7 +54,7 @@ const GarageCard = ({
           backgroundColor: BASE_COLORS.PRIMARY,
           width: '100%',
           marginHorizontal: 0,
-          height: 50,
+          height: 43,
           marginBottom: 0,
         }}
         textStyle={{ fontSize: 12 }}
@@ -67,9 +67,10 @@ export default GarageCard;
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: BASE_COLORS.WHITE,
+    backgroundColor: BASE_COLORS.BORDER_COLOR,
     paddingHorizontal: 16,
-    paddingVertical: 14,
+    paddingBottom: 18,
+    paddingTop: 6,
     borderRadius: 12,
     borderColor: BASE_COLORS.BORDER_COLOR,
     marginRight: 12,

@@ -43,12 +43,18 @@ import MyBookingCompleted from '../screens/Home/HomeScreens/MyBookingScreens/MyB
 import PastBookingCompleted from '../screens/Home/HomeScreens/MyBookingScreens/PastBookingCompleted';
 import PastBookingCanceled from '../screens/Home/HomeScreens/MyBookingScreens/PastBookingCanceled';
 import Bookings from '../screens/Home/ManagerScreens/Bookings';
-import Messages from '../screens/Home/CommonScreens/MessagesScreens/Messages';
-import EmergencyServices from '../screens/Home/HomeScreens/EmergencyServices';
 import EmergencyServiceBooking from '../screens/Home/HomeScreens/EmergencyServices/EmergencyServiceBooking';
 import CategoriesScreen from '../screens/Home/HomeScreens/MapViewScreen/CategoriesScreen';
 import AddStopsScreen from '../screens/Home/HomeScreens/MapViewScreen/AddStopsScreen';
 import AddGaragesScreen from '../screens/Home/HomeScreens/MapViewScreen/AddGaragesScreen';
+import MessagesScreen from '../screens/Home/CommonScreens/MessagesScreen';
+import ChatScreen from '../screens/Home/CommonScreens/MessagesScreen/ChatScreen';
+import DeleteAccount from '../screens/Home/CommonScreens/SettingScreens/DeleteAccount';
+import InviteFriendsScreen from '../screens/Home/CommonScreens/SettingScreens/InviteFriendsScreen';
+import InviteSent from '../screens/Home/CommonScreens/SettingScreens/InviteSent';
+import InviteFriends from '../screens/Home/CommonScreens/SettingScreens/InviteFriends';
+import MyRewardsScreen from '../screens/Home/CommonScreens/SettingScreens/MyRewardsScreen';
+import EmergencyServices from '../screens/Home/HomeScreens/EmergencyServices';
 
 const Routes = {
   Splash: {
@@ -350,6 +356,15 @@ const Routes = {
 
   // Settings Screens
 
+  setting: {
+    name: 'setting',
+    component: Setting,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
   EditProfile: {
     name: 'edit_profile',
     component: EditProfile,
@@ -413,6 +428,52 @@ const Routes = {
     },
     authRequired: false,
   },
+  DeleteAccount: {
+    name: 'delete_account',
+    component: DeleteAccount,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  InviteFriendsScreen: {
+    name: 'invite_friends',
+    component: InviteFriendsScreen,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  InviteSent: {
+    name: 'invite_sent',
+    component: InviteSent,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  InviteFriends: {
+    name: 'Invite_friends',
+    component: InviteFriends,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  MyRewardsScreen: {
+    name: 'my_rewards',
+    component: MyRewardsScreen,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+
   // emergency screens
   EmergencyServices: {
     name: 'emergency_services',
@@ -423,9 +484,21 @@ const Routes = {
     },
     authRequired: false,
   },
+
   EmergencyServiceBooking: {
     name: 'emergency_booking',
     component: EmergencyServiceBooking,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  // Msesages scren
+
+  ChatScreen: {
+    name: 'chat_screen',
+    component: ChatScreen,
     options: {
       headerShown: false,
       gestureEnabled: false,
@@ -470,7 +543,7 @@ export const BOTTOM_ROUTES_USER = [
   },
   {
     name: 'messages',
-    component: Messages,
+    component: MessagesScreen,
     icon: ICONS.MESSAGES,
     label: 'Messages',
     options: { headerShown: false, gestureEnabled: false },

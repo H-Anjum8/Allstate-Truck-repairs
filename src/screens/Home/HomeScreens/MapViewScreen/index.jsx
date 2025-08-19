@@ -60,19 +60,25 @@ export default function MapScreen() {
         <script src="leaflet.js"></script>
         <style>
           html, body, #map { margin:0; padding:0; width:100%; height:100%; }
+           .leaflet-control-zoom {
+    margin-bottom: 84px !important; /* lift it 40px from bottom */
+    margin-right: 20px; /* optional: spacing from right edge */
+  }
         </style>
       </head>
       <body>
         <div id="map"></div>
         <script>
   // Init map without default zoom control
-  const map = L.map('map', { zoomControl: false }).setView([43.6532, -79.3832], 6);
+const map = L.map('map', { zoomControl: false, attributionControl: false }).setView([43.6532, -79.3832], 6);
+
 
   // Add TomTom tiles
   L.tileLayer('https://api.tomtom.com/map/1/tile/basic/main/{z}/{x}/{y}.png?key=${TOMTOM_API_KEY}', {
     attribution: '© TomTom',
     maxZoom: 22
   }).addTo(map);
+
 
   // Add markers
   const places = [
@@ -87,7 +93,7 @@ export default function MapScreen() {
   places.forEach(p => L.marker(p.coords).addTo(map).bindPopup(p.label));
 document.getElementById('map').style.backgroundColor = '#a0c4ff';
   // Add zoom control to right side
-  L.control.zoom({ position: 'topright' }).addTo(map);
+  L.control.zoom({ position: 'bottomright' }).addTo(map);
  
 </script>
 
@@ -97,29 +103,6 @@ document.getElementById('map').style.backgroundColor = '#a0c4ff';
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Service Filters */}
-
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.servicesRow}
-      >
-        {services.map((item, index) => (
-          <TouchableOpacity
-            key={index}
-            style={[
-              styles.serviceBtn,
-              selected === index && { backgroundColor: 'red' }, // highlight selected
-            ]}
-            onPress={() => handlePress(item, index)}
-          >
-            <Image source={item.icon} style={{ width: 14, height: 14 }} />
-            <Text style={{ color: selected === index ? '#fff' : '#000' }}>
-              {item.name}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
       {/* Map */}
       <View style={styles.mapContainer}>
         <WebView
@@ -135,7 +118,38 @@ document.getElementById('map').style.backgroundColor = '#a0c4ff';
           domStorageEnabled
           style={styles.map}
         />
+        {/* Service Filters */}
 
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.servicesRow}
+        >
+          {services.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              style={[
+                styles.serviceBtn,
+                selected === index && { backgroundColor: 'red' }, // highlight selected
+              ]}
+              onPress={() => handlePress(item, index)}
+            >
+              <Image
+                source={item.icon}
+                style={{ width: 14, height: 14, resizeMode: 'contain' }}
+              />
+              <Text
+                style={{
+                  color:
+                    selected === index ? BASE_COLORS.WHITE : BASE_COLORS.BLACK,
+                  fontSize: 11,
+                }}
+              >
+                {item.name}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
         <WeatherModal
           visible={modalVisible}
           onClose={() => setModalVisible(false)}
@@ -146,15 +160,32 @@ document.getElementById('map').style.backgroundColor = '#a0c4ff';
           style={styles.weatherBtn}
           onPress={() => setModalVisible(true)}
         >
-          <Image source={ICONS.WEATHER} style={{ width: 20, height: 20 }} />
-          <Text style={{ color: BASE_COLORS.BLACK, fontWeight: 'bold' }}>
+          <Image source={ICONS.WEATHER} style={{ width: 16, height: 16 }} />
+          <Text
+            style={{
+              color: BASE_COLORS.BLACK,
+              fontWeight: 'bold',
+              fontSize: 10,
+            }}
+          >
             31
           </Text>
         </TouchableOpacity>
         {/* Emergency button */}
-        <TouchableOpacity style={styles.emergencyBtn}>
-          <Image source={ICONS.EMERGENCY} style={{ width: 50, height: 50 }} />
-          <Text style={{ color: '#fff', fontWeight: 'bold' }}>Emergency</Text>
+        <TouchableOpacity
+          style={styles.emergencyBtn}
+          onPress={() => navigation.navigate('emergency_services')}
+        >
+          <Image source={ICONS.EMERGENCY} style={{ width: 30, height: 30 }} />
+          <Text
+            style={{
+              color: BASE_COLORS.WHITE,
+              fontWeight: 'bold',
+              fontSize: 10,
+            }}
+          >
+            Emergency
+          </Text>
         </TouchableOpacity>
 
         {/* AI Copilot */}
@@ -162,10 +193,16 @@ document.getElementById('map').style.backgroundColor = '#a0c4ff';
           <TouchableOpacity style={styles.aiBtn}>
             <Image
               source={ICONS.COPILOT}
-              style={{ width: '100%', height: 40, resizeMode: 'contain' }}
+              style={{ width: 40, height: 40, resizeMode: 'contain' }}
             />
           </TouchableOpacity>
-          <Text style={{ color: BASE_COLORS.WHITE, fontWeight: 'bold' }}>
+          <Text
+            style={{
+              color: BASE_COLORS.WHITE,
+              fontWeight: 'bold',
+              fontSize: 10,
+            }}
+          >
             AI Copilot
           </Text>
         </View>
@@ -185,44 +222,51 @@ document.getElementById('map').style.backgroundColor = '#a0c4ff';
 const styles = StyleSheet.create({
   container: { flex: 1 },
 
-  servicesRow: { marginVertical: 10, paddingHorizontal: 10 },
+  servicesRow: {
+    marginVertical: 0,
+    paddingHorizontal: 10,
+    position: 'absolute',
+    left: 2,
+    top: 16,
+  },
   serviceBtn: {
     flexDirection: 'row',
     gap: 4,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingHorizontal: 8,
+    paddingVertical: 5,
     backgroundColor: BASE_COLORS.GRAYIESH,
-    marginRight: 10,
-    borderRadius: 12,
+    marginRight: 6,
+    borderRadius: 10,
   },
   mapContainer: {
     flex: 1,
     margin: 10,
-    height: 420,
+    height: 530,
     backgroundColor: BASE_COLORS.BLACK,
     borderRadius: 12,
     overflow: 'hidden',
   },
-  map: { flex: 1, backgroundColor: 'yellow' },
+  map: { flex: 1 },
   weatherBtn: {
     flexDirection: 'row',
     position: 'absolute',
     gap: 6,
-    left: 20,
-    top: 10,
-    padding: 5,
-    borderRadius: 8,
+    left: 13,
+    top: 54,
+    paddingVertical: 5,
+    paddingHorizontal: 12,
+    borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: BASE_COLORS.WHITE,
   },
   emergencyBtn: {
     position: 'absolute',
-    right: 8,
-    top: 170,
-    padding: 8,
+    right: 0,
+    bottom: 150,
+    paddingVertical: 8,
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
@@ -230,15 +274,16 @@ const styles = StyleSheet.create({
 
   mainaiBtn: {
     position: 'absolute',
-    right: 20,
-    bottom: 50,
+    right: 10,
+    bottom: 4,
   },
   aiBtn: {
     backgroundColor: BASE_COLORS.WHITE,
     borderColor: BASE_COLORS.SECONDARY,
     borderWidth: 3,
-    padding: 10,
-    width: 80,
+    paddingVertical: 2,
+    paddingHorizontal: 4,
+    width: 57,
     borderRadius: 8,
   },
 
@@ -246,12 +291,18 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 10,
     bottom: 20,
-    backgroundColor: '#0a1b5b',
-    padding: 15,
+    backgroundColor: BASE_COLORS.PRIMARY,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
     margin: 10,
     borderRadius: 8,
   },
-  tripBtnText: { color: '#fff', textAlign: 'center', fontWeight: 'bold' },
+  tripBtnText: {
+    color: BASE_COLORS.WHITE,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 11,
+  },
 
   bottomNav: {
     flexDirection: 'row',

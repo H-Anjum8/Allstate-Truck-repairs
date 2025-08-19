@@ -32,6 +32,7 @@ const CategoriesScreen = () => {
   return (
     <AuthWrapper>
       <MyBookingHeader
+        style={{ marginBottom: -12 }}
         title="Categories"
         onBackPress={() => navigation.goBack()}
       />
@@ -48,28 +49,11 @@ const CategoriesScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    paddingTop: 50,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 15,
-    marginBottom: 10,
-  },
-  headerTitle: {
-    flex: 1,
-    textAlign: 'center',
-    fontSize: 16,
-    fontWeight: '600',
-  },
   item: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 15,
-    paddingHorizontal: 20,
+    paddingVertical: 8,
+    paddingHorizontal: 10,
   },
   icon: {
     width: 22,

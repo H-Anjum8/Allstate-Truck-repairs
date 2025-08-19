@@ -4,9 +4,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import BASE_COLORS from '../../utils/colors';
 import { FONTS, TextStyles } from '../../theme/fonts';
 
-const MyBookingHeader = ({ title = 'Header', onBackPress }) => {
+const MyBookingHeader = ({ title = 'Header', onBackPress, style }) => {
   return (
-    <View style={styles.header}>
+    <View style={[styles.header, style]}>
       <TouchableOpacity style={styles.backButton} onPress={onBackPress}>
         <Ionicons name="chevron-back" size={24} color={BASE_COLORS.BLACK} />
       </TouchableOpacity>
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   title: {
     color: BASE_COLORS.BLACK,
     fontFamily: FONTS.MEDIUM,
-    fontSize: 24,
+    fontSize: 20,
 
     fontWeight: 500,
     marginLeft: 0,

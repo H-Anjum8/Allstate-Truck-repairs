@@ -38,7 +38,7 @@ const WeatherModal = ({ visible, onClose, weatherData }) => {
           {/* Hourly Forecast */}
           <FlatList
             style={{
-              backgroundColor: '#fef4f4',
+              backgroundColor: BASE_COLORS.PINK,
               borderRadius: 10,
               padding: 10,
             }}
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.3)',
+    backgroundColor: 'rgba(0,0,0,0.7)',
   },
   modalBox: {
     backgroundColor: '#fff',
