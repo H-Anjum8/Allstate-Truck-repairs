@@ -9,22 +9,26 @@ import {
   Dimensions,
   Platform,
   Image,
+  Modal,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { ICONS } from '../../../../utils/appAssets';
 import BASE_COLORS from '../../../../utils/colors';
 import { useNavigation } from '@react-navigation/native';
 import WeatherModal from '../../../../components/modalComponents/WeatherModal';
+import GarageModal from '../../../../components/modalComponents/GarageModal';
 
 const { height } = Dimensions.get('window');
 
 // Your TomTom Key
-const TOMTOM_API_KEY = '';
+const TOMTOM_API_KEY = '0GiMexe38wEi9Zune3D2tLLfE9QAavfM';
 
 export default function MapScreen() {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [selected, setSelected] = useState(null);
+  const [garageModal, setGarageModal] = useState(false);
+  const [selectedMarker, setSelectedMarker] = useState(null); // 👈 hold clicked marker
   const services = [
     { name: 'Repair', icon: ICONS.REPAIR },
     { name: 'Parking', icon: ICONS.PARKING },
@@ -49,57 +53,107 @@ export default function MapScreen() {
     }
   };
   const mapHtml = `
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>Leaflet TomTom Map</title>
-        <!-- Load from local assets -->
-        <link rel="stylesheet" href="leaflet.css"/>
-        <script src="leaflet.js"></script>
-        <style>
-          html, body, #map { margin:0; padding:0; width:100%; height:100%; }
-           .leaflet-control-zoom {
-    margin-bottom: 84px !important; /* lift it 40px from bottom */
-    margin-right: 20px; /* optional: spacing from right edge */
-  }
-        </style>
-      </head>
-      <body>
-        <div id="map"></div>
-        <script>
-  // Init map without default zoom control
-const map = L.map('map', { zoomControl: false, attributionControl: false }).setView([43.6532, -79.3832], 6);
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Leaflet TomTom Map</title>
+    <link rel="stylesheet" href="leaflet.css"/>
+    <script src="leaflet.js"></script>
+    <style>
+      html, body, #map { margin:0; padding:0; width:100%; height:100%; }
 
+      .leaflet-control-zoom {
+        margin-bottom: 84px !important;
+        margin-right: 20px;
+      }
 
-  // Add TomTom tiles
-  L.tileLayer('https://api.tomtom.com/map/1/tile/basic/main/{z}/{x}/{y}.png?key=${TOMTOM_API_KEY}', {
-    attribution: '© TomTom',
-    maxZoom: 22
-  }).addTo(map);
+      /* popup/label style */
+      .marker-label {
+        background:#fff;
+        padding:2px 6px;
+        border-radius:6px;
+        font-size:12px;
+        font-weight:bold;
+        border:1px solid #333;
+        white-space:nowrap;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      // Init map without default zoom control
+      const map = L.map('map', { zoomControl: false, attributionControl: false }).setView([43.6532, -79.3832], 6);
 
+      // Add TomTom tiles
+      L.tileLayer('https://api.tomtom.com/map/1/tile/basic/night/{z}/{x}/{y}.png?key=${TOMTOM_API_KEY}', {
+        attribution: '© TomTom',
+        maxZoom: 22
+      }).addTo(map);
 
-  // Add markers
-  const places = [
-     { coords: [43.6532, -79.3832], label: "Toronto" },
-  { coords: [45.4215, -75.6972], label: "Ottawa" },
-  { coords: [44.2312, -76.4860], label: "Kingston" },
-  { coords: [46.8139, -71.2080], label: "Quebec City" },
-  { coords: [49.2827, -123.1207], label: "Vancouver" },
-  { coords: [51.0447, -114.0719], label: "Calgary" },
-     
-  ];
-  places.forEach(p => L.marker(p.coords).addTo(map).bindPopup(p.label));
-document.getElementById('map').style.backgroundColor = '#a0c4ff';
-  // Add zoom control to right side
-  L.control.zoom({ position: 'bottomright' }).addTo(map);
- 
-</script>
+      // Add markers
+      const places = [
+        { coords: [43.6532, -79.3832], label: "Toronto Garage" },
+        { coords: [45.4215, -75.6972], label: "Ottawa Garage" },
+        { coords: [44.2312, -76.4860], label: "Kingston Garage" },
+        { coords: [46.8139, -71.2080], label: "Quebec City Garage" },
+        { coords: [49.2827, -123.1207], label: "Vancouver Garage" },
+        { coords: [51.0447, -114.0719], label: "Calgary Garage" },
+      ];
 
-      </body>
-    </html>
-  `;
+      // default (red) and selected (green) marker icons
+      const defaultIcon = new L.Icon({
+        iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+        shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41],
+        className: "marker-red"
+      });
+
+      const selectedIcon = new L.Icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+        shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41],
+        className: "marker-green"
+      });
+
+      let selectedMarker = null;
+
+      places.forEach(p => {
+        const marker = L.marker(p.coords, { icon: defaultIcon, title: p.label }).addTo(map).bindPopup(p.label);
+
+        marker.on('click', function() {
+          // reset old selected marker
+          if (selectedMarker) {
+            selectedMarker.setIcon(defaultIcon);
+          }
+
+          // set new selected
+          marker.setIcon(selectedIcon);
+          selectedMarker = marker;
+
+          // send name back to React Native
+          if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
+            window.ReactNativeWebView.postMessage(p.label);
+          } else {
+            console.log("ReactNativeWebView not ready");
+          }
+        });
+      });
+
+      // Add zoom control to right side
+      L.control.zoom({ position: 'bottomright' }).addTo(map);
+    </script>
+  </body>
+</html>
+`;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -117,6 +171,12 @@ document.getElementById('map').style.backgroundColor = '#a0c4ff';
           javaScriptEnabled
           domStorageEnabled
           style={styles.map}
+          onMessage={event => {
+            console.log('📩 Message from WebView:', event.nativeEvent.data);
+            const markerLabel = event.nativeEvent.data;
+            setSelectedMarker(markerLabel);
+            setGarageModal(true);
+          }}
         />
         {/* Service Filters */}
 
@@ -155,6 +215,15 @@ document.getElementById('map').style.backgroundColor = '#a0c4ff';
           onClose={() => setModalVisible(false)}
           weatherData={dummyWeather}
         />
+        {/* 🚀 Bottom Garage Modal */}
+        <GarageModal
+          visible={garageModal}
+          onClose={() => setGarageModal(false)}
+          title={selectedMarker || 'Garage'}
+          buttonLabel="Book Now"
+          onButtonPress={() => console.log('Booking...')}
+        />
+
         {/* weather button */}
         <TouchableOpacity
           style={styles.weatherBtn}
@@ -211,7 +280,7 @@ document.getElementById('map').style.backgroundColor = '#a0c4ff';
       {/* Start Trip Button */}
       <TouchableOpacity
         style={styles.tripBtn}
-        onPress={() => navigation.navigate('addGarages_screen')}
+        onPress={() => navigation.navigate('trip_planning')}
       >
         <Text style={styles.tripBtnText}>Start Trip Planning</Text>
       </TouchableOpacity>
@@ -314,4 +383,36 @@ const styles = StyleSheet.create({
   },
   navItem: { alignItems: 'center' },
   navText: { fontSize: 12, marginTop: 2 },
+  // 🔽 Modal Styles
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  bottomSheet: {
+    height: height * 0.65,
+    backgroundColor: 'white',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 16,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  card: {
+    backgroundColor: '#f5f5f5',
+    padding: 10,
+    borderRadius: 8,
+    marginVertical: 5,
+  },
+  bookBtn: {
+    backgroundColor: 'red',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 10,
+  },
 });

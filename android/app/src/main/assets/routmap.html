@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
+    <link rel="stylesheet" href="leaflet.css" />
+    <style>
+      html,
+      body,
+      #map {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .leaflet-container {
+        background: #0f1115;
+      }
+      .garage-popup {
+        font-size: 14px;
+        font-weight: 600;
+        color: #1f2937;
+        padding: 4px 6px;
+      }
+      .garage-label {
+        background: #ffffff;
+        color: #111827;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 2px 6px;
+        border-radius: 6px;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <script src="leaflet.js"></script>
+    <script>
+      const API_KEY = '0GiMexe38wEi9Zune3D2tLLfE9QAavfM';
+      const RN_BRIDGE = window.ReactNativeWebView;
+
+      const map = L.map('map', { zoomControl: false }).setView(
+        [43.6532, -79.3832],
+        6,
+      );
+
+      L.tileLayer(
+        'https://{s}.api.tomtom.com/map/1/tile/basic/main/{z}/{x}/{y}.png?key=' +
+          API_KEY,
+        {
+          subdomains: 'abcd',
+          maxZoom: 19,
+          attribution: '© TomTom | © OpenStreetMap contributors',
+        },
+      ).addTo(map);
+
+      let startMarker, endMarker, routeLine;
+      let garageMarkers = [];
+
+      async function geocode(q) {
+        const url =
+          'https://api.tomtom.com/search/2/search/' +
+          encodeURIComponent(q) +
+          '.json?key=' +
+          API_KEY +
+          '&limit=1';
+        const res = await fetch(url);
+        const json = await res.json();
+        if (json.results && json.results.length) {
+          const p = json.results[0].position;
+          return [p.lat, p.lon];
+        }
+        throw new Error('Geocode failed: ' + q);
+      }
+
+      async function fetchRoute(fromLatLng, toLatLng) {
+        const loc = fromLatLng.join(',') + ':' + toLatLng.join(',');
+        const url =
+          'https://api.tomtom.com/routing/1/calculateRoute/' +
+          loc +
+          '/json?key=' +
+          API_KEY +
+          '&traffic=true';
+        const res = await fetch(url);
+        if (!res.ok) {
+          throw new Error('Routing failed');
+        }
+        return res.json();
+      }
+
+      function pointsToLatLngs(points) {
+        return points.map(p => [p.latitude, p.longitude]);
+      }
+
+      async function fetchGarages(routeCoords) {
+        const mid = routeCoords[Math.floor(routeCoords.length / 2)];
+        const url =
+          'https://api.tomtom.com/search/2/poiSearch/garage.json?key=' +
+          API_KEY +
+          '&lat=' +
+          mid[0] +
+          '&lon=' +
+          mid[1] +
+          '&radius=50000&limit=10';
+        const res = await fetch(url);
+        if (!res.ok) return [];
+        const data = await res.json();
+        return (data.results || []).map(r => ({
+          name: r.poi?.name || 'Garage',
+          position: [r.position.lat, r.position.lon],
+        }));
+      }
+
+      function clearGarages() {
+        garageMarkers.forEach(m => map.removeLayer(m));
+        garageMarkers = [];
+      }
+
+      function showGarages(garages) {
+        clearGarages();
+        garages.forEach(g => {
+          const marker = L.circleMarker(g.position, {
+            radius: 10,
+            fillColor: '#ffffff',
+            color: '#ef4444',
+            weight: 3,
+            opacity: 1,
+            fillOpacity: 1,
+          }).addTo(map);
+
+          marker.bindPopup('<b>🔧 ' + g.name + '</b>');
+          garageMarkers.push(marker);
+        });
+      }
+
+      async function handleSetRoute({ start, destination }) {
+        try {
+          if (routeLine) map.removeLayer(routeLine);
+          if (startMarker) map.removeLayer(startMarker);
+          if (endMarker) map.removeLayer(endMarker);
+          clearGarages();
+
+          const from = await geocode(start);
+          const to = await geocode(destination);
+
+          startMarker = L.marker(from).addTo(map).bindPopup('Start');
+          endMarker = L.marker(to).addTo(map).bindPopup('Destination');
+
+          const data = await fetchRoute(from, to);
+          const route = data.routes[0];
+          const coords = pointsToLatLngs(route.legs[0].points);
+
+          routeLine = L.polyline(coords, { color: '#ff3b30', weight: 6 }).addTo(
+            map,
+          );
+          map.fitBounds(routeLine.getBounds().pad(0.2));
+
+          const garages = await fetchGarages(coords);
+          showGarages(garages);
+
+          RN_BRIDGE.postMessage(
+            JSON.stringify({
+              type: 'ROUTE_SUMMARIES',
+              payload: [
+                {
+                  lengthInMeters: route.summary.lengthInMeters,
+                  travelTimeInSeconds: route.summary.travelTimeInSeconds,
+                },
+              ],
+            }),
+          );
+        } catch (err) {
+          RN_BRIDGE.postMessage(
+            JSON.stringify({ type: 'ERROR', payload: String(err) }),
+          );
+        }
+      }
+
+      document.addEventListener('message', ev => {
+        try {
+          const msg = JSON.parse(ev.data);
+          if (msg.type === 'SET_ROUTE') handleSetRoute(msg.payload);
+        } catch (e) {}
+      });
+
+      map.whenReady(() => {
+        handleSetRoute({
+          start: 'Toronto, Ontario',
+          destination: 'Winnipeg, Manitoba',
+        });
+      });
+    </script>
+  </body>
+</html>

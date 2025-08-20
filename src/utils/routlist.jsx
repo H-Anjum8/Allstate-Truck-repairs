@@ -55,6 +55,7 @@ import InviteSent from '../screens/Home/CommonScreens/SettingScreens/InviteSent'
 import InviteFriends from '../screens/Home/CommonScreens/SettingScreens/InviteFriends';
 import MyRewardsScreen from '../screens/Home/CommonScreens/SettingScreens/MyRewardsScreen';
 import EmergencyServices from '../screens/Home/HomeScreens/EmergencyServices';
+import TripPlanning from '../screens/Home/HomeScreens/MapViewScreen/TripPlanning';
 
 const Routes = {
   Splash: {
@@ -508,6 +509,15 @@ const Routes = {
   CategoriesScreen: {
     name: 'categories_screen',
     component: CategoriesScreen,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  TripPlanning: {
+    name: 'trip_planning',
+    component: TripPlanning,
     options: {
       headerShown: false,
       gestureEnabled: false,

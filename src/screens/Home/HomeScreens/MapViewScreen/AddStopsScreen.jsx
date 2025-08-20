@@ -10,7 +10,6 @@ import {
   Image,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MyBookingHeader from '../../../../components/DashboardComponents/MyBookingHeader';
 import { useNavigation } from '@react-navigation/native';
 import AuthWrapper from '../../../../components/AuthWrapper';
@@ -21,11 +20,33 @@ const AddStopsScreen = () => {
   const navigation = useNavigation();
 
   const categories = [
-    { id: '1', title: 'Hotels', icon: ICONS.HOTLE },
-    { id: '2', title: 'Fuel Stations', icon: ICONS.FUEL_STATION },
-    { id: '3', title: 'Parkings', icon: ICONS.PARKING },
-    { id: '4', title: 'Garages', icon: ICONS.GARAGES },
+    { id: '1', title: 'Hotels', icon: ICONS.HOTLE, screen: 'HotelsScreen' },
+    {
+      id: '2',
+      title: 'Fuel Stations',
+      icon: ICONS.FUEL_STATION,
+      screen: 'FuelStationsScreen',
+    },
+    {
+      id: '3',
+      title: 'Parkings',
+      icon: ICONS.PARKING,
+      screen: 'ParkingsScreen',
+    },
+    {
+      id: '4',
+      title: 'Garages',
+      icon: ICONS.GARAGES,
+      screen: 'addGarages_screen',
+    },
   ];
+
+  const handleCategoryPress = screen => {
+    if (screen) {
+      navigation.navigate(screen);
+    }
+  };
+
   return (
     <AuthWrapper>
       <MyBookingHeader
@@ -57,7 +78,10 @@ const AddStopsScreen = () => {
           numColumns={2} // ✅ grid layout (2 per row)
           columnWrapperStyle={styles.categoryRow}
           renderItem={({ item }) => (
-            <TouchableOpacity style={styles.categoryButton}>
+            <TouchableOpacity
+              style={styles.categoryButton}
+              onPress={() => handleCategoryPress(item.screen)}
+            >
               <Image
                 source={item.icon}
                 style={styles.categoryImage}
@@ -89,30 +113,6 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 50,
     fontSize: 12,
-  },
-  categoriesContainer: {
-    marginHorizontal: 10,
-  },
-  categoryRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 10,
-  },
-  categoryButton: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#f8f8f8',
-    borderRadius: 10,
-    paddingVertical: 20,
-    marginHorizontal: 5,
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
-  },
-  categoryText: {
-    marginTop: 8,
-    fontSize: 14,
-    fontWeight: '600',
   },
   categoriesContainer: {
     marginHorizontal: -10,

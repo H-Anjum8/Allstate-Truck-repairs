@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -10,6 +10,7 @@ import {
   Image,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
+import { useNavigation } from '@react-navigation/native';
 import { ICONS, IMAGES } from '../../../../utils/appAssets';
 import BASE_COLORS from '../../../../utils/colors';
 
@@ -18,36 +19,8 @@ const { height } = Dimensions.get('window');
 
 export default function AddGaragesScreen() {
   const [garages, setGarages] = useState([]);
-  const dummyGarages = [
-    {
-      id: '1',
-      name: 'AutoFix Garage',
-      rating: 4.0,
-      distance: '50m',
-      timing: 'Open 9:00 AM - Close 11:00 PM',
-    },
-    {
-      id: '2',
-      name: 'Speedy Repairs',
-      rating: 4.5,
-      distance: '120m',
-      timing: 'Open 8:00 AM - Close 10:00 PM',
-    },
-    {
-      id: '3',
-      name: 'Quick Auto Service',
-      rating: 5.0,
-      distance: '200m',
-      timing: 'Open 10:00 AM - Close 8:00 PM',
-    },
-    {
-      id: '4',
-      name: 'Elite Motors',
-      rating: 3.9,
-      distance: '300m',
-      timing: 'Open 24 Hours',
-    },
-  ];
+  const webViewRef = useRef(null);
+  const navigation = useNavigation();
 
   useEffect(() => {
     fetchGarages();
@@ -59,49 +32,92 @@ export default function AddGaragesScreen() {
         `https://api.tomtom.com/search/2/poiSearch/garage.json?lat=37.6879&lon=-122.4702&radius=5000&limit=10&key=${API_KEY}`,
       );
       const data = await res.json();
-      setGarages(data.results || []);
+      const garagesList = data.results.map(g => ({
+        id: g.id,
+        name: g.poi.name,
+        lat: g.position.lat,
+        lon: g.position.lon,
+        distance: g.dist ? `${Math.round(g.dist)}m` : 'N/A',
+        timing: 'Open 9:00 AM - Close 9:00 PM',
+      }));
+      setGarages(garagesList);
     } catch (err) {
       console.log('Error fetching garages:', err);
     }
   };
 
+  const handleCardPress = garage => {
+    // Highlight marker on map
+    const jsCode = `
+      garages.forEach(g => {
+        if(g.id === "${garage.id}") {
+          g.marker.setIcon(L.icon({iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/blue.png', iconSize: [30, 30]}));
+          g.marker.openPopup();
+        } else {
+          g.marker.setIcon(L.icon({iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/red.png', iconSize: [25, 25]}));
+        }
+      });
+      true;
+    `;
+    webViewRef.current.injectJavaScript(jsCode);
+  };
+
+  const handleAddStop = garage => {
+    // Navigate to another screen and pass garage location
+    navigation.navigate('trip_planning', {
+      garageName: garage.name,
+      latitude: garage.lat,
+      longitude: garage.lon,
+    });
+  };
+
   const leafletHTML = `
     <!DOCTYPE html>
     <html>
-    <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <link rel="stylesheet" href="leaflet.css"/>
-        <script src="leaflet.js"></script>
-      <style>
-        #map { height: 100%; width: 100%; }
-      </style>
-    </head>
-    <body>
-      <div id="map"></div>
-      <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-      <script>
-        var map = L.map('map').setView([37.6879, -122.4702], 12);
-        L.tileLayer('https://api.tomtom.com/map/1/tile/basic/main/{z}/{x}/{y}.png?key=${API_KEY}', {
-          attribution: '© TomTom'
-        }).addTo(map);
-      </script>
-    </body>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <style>
+          #map { height: 100%; width: 100%; margin:0; padding:0;}
+          html, body {height:100%; margin:0; padding:0;}
+        </style>
+      </head>
+      <body>
+        <div id="map"></div>
+        <script>
+          var garages = ${JSON.stringify(
+            garages.map(g => ({ ...g, marker: null })),
+          )};
+          var map = L.map('map').setView([37.6879, -122.4702], 14);
+
+          L.tileLayer('https://api.tomtom.com/map/1/tile/basic/night/{z}/{x}/{y}.png?key=${API_KEY}', {
+            attribution: '© TomTom'
+          }).addTo(map);
+
+          garages.forEach(function(g) {
+            g.marker = L.marker([g.lat, g.lon], {
+              icon: L.icon({iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/red.png', iconSize: [25, 25]})
+            }).addTo(map)
+            .bindPopup(g.name);
+          });
+        </script>
+      </body>
     </html>
   `;
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Leaflet Map */}
       <WebView
+        ref={webViewRef}
         originWhitelist={['*']}
         source={{ html: leafletHTML }}
         style={styles.map}
       />
-      <Text>WELLCOME</Text>
-      {/* Garage List */}
+
       <View style={styles.listContainer}>
         <FlatList
-          data={dummyGarages}
+          data={garages}
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
             <View style={styles.garageCard}>
@@ -114,19 +130,16 @@ export default function AddGaragesScreen() {
                   />
                   <View style={{ flex: 1 }}>
                     <Text style={styles.garageName}>{item.name}</Text>
-                    <Text style={styles.rating}>
-                      ⭐{' '}
-                      {item.rating
-                        ? item.rating.toFixed(1)
-                        : (Math.random() * (5 - 3) + 3).toFixed(1)}{' '}
-                      • 50m
-                    </Text>
+                    <Text style={styles.rating}>⭐ 4.0 • {item.distance}</Text>
                   </View>
                 </View>
                 <Text style={styles.timing}>{item.timing}</Text>
               </View>
 
-              <TouchableOpacity style={styles.addBtn}>
+              <TouchableOpacity
+                style={styles.addBtn}
+                onPress={() => handleAddStop(item)}
+              >
                 <Image
                   source={ICONS.ADD_LOCATION}
                   style={styles.image}
@@ -164,27 +177,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 4,
     borderBottomColor: BASE_COLORS.LIGHT_GRAY,
   },
-  garageCardRow: {
-    flexDirection: 'row',
-    width: 200,
-  },
-  CardRow: {
-    flexDirection: 'column',
-  },
-  garageName: {
-    fontWeight: 'bold',
-    fontSize: 11,
-    color: BASE_COLORS.GRAY,
-  },
+  garageCardRow: { flexDirection: 'row', width: 200 },
+  CardRow: { flexDirection: 'column' },
+  garageName: { fontWeight: 'bold', fontSize: 11, color: BASE_COLORS.GRAY },
   rating: { color: BASE_COLORS.GRAY, fontSize: 10 },
   timing: { color: BASE_COLORS.GRAY, fontSize: 10 },
   addBtn: { padding: 8, justifyContent: 'center', alignItems: 'center' },
-  image: {
-    width: 20,
-    height: 20,
-  },
-  garage_image: {
-    width: 40,
-    height: 40,
-  },
+  image: { width: 20, height: 20 },
+  garage_image: { width: 40, height: 40 },
 });
