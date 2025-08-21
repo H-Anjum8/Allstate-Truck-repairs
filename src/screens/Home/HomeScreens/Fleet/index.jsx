@@ -1,41 +1,88 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AuthWrapper from '../../../../components/AuthWrapper';
 import CustomHeader from '../../../../components/CustomHeaders';
 import CustomButton from '../../../../components/CustomButton';
+import CustomTextInput from '../../../../components/CustomTextInput';
 import BASE_COLORS from '../../../../utils/colors';
 import FONTS from '../../../../theme/fonts';
-import CustomTextInput from '../../../../components/CustomTextInput';
+import FleetCard from '../../../../components/DashboardComponents/FleetCard';
 
-const FleetDashboard = () => {
+const Fleet = ({ navigation }) => {
   const [activeTab, setActiveTab] = useState('Vehicles');
-  const [vehicleCount, setVehicleCount] = useState(0);
-  const [driverCount, setDriverCount] = useState(0);
-  const [bookingCount, setBookingCount] = useState(0);
   const [search, setSearch] = useState('');
 
+  // ✅ States
+  const [vehicles, setVehicles] = useState([
+    {
+      id: '1',
+      name: 'Freightliner TX-9821',
+      plate: 'TX - 9821',
+      owner: 'George Franklin',
+      status: 'Active',
+    },
+  ]);
+
+  const [drivers, setDrivers] = useState([
+    {
+      id: '1',
+      name: 'John Doe',
+      license: 'DL-12345',
+      status: 'Active',
+      email: 'john@.com',
+      phone: '0434343434',
+    },
+  ]);
+
+  // ✅ Stats
   const stats = [
     {
       id: '1',
       icon: 'bus-outline',
       label: 'Total Vehicles',
-      value: vehicleCount,
+      value: vehicles.length,
     },
     {
       id: '2',
       icon: 'person-outline',
       label: 'Total Drivers',
-      value: driverCount,
+      value: drivers.length,
     },
-    {
-      id: '3',
-      icon: 'calendar-outline',
-      label: 'Upcoming Bookings',
-      value: bookingCount,
-    },
+    { id: '3', icon: 'calendar-outline', label: 'Upcoming Bookings', value: 0 },
   ];
+
+  // ✅ Add new Vehicle
+  const handleAddVehicle = () => {
+    navigation.navigate('add_vehicle');
+    // const newVehicle = {
+    //   id: (vehicles.length + 1).toString(),
+    //   name: `New Vehicle ${vehicles.length + 1}`,
+    //   plate: `PLATE-${Math.floor(Math.random() * 9999)}`,
+    //   owner: 'Unknown Owner',
+    //   status: 'Inactive',
+    // };
+    // setVehicles([...vehicles, newVehicle]);
+  };
+
+  // ✅ Add new Driver
+  const handleAddDriver = () => {
+    navigation.navigate('add_driver');
+    // const newDriver = {
+    //   id: (drivers.length + 1).toString(),
+    //   name: `New Driver ${drivers.length + 1}`,
+    //   license: `DL-${Math.floor(Math.random() * 9999)}`,
+    //   status: 'Inactive',
+    // };
+    // setDrivers([...drivers, newDriver]);
+  };
 
   return (
     <AuthWrapper>
@@ -44,7 +91,7 @@ const FleetDashboard = () => {
         username="Fleet Dashboard"
         showUsername
         showWelcomeText={false}
-        contentContainerStyle={{ alignItems: 'flex-start' }} // left align
+        contentContainerStyle={{ alignItems: 'flex-start' }}
         usernameTextStyle={{
           textAlign: 'left',
           alignSelf: 'flex-start',
@@ -121,7 +168,7 @@ const FleetDashboard = () => {
         {activeTab === 'Vehicles' && (
           <CustomButton
             label="+ Add Vehicle"
-            onPress={() => setVehicleCount(vehicleCount + 1)}
+            onPress={handleAddVehicle}
             style={styles.buttonStyle}
             textStyle={styles.buttonTextStyle}
           />
@@ -130,24 +177,42 @@ const FleetDashboard = () => {
         {activeTab === 'Drivers' && (
           <CustomButton
             label="+ Add Driver"
-            onPress={() => setDriverCount(driverCount + 1)}
+            onPress={handleAddDriver}
             style={styles.buttonStyle}
             textStyle={styles.buttonTextStyle}
           />
         )}
       </View>
 
-      {/* Empty State */}
-      <View style={styles.emptyWrapper}>
-        <Text style={styles.emptyText}>
-          {activeTab === 'Vehicles' ? 'No vehicle added' : 'No driver added'}
-        </Text>
-      </View>
+      {/* ✅ Show List or Empty State */}
+      {activeTab === 'Vehicles' ? (
+        vehicles.length > 0 ? (
+          <FlatList
+            data={vehicles}
+            keyExtractor={item => item.id}
+            renderItem={({ item }) => <FleetCard item={item} type="vehicle" />}
+          />
+        ) : (
+          <View style={styles.emptyWrapper}>
+            <Text style={styles.emptyText}>No vehicle added</Text>
+          </View>
+        )
+      ) : drivers.length > 0 ? (
+        <FlatList
+          data={drivers}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => <FleetCard item={item} type="driver" />}
+        />
+      ) : (
+        <View style={styles.emptyWrapper}>
+          <Text style={styles.emptyText}>No driver added</Text>
+        </View>
+      )}
     </AuthWrapper>
   );
 };
 
-export default FleetDashboard;
+export default Fleet;
 
 const styles = StyleSheet.create({
   statsRow: {
@@ -217,8 +282,6 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.BOLD,
     borderBottomColor: BASE_COLORS.SECONDARY,
   },
-
-  // ✅ Search Row styles
   searchRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -239,13 +302,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: moderateScale(8),
     height: moderateScale(40),
   },
-  input: {
-    flex: 1,
-    marginLeft: moderateScale(2),
-    color: BASE_COLORS.BLACK,
-  },
-
-  // ✅ Shared Button Styles
   buttonStyle: {
     marginHorizontal: 3,
     marginTop: 10,
@@ -260,7 +316,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: BASE_COLORS.WHITE,
   },
-
   emptyWrapper: {
     flex: 1,
     justifyContent: 'center',

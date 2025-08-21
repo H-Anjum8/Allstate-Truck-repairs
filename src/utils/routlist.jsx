@@ -60,6 +60,10 @@ import NavigateScreen from '../screens/Home/HomeScreens/MapViewScreen/NavigateSc
 import Fleet from '../screens/Home/HomeScreens/Fleet';
 import EditDriver from '../screens/Home/HomeScreens/Fleet/EditDriver';
 import AddDriver from '../screens/Home/HomeScreens/Fleet/AddDriver';
+import AddVehicle from '../screens/Home/HomeScreens/Fleet/AddVehicle';
+import EditVehicle from '../screens/Home/HomeScreens/Fleet/EditVehicle';
+import VehicalDetails from '../screens/Home/HomeScreens/Fleet/VehicalDetails';
+import DriverDetails from '../screens/Home/HomeScreens/Fleet/DriverDetails';
 
 const Routes = {
   Splash: {
@@ -565,9 +569,45 @@ const Routes = {
     },
     authRequired: false,
   },
+  AddVehicle: {
+    name: 'add_vehicle',
+    component: AddVehicle,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
   EditDriver: {
     name: 'edit_driver',
     component: EditDriver,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  EditVehicle: {
+    name: 'edit_vehicle',
+    component: EditVehicle,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  VehicalDetails: {
+    name: 'vehical_details',
+    component: VehicalDetails,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  DriverDetails: {
+    name: 'driver_details',
+    component: DriverDetails,
     options: {
       headerShown: false,
       gestureEnabled: false,
