@@ -156,11 +156,86 @@ export const getValidationSchema = formType => {
           .required('Email is required'),
         phone: Yup.string().required('Phone number is required'),
       });
-
     case 'contact_support':
       return Yup.object().shape({
         subject: Yup.string().required('Subject is required'),
         message: Yup.string().required('Message is required'),
+      });
+
+    case 'BookingSchema':
+      return Yup.object().shape({
+        description: Yup.string()
+          .trim()
+          .min(10, 'Description must be at least 10 characters')
+          .required('Description is required'),
+        photos: Yup.array()
+          .min(1, 'Please upload at least one photo')
+          .required('Please upload at least one photo'),
+      });
+    case 'AddVehicle':
+      return Yup.object().shape({
+        vehicleName: Yup.string().required('Vehicle name is required'),
+        make: Yup.string().required('Make is required'),
+        model: Yup.string().required('Model is required'),
+        year: Yup.string()
+          .matches(/^[0-9]{4}$/, 'Enter valid year')
+          .required('Year is required'),
+        licensePlate: Yup.string().required('License plate is required'),
+        vin: Yup.string().required('VIN is required'),
+      });
+    case 'EditVehicle':
+      return Yup.object().shape({
+        vehicleName: Yup.string().required('Vehicle name is required'),
+        make: Yup.string().required('Make is required'),
+        model: Yup.string().required('Model is required'),
+        year: Yup.string()
+          .matches(/^[0-9]{4}$/, 'Enter valid year')
+          .required('Year is required'),
+        licensePlate: Yup.string().required('License plate is required'),
+      });
+    case 'addDriver':
+      return Yup.object().shape({
+        fullName: Yup.string()
+          .required('Full name is required')
+          .min(3, 'Full name must be at least 3 characters'),
+
+        phone: Yup.string()
+          .required('Phone number is required')
+          .matches(/^[0-9]{10,15}$/, 'Enter a valid phone number'),
+
+        email: Yup.string()
+          .required('Email is required')
+          .email('Enter a valid email'),
+
+        licenseNumber: Yup.string()
+          .required('License number is required')
+          .min(4, 'License number must be at least 4 characters'),
+
+        licenseExpiry: Yup.string()
+          .required('License expiry is required')
+          .matches(/^\d{4}-\d{2}-\d{2}$/, 'Use format YYYY-MM-DD'),
+      });
+    case 'editDriver':
+      return Yup.object().shape({
+        fullName: Yup.string()
+          .required('Full name is required')
+          .min(3, 'Full name must be at least 3 characters'),
+
+        phone: Yup.string()
+          .required('Phone number is required')
+          .matches(/^[0-9]{10,15}$/, 'Enter a valid phone number'),
+
+        email: Yup.string()
+          .required('Email is required')
+          .email('Enter a valid email'),
+
+        licenseNumber: Yup.string()
+          .required('License number is required')
+          .min(4, 'License number must be at least 4 characters'),
+
+        licenseExpiry: Yup.string()
+          .required('License expiry is required')
+          .matches(/^\d{4}-\d{2}-\d{2}$/, 'Use format YYYY-MM-DD'),
       });
     default:
       return Yup.object();

@@ -18,14 +18,11 @@ const images = {
   USER3: require('../assets/user3.png'),
   EDIT_PROFILE: require('../assets/edit_profile.png'),
   INVITEFRIENDS: require('../assets/inviteFriends.png'),
-  // USER1: require('../assets/user1.jpg'),
-  // USER2: require('../assets/user2.jpg'),
-  // USER3: require('../assets/user3.jpg'),
-  // USER4: require('../assets/user4.jpg'),
-  // USER5: require('../assets/user5.jpg'),
-  // USER6: require('../assets/user6.jpg'),
-  // USER7: require('../assets/user7.jpg'),
-  // USER8: require('../assets/user8.jpg'),
+  USER4: require('../assets/user4.jpeg'),
+  USER5: require('../assets/user5.jpeg'),
+  USER6: require('../assets/user6.jpeg'),
+  USER7: require('../assets/user7.jpeg'),
+  USER8: require('../assets/user8.jpeg'),
 };
 
 const icons = {
@@ -68,6 +65,18 @@ const icons = {
   GARAGES: require('../assets/icons/garages.png'),
   HOTLE: require('../assets/icons/hotle.png'),
   ADD_LOCATION: require('../assets/icons/add_location.png'),
+  WAVEFORM: require('../assets/icons/waveform.png'),
+  EMERGENCY_ICON: require('../assets/icons/emergency_icon.png'),
+  DIRECTION: require('../assets/icons/direction.png'),
+  START: require('../assets/icons/start.png'),
+  DISTANCE: require('../assets/icons/distance.png'),
+  TIME: require('../assets/icons/time.png'),
+  FUEL: require('../assets/icons/fuel.png'),
+  COST: require('../assets/icons/fuel_cost.png'),
+  TOLL_ZONE: require('../assets/icons/toll_zone.png'),
+  ROUT_TYPE: require('../assets/icons/route.png'),
+  STOP: require('../assets/icons/stop.png'),
+  LOCATIONiCON: require('../assets/icons/location-colored.png'),
 };
 
 // Export assets

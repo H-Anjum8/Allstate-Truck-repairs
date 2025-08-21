@@ -4,20 +4,21 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  SafeAreaView,
   TextInput,
   FlatList,
   Image,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MyBookingHeader from '../../../../components/DashboardComponents/MyBookingHeader';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import AuthWrapper from '../../../../components/AuthWrapper';
 import { ICONS } from '../../../../utils/appAssets';
 import BASE_COLORS from '../../../../utils/colors';
 
 const AddStopsScreen = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const { start, destination } = route.params || {};
 
   const categories = [
     { id: '1', title: 'Hotels', icon: ICONS.HOTLE, screen: 'HotelsScreen' },
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 15,
     marginHorizontal: 5,
-    backgroundColor: '#f1f1f1',
+    backgroundColor: BASE_COLORS.BORDER_COLOR,
     borderRadius: 10,
   },
   categoryImage: {

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+      #map {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      const API_KEY = "${API_KEY}";
+      const garages = ${JSON.stringify(garages)};
+
+      const map = L.map('map').setView([43.6532, -79.3832], 6);
+
+      L.tileLayer('https://api.tomtom.com/map/1/tile/basic/night/{z}/{x}/{y}.png?key=' + API_KEY, {
+        attribution: '© TomTom'
+      }).addTo(map);
+
+      const garageIcon = L.icon({iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/blue.png', iconSize: [30,30]});
+
+      garages.forEach(g => {
+        L.marker([g.lat, g.lon], {icon: garageIcon})
+         .addTo(map)
+         .bindPopup(g.name);
+      });
+
+      // Fit map to all garage markers
+      if(garages.length > 0){
+        const group = new L.featureGroup(garages.map(g => L.marker([g.lat, g.lon])));
+        map.fitBounds(group.getBounds().pad(0.2));
+      }
+    </script>
+  </body>
+</html>

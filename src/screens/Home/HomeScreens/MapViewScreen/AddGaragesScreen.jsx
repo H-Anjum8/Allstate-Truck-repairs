@@ -13,23 +13,47 @@ import { WebView } from 'react-native-webview';
 import { useNavigation } from '@react-navigation/native';
 import { ICONS, IMAGES } from '../../../../utils/appAssets';
 import BASE_COLORS from '../../../../utils/colors';
+import { useSelector } from 'react-redux';
 
-const API_KEY = '0GiMexe38wEi9Zune3D2tLLfE9QAavfM';
+const API_KEY = 'mmOuOHPaeu4UIxzUcftugBPAPBkzYVE5';
 const { height } = Dimensions.get('window');
 
 export default function AddGaragesScreen() {
   const [garages, setGarages] = useState([]);
   const webViewRef = useRef(null);
   const navigation = useNavigation();
+  const { start, destination } = useSelector(state => state.location);
+  const [startCoords, setStartCoords] = useState(null);
+  const [destCoords, setDestCoords] = useState(null);
 
   useEffect(() => {
-    fetchGarages();
-  }, []);
+    if (start && destination) fetchData();
+  }, [start, destination]);
 
-  const fetchGarages = async () => {
+  const fetchData = async () => {
     try {
+      const geoRes = await fetch(
+        `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(
+          start,
+        )}.json?key=${API_KEY}&limit=1`,
+      );
+      const geoData = await geoRes.json();
+      const startLat = geoData.results[0].position.lat;
+      const startLon = geoData.results[0].position.lon;
+      setStartCoords([startLat, startLon]);
+
+      const destRes = await fetch(
+        `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(
+          destination,
+        )}.json?key=${API_KEY}&limit=1`,
+      );
+      const destData = await destRes.json();
+      const destLat = destData.results[0].position.lat;
+      const destLon = destData.results[0].position.lon;
+      setDestCoords([destLat, destLon]);
+
       const res = await fetch(
-        `https://api.tomtom.com/search/2/poiSearch/garage.json?lat=37.6879&lon=-122.4702&radius=5000&limit=10&key=${API_KEY}`,
+        `https://api.tomtom.com/search/2/poiSearch/garage.json?lat=${startLat}&lon=${startLon}&radius=5000&limit=10&key=${API_KEY}`,
       );
       const data = await res.json();
       const garagesList = data.results.map(g => ({
@@ -46,65 +70,57 @@ export default function AddGaragesScreen() {
     }
   };
 
-  const handleCardPress = garage => {
-    // Highlight marker on map
-    const jsCode = `
-      garages.forEach(g => {
-        if(g.id === "${garage.id}") {
-          g.marker.setIcon(L.icon({iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/blue.png', iconSize: [30, 30]}));
-          g.marker.openPopup();
-        } else {
-          g.marker.setIcon(L.icon({iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/red.png', iconSize: [25, 25]}));
-        }
-      });
-      true;
-    `;
-    webViewRef.current.injectJavaScript(jsCode);
-  };
-
   const handleAddStop = garage => {
-    // Navigate to another screen and pass garage location
     navigation.navigate('trip_planning', {
+      garageLat: garage.lat,
+      garageLon: garage.lon,
       garageName: garage.name,
-      latitude: garage.lat,
-      longitude: garage.lon,
+      startLoc: start,
+      destLoc: destination,
     });
   };
 
   const leafletHTML = `
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-        <style>
-          #map { height: 100%; width: 100%; margin:0; padding:0;}
-          html, body {height:100%; margin:0; padding:0;}
-        </style>
-      </head>
-      <body>
-        <div id="map"></div>
-        <script>
-          var garages = ${JSON.stringify(
-            garages.map(g => ({ ...g, marker: null })),
-          )};
-          var map = L.map('map').setView([37.6879, -122.4702], 14);
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+      <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+      <style>
+        #map { height: 100%; width: 100%; margin:0; padding:0;}
+        html, body {height:100%; margin:0; padding:0;}
+      </style>
+    </head>
+    <body>
+      <div id="map"></div>
+      <script>
+        const API_KEY = "${API_KEY}";
+        const garages = ${JSON.stringify(garages)};
 
-          L.tileLayer('https://api.tomtom.com/map/1/tile/basic/night/{z}/{x}/{y}.png?key=${API_KEY}', {
-            attribution: '© TomTom'
-          }).addTo(map);
+        const map = L.map('map').setView([43.6532, -79.3832], 6);
 
-          garages.forEach(function(g) {
-            g.marker = L.marker([g.lat, g.lon], {
-              icon: L.icon({iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/red.png', iconSize: [25, 25]})
-            }).addTo(map)
-            .bindPopup(g.name);
-          });
-        </script>
-      </body>
-    </html>
-  `;
+        L.tileLayer('https://api.tomtom.com/map/1/tile/basic/night/{z}/{x}/{y}.png?key=' + API_KEY, {
+          attribution: '© TomTom'
+        }).addTo(map);
+
+        const garageIcon = L.icon({iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/blue.png', iconSize: [30,30]});
+
+        garages.forEach(g => {
+          L.marker([g.lat, g.lon], {icon: garageIcon})
+           .addTo(map)
+           .bindPopup(g.name);
+        });
+
+        // Fit map to all garage markers
+        if(garages.length > 0){
+          const group = new L.featureGroup(garages.map(g => L.marker([g.lat, g.lon])));
+          map.fitBounds(group.getBounds().pad(0.2));
+        }
+      </script>
+    </body>
+  </html>
+`;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -156,7 +172,7 @@ export default function AddGaragesScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: 'yellow', height: 500 },
+  container: { flex: 1, backgroundColor: BASE_COLORS.WHITE },
   map: { flex: 1, height: 500 },
   listContainer: {
     position: 'absolute',

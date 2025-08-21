@@ -10,6 +10,7 @@ export const BASE_COLORS = {
   PRIMARY_SEMI: '#0006541A',
   CHAT: '#E9E9EB',
   // Neutrals
+  BLUE_BG: '#EAEAFD',
   LIGHT_GREEN: '#D4EAD6',
   LIGHT_BLACK: '#0000001A',
   BLACKISH: '#00000080',

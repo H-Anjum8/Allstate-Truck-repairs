@@ -7,11 +7,11 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { ICONS } from '../../../../utils/appAssets'; // your image icons
+import { ICONS } from '../../../../utils/appAssets';
 import MyBookingHeader from '../../../../components/DashboardComponents/MyBookingHeader';
 import { useNavigation } from '@react-navigation/native';
 import AuthWrapper from '../../../../components/AuthWrapper';
+import BASE_COLORS from '../../../../utils/colors';
 
 const categories = [
   { id: '1', title: 'Fuel Stations', icon: ICONS.FUEL_STATION },
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   },
   separator: {
     height: 1,
-    backgroundColor: '#e0e0e0',
+    backgroundColor: BASE_COLORS.LIGHT_GRAY,
     marginLeft: 55,
   },
 });

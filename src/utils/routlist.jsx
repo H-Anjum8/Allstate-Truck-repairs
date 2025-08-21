@@ -9,7 +9,7 @@ import Home from '../screens/Home';
 import IntroductionScreen from '../screens/IntroductionScreen';
 import SplashScreen from '../screens/SplashScreen';
 import { ICONS } from './appAssets';
-import Fleet from '../screens/Home/ManagerScreens/Fleet';
+
 // import MyJobs from '../screens/Home/DriverScreens/MyJobs';
 import RoleSelection from '../screens/RoleSelection';
 import UpdateEmail from '../screens/Auth/UpdateEmail';
@@ -56,6 +56,10 @@ import InviteFriends from '../screens/Home/CommonScreens/SettingScreens/InviteFr
 import MyRewardsScreen from '../screens/Home/CommonScreens/SettingScreens/MyRewardsScreen';
 import EmergencyServices from '../screens/Home/HomeScreens/EmergencyServices';
 import TripPlanning from '../screens/Home/HomeScreens/MapViewScreen/TripPlanning';
+import NavigateScreen from '../screens/Home/HomeScreens/MapViewScreen/NavigateScreen';
+import Fleet from '../screens/Home/HomeScreens/Fleet';
+import EditDriver from '../screens/Home/HomeScreens/Fleet/EditDriver';
+import AddDriver from '../screens/Home/HomeScreens/Fleet/AddDriver';
 
 const Routes = {
   Splash: {
@@ -536,6 +540,34 @@ const Routes = {
   AddGaragesScreen: {
     name: 'addGarages_screen',
     component: AddGaragesScreen,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  NavigateScreen: {
+    name: 'navigate_screen',
+    component: NavigateScreen,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  // Fleet screns
+  AddDriver: {
+    name: 'add_driver',
+    component: AddDriver,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  EditDriver: {
+    name: 'edit_driver',
+    component: EditDriver,
     options: {
       headerShown: false,
       gestureEnabled: false,

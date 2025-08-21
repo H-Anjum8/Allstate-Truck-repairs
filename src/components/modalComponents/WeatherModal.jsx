@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.7)',
   },
   modalBox: {
-    backgroundColor: '#fff',
+    backgroundColor: BASE_COLORS.WHITE,
     borderRadius: 12,
     padding: 20,
     width: '85%',
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     color: '#555',
   },
   closeButton: {
-    backgroundColor: 'red',
+    backgroundColor: BASE_COLORS.SECONDARY,
     marginTop: 15,
     paddingVertical: 12,
     borderRadius: 8,
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   closeText: {
-    color: '#fff',
+    color: BASE_COLORS.WHITE,
     fontSize: 16,
     fontWeight: '600',
   },

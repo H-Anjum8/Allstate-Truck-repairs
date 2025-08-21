@@ -23,10 +23,11 @@ const FilterScreen = () => {
   const [distance, setDistance] = useState(5);
   const [rating, setRating] = useState(4);
   const [showDiscounts, setShowDiscounts] = useState(true);
-  const [range, setRange] = useState([5, 20]);
+  const [range, setRange] = useState([15, 500]);
+  const [price, setPrice] = useState([5, 20]);
 
   const handleApplyFilter = () => {
-    console.log({ selectedServices, range, rating, showDiscounts });
+    console.log({ selectedServices, range, rating, showDiscounts, price });
     navigation.navigate('filter_result');
   };
 
@@ -41,6 +42,7 @@ const FilterScreen = () => {
   const resetFilters = () => {
     setSelectedServices([]);
     setRange([5, 20]);
+    setPrice([15, 500]);
     setRating(4);
     setShowDiscounts(true);
   };
@@ -90,7 +92,33 @@ const FilterScreen = () => {
           </ScrollView>
         </View>
       </View>
+      {/* price  */}
 
+      <View style={styles.card1}>
+        <Text style={styles.sectionTitle}>Pricing</Text>
+        <View style={styles.sliderconatiner}>
+          <MultiSlider
+            values={range}
+            min={0}
+            max={50}
+            step={1}
+            onValuesChange={setPrice}
+            sliderLength={280}
+            selectedStyle={{ backgroundColor: BASE_COLORS.PRIMARY }}
+            unselectedStyle={{ backgroundColor: BASE_COLORS.BORDER_COLOR }}
+            markerStyle={styles.marker}
+            pressedMarkerStyle={styles.pressedMarker}
+            containerStyle={styles.sliderContainer}
+            trackStyle={styles.track}
+            customLabel={() => null}
+          />
+          <View style={styles.labelRow}>
+            <Text style={styles.labelText}>{price[0]}K</Text>
+            <Text style={styles.labelText}>{price[1]}K</Text>
+          </View>
+        </View>
+      </View>
+      {/* Distance  */}
       <View style={styles.card1}>
         <Text style={styles.sectionTitle}>Distance (Radius from You)</Text>
         <View style={styles.sliderconatiner}>

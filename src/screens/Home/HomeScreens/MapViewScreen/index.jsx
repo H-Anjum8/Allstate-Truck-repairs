@@ -9,7 +9,6 @@ import {
   Dimensions,
   Platform,
   Image,
-  Modal,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { ICONS } from '../../../../utils/appAssets';
@@ -17,17 +16,19 @@ import BASE_COLORS from '../../../../utils/colors';
 import { useNavigation } from '@react-navigation/native';
 import WeatherModal from '../../../../components/modalComponents/WeatherModal';
 import GarageModal from '../../../../components/modalComponents/GarageModal';
+import CopilotModal from '../../../../components/modalComponents/CopilotModal';
 
 const { height } = Dimensions.get('window');
 
 // Your TomTom Key
-const TOMTOM_API_KEY = '0GiMexe38wEi9Zune3D2tLLfE9QAavfM';
+const TOMTOM_API_KEY = 'mmOuOHPaeu4UIxzUcftugBPAPBkzYVE5';
 
 export default function MapScreen() {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [selected, setSelected] = useState(null);
   const [garageModal, setGarageModal] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [selectedMarker, setSelectedMarker] = useState(null); // 👈 hold clicked marker
   const services = [
     { name: 'Repair', icon: ICONS.REPAIR },
@@ -179,7 +180,6 @@ export default function MapScreen() {
           }}
         />
         {/* Service Filters */}
-
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -259,7 +259,10 @@ export default function MapScreen() {
 
         {/* AI Copilot */}
         <View style={styles.mainaiBtn}>
-          <TouchableOpacity style={styles.aiBtn}>
+          <TouchableOpacity
+            style={styles.aiBtn}
+            onPress={() => setVisible(true)}
+          >
             <Image
               source={ICONS.COPILOT}
               style={{ width: 40, height: 40, resizeMode: 'contain' }}
@@ -275,6 +278,11 @@ export default function MapScreen() {
             AI Copilot
           </Text>
         </View>
+        <CopilotModal
+          visible={visible}
+          onClose={() => setVisible(false)}
+          message="Open Doug's garage Screen..."
+        />
       </View>
 
       {/* Start Trip Button */}
@@ -403,16 +411,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   card: {
-    backgroundColor: '#f5f5f5',
+    backgroundColor: BASE_COLORS.WHITE,
     padding: 10,
     borderRadius: 8,
     marginVertical: 5,
-  },
-  bookBtn: {
-    backgroundColor: 'red',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-    marginTop: 10,
   },
 });

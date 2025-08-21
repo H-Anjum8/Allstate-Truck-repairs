@@ -15,6 +15,7 @@ const FilterGarageCard = ({
   location,
   label,
   textstyle,
+  locationStyle,
   type,
 }) => {
   const handleBtn = values => {
@@ -27,7 +28,7 @@ const FilterGarageCard = ({
 
   const navigation = useNavigation();
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, textstyle]}>
       <View style={styles.cardHeader}>
         <View style={styles.cardcontent}>
           <Image
@@ -46,14 +47,14 @@ const FilterGarageCard = ({
         <Text style={styles.rating}>⭐ {rating}</Text>
       </View>
 
-      <Text style={[styles.address, textstyle]}>{address}</Text>
+      <Text style={styles.address}>{address}</Text>
       <View style={styles.locationContent}>
         <Image
           source={ICONS.LOCATION_COLOURED}
           style={styles.locationImage}
           resizeMode="contain"
         />
-        <Text style={styles.location}>{location}</Text>
+        <Text style={[styles.location, locationStyle]}>{location}</Text>
       </View>
       <CustomButton
         label={label}

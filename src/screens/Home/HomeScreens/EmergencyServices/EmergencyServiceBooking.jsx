@@ -14,27 +14,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
-import * as Yup from 'yup';
-
 import AuthWrapper from '../../../../components/AuthWrapper';
 import CustomHeader from '../../../../components/CustomHeaders';
 import BASE_COLORS from '../../../../utils/colors';
 import CustomButton from '../../../../components/CustomButton';
-
-// Validation schema
-const BookingSchema = Yup.object().shape({
-  description: Yup.string()
-    .trim()
-    .min(10, 'Description must be at least 10 characters')
-    .required('Description is required'),
-  photos: Yup.array()
-    .min(1, 'Please upload at least one photo')
-    .required('Please upload at least one photo'),
-});
-
+import { getValidationSchema } from '../../../../utils/validationSchema';
 export default function EmergencyServiceBooking() {
   const navigation = useNavigation();
-
   const handleAddPhoto = (setFieldValue, photos) => {
     launchImageLibrary(
       {
@@ -53,7 +39,6 @@ export default function EmergencyServiceBooking() {
       },
     );
   };
-
   return (
     <AuthWrapper>
       <KeyboardAvoidingView
@@ -85,7 +70,7 @@ export default function EmergencyServiceBooking() {
             description: '',
             photos: [],
           }}
-          validationSchema={BookingSchema}
+          validationSchema={getValidationSchema('BookingSchema')}
           onSubmit={values => {
             console.log('Form Submitted:', values);
             navigation.navigate('booking_done');

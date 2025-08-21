@@ -1,40 +1,75 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
 import ServiceListSection from '../../../../components/DashboardComponents/ServiceListSection';
 import { categories, featured } from '../../../../utils/staticData';
 import { ScrollView } from 'react-native';
 import PopularCategoryCard from '../../../../components/DashboardComponents/PopularCategoryCard';
 import BASE_COLORS from '../../../../utils/colors';
 import { FONTS } from '../../../../theme/fonts';
+import CopilotModal from '../../../../components/modalComponents/CopilotModal';
+import { ICONS } from '../../../../utils/appAssets';
+import { useNavigation } from '@react-navigation/native';
 
 const HomeView = () => {
+  const [visible, setVisible] = useState(false);
+  const navigation = useNavigation();
   return (
-    <View>
-      <ServiceListSection
-        title="Featured Services"
-        data={featured}
-        marginBottom={2}
-      />
+    <View style={styles.container}>
+      <ScrollView>
+        <ServiceListSection
+          title="Featured Services"
+          data={featured}
+          marginBottom={2}
+        />
 
-      <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>Popular Categories</Text>
-        <Text style={styles.viewAll}>View All</Text>
-      </View>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={{ marginBottom: 1, paddingHorizontal: 10 }}
-      >
-        {categories.map((cat, index) => (
-          <PopularCategoryCard key={index} {...cat} />
-        ))}
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Popular Categories</Text>
+          <Text style={styles.viewAll}>View All</Text>
+        </View>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={{ marginBottom: 1, paddingHorizontal: 10 }}
+        >
+          {categories.map((cat, index) => (
+            <PopularCategoryCard key={index} {...cat} />
+          ))}
+        </ScrollView>
+
+        <ServiceListSection
+          title="Nearby Services"
+          data={featured}
+          marginBottom={30}
+        />
+        {/* Emergency button */}
+        <TouchableOpacity
+          style={styles.emergencyBtn}
+          onPress={() => navigation.navigate('emergency_services')}
+        >
+          <Image
+            source={ICONS.EMERGENCY_ICON}
+            style={{ width: 30, height: 30 }}
+          />
+        </TouchableOpacity>
+
+        {/* AI Copilot */}
+        <View style={styles.mainaiBtn}>
+          <TouchableOpacity
+            style={styles.aiBtn}
+            onPress={() => setVisible(true)}
+          >
+            <Image
+              source={ICONS.COPILOT}
+              style={{ width: 40, height: 40, resizeMode: 'contain' }}
+            />
+          </TouchableOpacity>
+        </View>
+        <CopilotModal
+          visible={visible}
+          onClose={() => setVisible(false)}
+          message="Open Doug's garage Screen..."
+        />
       </ScrollView>
-
-      <ServiceListSection
-        title="Nearby Services"
-        data={featured}
-        marginBottom={30}
-      />
     </View>
   );
 };
@@ -43,6 +78,7 @@ export default HomeView;
 
 const styles = StyleSheet.create({
   container: {
+    position: 'relative',
     flex: 1,
     height: '100%',
     backgroundColor: BASE_COLORS.BORDER_COLOR,
@@ -73,4 +109,30 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.BOLD,
   },
   viewAll: { color: BASE_COLORS.DARK_GRAY, fontSize: 11 },
+  emergencyBtn: {
+    position: 'absolute',
+    backgroundColor: BASE_COLORS.SECONDARY,
+    right: 12,
+    bottom: 220,
+    padding: 12,
+    borderRadius: 8,
+
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  mainaiBtn: {
+    position: 'absolute',
+    right: 10,
+    bottom: 160,
+  },
+  aiBtn: {
+    backgroundColor: BASE_COLORS.WHITE,
+    borderColor: BASE_COLORS.SECONDARY,
+    borderWidth: 3,
+    paddingVertical: 2,
+    paddingHorizontal: 4,
+    width: 57,
+    borderRadius: 8,
+  },
 });

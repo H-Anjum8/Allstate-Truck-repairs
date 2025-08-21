@@ -7,7 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import { FONTS } from '../../theme/fonts';
 import BASE_COLORS from '../../utils/colors';
 import DashboardHeader from '../../components/DashboardComponents/DashboardHeader';

@@ -9,7 +9,6 @@ import {
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
 import BASE_COLORS from '../../../../utils/colors';
 import { featured } from '../../../../utils/staticData';
 import FilterGarageCard from '../../../../components/DashboardComponents/FilterGarageCard';
@@ -44,7 +43,7 @@ const EmergencyServices = () => {
           showDescription={true}
           showUsername={true}
         />
-        {/* Garage List */}
+
         <FlatList
           data={featured}
           keyExtractor={(_, index) => index.toString()}
@@ -54,7 +53,8 @@ const EmergencyServices = () => {
               <FilterGarageCard
                 {...item}
                 label="Book Now"
-                textstyle={{ fontSize: 10 }}
+                textstyle={{ fontSize: 8, width: 160 }}
+                locationStyle={{ fontSize: 7 }}
                 type="emergency_services"
               />
             </View>
@@ -70,15 +70,19 @@ const EmergencyServices = () => {
 export default EmergencyServices;
 
 const styles = StyleSheet.create({
-  cardList: {
-    backgroundColor: 'red',
-    paddingBottom: 3,
-    // width: '50%',
+  container: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    paddingHorizontal: 16,
+    paddingTop: 10,
+    paddingBottom: 8,
+    backgroundColor: BASE_COLORS.WHITE,
+  },
 
-    // paddingHorizontal: 6,
+  cardList: {
+    paddingBottom: 3,
   },
   cardWrapper: {
-    // width: '0%',
     padding: 2,
   },
 });

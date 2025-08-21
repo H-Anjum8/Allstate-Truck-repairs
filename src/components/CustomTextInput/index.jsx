@@ -14,17 +14,22 @@ const CustomTextInput = ({
   numberOfLines,
   inputContainerStyle,
   textInputStyle,
+  leftIcon,
 }) => {
   const [showPassword, setShowPassword] = useState(!secure);
 
   return (
     <View style={styles.container}>
-      <Ionicons
-        name={iconName}
-        size={20}
-        color={iconColor || COLORS.TEXT_INPUT_FIELD}
-        style={styles.icon}
-      />
+      {leftIcon ? (
+        leftIcon
+      ) : iconName ? (
+        <Ionicons
+          name={iconName}
+          size={20}
+          color={iconColor || COLORS.TEXT_INPUT_FIELD}
+          style={styles.icon}
+        />
+      ) : null}
       <TextInput
         style={[styles.input, textInputStyle]}
         placeholder={placeholder}
