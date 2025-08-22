@@ -17,6 +17,7 @@ const FilterGarageCard = ({
   textstyle,
   locationStyle,
   type,
+  iconStyle,
 }) => {
   const handleBtn = values => {
     if (type === 'emergency_services') {
@@ -51,7 +52,7 @@ const FilterGarageCard = ({
       <View style={styles.locationContent}>
         <Image
           source={ICONS.LOCATION_COLOURED}
-          style={styles.locationImage}
+          style={[styles.locationImage, iconStyle]}
           resizeMode="contain"
         />
         <Text style={[styles.location, locationStyle]}>{location}</Text>

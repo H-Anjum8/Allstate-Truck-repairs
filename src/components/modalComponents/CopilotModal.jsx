@@ -73,10 +73,10 @@ const styles = StyleSheet.create({
     borderColor: BASE_COLORS.SECONDARY,
   },
   robot: {
-    width: 100,
-    height: 100,
+    width: 120,
+    height: 120,
     position: 'absolute',
-    top: -60,
+    top: -78,
   },
   wave: {
     width: 120,

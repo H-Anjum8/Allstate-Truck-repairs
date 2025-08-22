@@ -51,14 +51,14 @@ export default function EmergencyServiceBooking() {
           username="Emergency Service Booking "
           usernameTextStyle={{
             fontSize: 21,
-            marginTop: -4,
+            marginTop: 8,
             color: BASE_COLORS.BLACK,
           }}
           descriptionTextStyle={{
             textAlign: 'left',
             fontSize: 12,
             paddingHorizontal: 2,
-            marginBottom: 25,
+            marginBottom: 14,
           }}
           showWelcomeText={false}
           showDescription={true}
@@ -137,10 +137,9 @@ export default function EmergencyServiceBooking() {
                   label="Continue"
                   onPress={handleSubmit}
                   style={{
-                    marginHorizontal: -4,
-                    marginTop: 50,
-                    height: 54,
-                    borderRadius: 20,
+                    marginHorizontal: 0,
+
+                    height: 56,
                   }}
                   textStyle={{ fontSize: 12 }}
                 />
@@ -155,26 +154,26 @@ export default function EmergencyServiceBooking() {
 
 const styles = StyleSheet.create({
   label: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: '500',
     marginBottom: 8,
   },
   maincontainer: {
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: '80%',
+    height: 595,
   },
   uploadBox: {
     borderWidth: 1,
     borderColor: BASE_COLORS.GRAY,
     borderStyle: 'dashed',
     backgroundColor: BASE_COLORS.GRAYIESH,
-    padding: 15,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
     borderRadius: 8,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 10,
   },
   uploadText: {
     fontSize: 14,
@@ -197,10 +196,11 @@ const styles = StyleSheet.create({
     borderColor: BASE_COLORS.BORDER_COLOR,
     borderRadius: 8,
     padding: 12,
-    fontSize: 14,
-    minHeight: 200,
+    fontSize: 10,
+    minHeight: 153,
     textAlignVertical: 'top',
     marginBottom: 5,
+    color: BASE_COLORS.GRAY,
   },
   errorText: {
     color: 'red',

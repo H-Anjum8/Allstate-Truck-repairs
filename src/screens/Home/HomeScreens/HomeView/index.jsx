@@ -41,6 +41,8 @@ const HomeView = () => {
           data={featured}
           marginBottom={30}
         />
+      </ScrollView>
+      <View style={styles.floatingLayer} pointerEvents="box-none">
         {/* Emergency button */}
         <TouchableOpacity
           style={styles.emergencyBtn}
@@ -69,7 +71,7 @@ const HomeView = () => {
           onClose={() => setVisible(false)}
           message="Open Doug's garage Screen..."
         />
-      </ScrollView>
+      </View>
     </View>
   );
 };
@@ -81,7 +83,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     flex: 1,
     height: '100%',
-    backgroundColor: BASE_COLORS.BORDER_COLOR,
+    backgroundColor: BASE_COLORS.WHITE,
   },
   location: {
     fontSize: 14,
@@ -90,7 +92,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   search: {
-    backgroundColor: '#fff',
+    backgroundColor: BASE_COLORS.WHITE,
     borderRadius: 8,
     padding: 10,
     marginHorizontal: 12,
@@ -134,5 +136,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
     width: 57,
     borderRadius: 8,
+  },
+  floatingLayer: {
+    position: 'absolute',
+    right: 0,
+    left: 0,
+    bottom: 0,
+    top: 0,
+    justifyContent: 'flex-end',
   },
 });

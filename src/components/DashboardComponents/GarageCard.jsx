@@ -67,7 +67,7 @@ export default GarageCard;
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: BASE_COLORS.BORDER_COLOR,
+    backgroundColor: BASE_COLORS.WHITE,
     paddingHorizontal: 16,
     paddingBottom: 18,
     paddingTop: 6,

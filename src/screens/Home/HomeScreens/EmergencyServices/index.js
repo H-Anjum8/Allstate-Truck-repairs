@@ -29,7 +29,7 @@ const EmergencyServices = () => {
           username="Emergency Service Booking "
           usernameTextStyle={{
             fontSize: 21,
-            marginTop: -4,
+            marginTop: 6,
 
             color: BASE_COLORS.BLACK,
           }}
@@ -37,7 +37,7 @@ const EmergencyServices = () => {
             textAlign: 'left',
             fontSize: 12,
             paddingHorizontal: 2,
-            marginBottom: 25,
+            marginBottom: 14,
           }}
           showWelcomeText={false}
           showDescription={true}
@@ -55,6 +55,7 @@ const EmergencyServices = () => {
                 label="Book Now"
                 textstyle={{ fontSize: 8, width: 160 }}
                 locationStyle={{ fontSize: 7 }}
+                iconStyle={{ height: 10, width: 10 }}
                 type="emergency_services"
               />
             </View>
@@ -83,6 +84,7 @@ const styles = StyleSheet.create({
     paddingBottom: 3,
   },
   cardWrapper: {
-    padding: 2,
+    paddingHorizontal: 2,
+    paddingVertical: 6,
   },
 });

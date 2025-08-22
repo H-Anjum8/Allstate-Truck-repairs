@@ -58,7 +58,6 @@ const WeatherModal = ({ visible, onClose, weatherData }) => {
             }}
           />
 
-          {/* Close Button */}
           <TouchableOpacity style={styles.closeButton} onPress={onClose}>
             <Text style={styles.closeText}>Close</Text>
           </TouchableOpacity>
@@ -91,11 +90,11 @@ const styles = StyleSheet.create({
   currentWeather: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 15,
+    marginBottom: 50,
   },
   temp: {
     fontSize: 40,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     marginRight: 8,
   },
   hourItem: {
@@ -113,7 +112,7 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     backgroundColor: BASE_COLORS.SECONDARY,
-    marginTop: 15,
+    marginVertical: 15,
     paddingVertical: 12,
     borderRadius: 8,
     width: '100%',
