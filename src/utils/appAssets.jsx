@@ -67,6 +67,7 @@ const icons = {
   ADD_LOCATION: require('../assets/icons/add_location.png'),
   WAVEFORM: require('../assets/icons/waveform.png'),
   EMERGENCY_ICON: require('../assets/icons/emergency_icon.png'),
+  EMERGENCY_RED_ICON: require('../assets/icons/emergrncy_red_icon.png'),
   DIRECTION: require('../assets/icons/direction.png'),
   START: require('../assets/icons/start.png'),
   DISTANCE: require('../assets/icons/distance.png'),

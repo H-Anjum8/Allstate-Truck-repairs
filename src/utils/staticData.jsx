@@ -374,3 +374,21 @@ export const filterTags = [
   'Smog Check',
   'Brake Inspection',
 ];
+
+export const all_services = [
+  { name: 'Repair', icon: ICONS.REPAIR },
+  { name: 'Parking', icon: ICONS.PARKING },
+  { name: 'Truck Stops', icon: ICONS.TRUCK },
+  { name: 'More', icon: ICONS.MORE },
+];
+
+export const dummyWeather = {
+  current: { temp: 29, icon: 'sunny' },
+  hourly: [
+    { id: '1', time: 'Now', temp: 29, icon: 'sunny' },
+    { id: '2', time: '1 PM', temp: 29, icon: 'sunny' },
+    { id: '3', time: '2 PM', temp: 29, icon: 'sunny' },
+    { id: '4', time: '3 PM', temp: 29, icon: 'sunny' },
+    { id: '5', time: '4 PM', temp: 29, icon: 'sunny' },
+  ],
+};

@@ -42,7 +42,7 @@ import MyBookingDetails from '../screens/Home/HomeScreens/MyBookingScreens/MyBoo
 import MyBookingCompleted from '../screens/Home/HomeScreens/MyBookingScreens/MyBookingCompleted';
 import PastBookingCompleted from '../screens/Home/HomeScreens/MyBookingScreens/PastBookingCompleted';
 import PastBookingCanceled from '../screens/Home/HomeScreens/MyBookingScreens/PastBookingCanceled';
-import Bookings from '../screens/Home/ManagerScreens/Bookings';
+// import Bookings from '../screens/Home/FleetManagerScreens/Bookings';
 import EmergencyServiceBooking from '../screens/Home/HomeScreens/EmergencyServices/EmergencyServiceBooking';
 import CategoriesScreen from '../screens/Home/HomeScreens/MapViewScreen/CategoriesScreen';
 import AddStopsScreen from '../screens/Home/HomeScreens/MapViewScreen/AddStopsScreen';
@@ -64,6 +64,7 @@ import AddVehicle from '../screens/Home/HomeScreens/Fleet/AddVehicle';
 import EditVehicle from '../screens/Home/HomeScreens/Fleet/EditVehicle';
 import VehicalDetails from '../screens/Home/HomeScreens/Fleet/VehicalDetails';
 import DriverDetails from '../screens/Home/HomeScreens/Fleet/DriverDetails';
+import FleetManagerHome from '../screens/Home/FleetManagerScreens';
 
 const Routes = {
   Splash: {
@@ -656,14 +657,21 @@ export const BOTTOM_ROUTES_USER = [
 export const BOTTOM_ROUTES_MANAGER = [
   {
     name: 'home',
-    component: Home,
+    component: FleetManagerHome,
     icon: ICONS.HOME,
     label: 'Home',
     options: { headerShown: false, gestureEnabled: false },
   },
   {
+    name: 'messages',
+    component: MessagesScreen,
+    icon: ICONS.MESSAGES,
+    label: 'Messages',
+    options: { headerShown: false, gestureEnabled: false },
+  },
+  {
     name: 'bookings',
-    component: Bookings,
+    component: MessagesScreen,
     icon: ICONS.BOOKING,
     label: 'Bookings',
     options: { headerShown: false, gestureEnabled: false },

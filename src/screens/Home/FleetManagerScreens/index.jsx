@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -7,14 +6,13 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+import React, { useState } from 'react';
+import DashboardHeader from '../../../components/DashboardComponents/DashboardHeader';
+import MapView from './MapViewScreens.jsx';
+import ServicesView from './ServicesViewScreens/index.jsx';
+import BASE_COLORS from '../../../utils/colors.jsx';
 
-import { FONTS } from '../../theme/fonts';
-import BASE_COLORS from '../../utils/colors';
-import DashboardHeader from '../../components/DashboardComponents/DashboardHeader';
-import HomeView from './HomeScreens/HomeView';
-import MapViewScreen from './HomeScreens/MapViewScreen';
-
-const Home = () => {
+const FleetManagerHome = () => {
   const [selectedTab, setSelectedTab] = useState('map');
   return (
     <ScrollView style={styles.container}>
@@ -59,13 +57,13 @@ const Home = () => {
         </View>
 
         {/* Content */}
-        {selectedTab === 'map' ? <MapViewScreen /> : <HomeView />}
+        {selectedTab === 'map' ? <MapView /> : <ServicesView />}
       </View>
     </ScrollView>
   );
 };
 
-export default Home;
+export default FleetManagerHome;
 
 const styles = StyleSheet.create({
   tabWrapper: {

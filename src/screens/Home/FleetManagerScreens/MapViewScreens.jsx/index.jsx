@@ -15,20 +15,18 @@ import { ICONS } from '../../../../utils/appAssets';
 import BASE_COLORS from '../../../../utils/colors';
 import { useNavigation } from '@react-navigation/native';
 import WeatherModal from '../../../../components/modalComponents/WeatherModal';
-import GarageModal from '../../../../components/modalComponents/GarageModal';
 import CopilotModal from '../../../../components/modalComponents/CopilotModal';
-import { all_services, dummyWeather } from '../../../../utils/staticData';
+import { dummyWeather } from '../../../../utils/staticData';
 
 const { height } = Dimensions.get('window');
 
 // Your TomTom Key
 const TOMTOM_API_KEY = 'mmOuOHPaeu4UIxzUcftugBPAPBkzYVE5';
 
-export default function MapScreen() {
+const MapView = () => {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
-  const [selected, setSelected] = useState(null);
-  const [garageModal, setGarageModal] = useState(false);
+
   const [visible, setVisible] = useState(false);
   const [selectedMarker, setSelectedMarker] = useState(null); // 👈 hold clicked marker
 
@@ -39,107 +37,104 @@ export default function MapScreen() {
       navigation.navigate('categories_screen');
     }
   };
-  const mapHtml = `
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Leaflet TomTom Map</title>
-    <link rel="stylesheet" href="leaflet.css"/>
-    <script src="leaflet.js"></script>
-    <style>
-      html, body, #map { margin:0; padding:0; width:100%; height:100%; }
+  const mapHtml = `   
+<!DOCTYPE html>   
+<html>     
+<head>       
+  <meta charset="utf-8"/>       
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>       
+  <title>Leaflet TomTom Map</title>       
+  <link rel="stylesheet" href="leaflet.css"/>       
+  <script src="leaflet.js"></script>       
+  <style>         
+    html, body, #map { margin:0; padding:0; width:100%; height:100%; }            
 
-      .leaflet-control-zoom {
-        margin-bottom: 84px !important;
-        margin-right: 20px;
-      }
+    .leaflet-control-zoom {           
+      margin-bottom: 84px !important;           
+      margin-right: 20px;         
+    }            
 
-      /* popup/label style */
-      .marker-label {
-        background:#fff;
-        padding:2px 6px;
-        border-radius:6px;
-        font-size:12px;
-        font-weight:bold;
-        border:1px solid #333;
-        white-space:nowrap;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="map"></div>
-    <script>
-      // Init map without default zoom control
-      const map = L.map('map', { zoomControl: false, attributionControl: false }).setView([43.6532, -79.3832], 6);
+    /* popup/label style */         
+    .marker-label {           
+      background:#fff;           
+      padding:2px 6px;           
+      border-radius:6px;           
+      font-size:12px;           
+      font-weight:bold;           
+      border:1px solid #333;           
+      white-space:nowrap;         
+    }       
+  </style>     
+</head>     
+<body>       
+  <div id="map"></div>       
+  <script>         
+    // Init map without default zoom control         
+    const map = L.map('map', { zoomControl: false, attributionControl: false }).setView([43.6532, -79.3832], 6);            
 
-      // Add TomTom tiles
-      L.tileLayer('https://api.tomtom.com/map/1/tile/basic/night/{z}/{x}/{y}.png?key=${TOMTOM_API_KEY}', {
-        attribution: '© TomTom',
-        maxZoom: 22
-      }).addTo(map);
+    // Add TomTom tiles         
+    L.tileLayer('https://api.tomtom.com/map/1/tile/basic/night/{z}/{x}/{y}.png?key=${TOMTOM_API_KEY}', {           
+      attribution: '© TomTom',           
+      maxZoom: 22         
+    }).addTo(map);            
 
-      // Add markers
-      const places = [
-        { coords: [43.6532, -79.3832], label: "Toronto Garage" },
-        { coords: [45.4215, -75.6972], label: "Ottawa Garage" },
-        { coords: [44.2312, -76.4860], label: "Kingston Garage" },
-        { coords: [46.8139, -71.2080], label: "Quebec City Garage" },
-        { coords: [49.2827, -123.1207], label: "Vancouver Garage" },
-        { coords: [51.0447, -114.0719], label: "Calgary Garage" },
-      ];
+    // Add markers         
+    const places = [           
+      { coords: [43.6532, -79.3832], label: "Toronto Garage" },           
+      { coords: [45.4215, -75.6972], label: "Ottawa Garage" },           
+      { coords: [44.2312, -76.4860], label: "Kingston Garage" },           
+      { coords: [46.8139, -71.2080], label: "Quebec City Garage" },           
+      { coords: [49.2827, -123.1207], label: "Vancouver Garage" },           
+      { coords: [51.0447, -114.0719], label: "Calgary Garage" },         
+    ];            
 
-      // default (red) and selected (green) marker icons
-      const defaultIcon = new L.Icon({
-        iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-        shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41],
-        className: "marker-red"
-      });
+    // 🚗 CHANGE HERE: replaced location pin with car icons
+    const defaultIcon = new L.Icon({           
+      iconUrl: 'https://cdn-icons-png.flaticon.com/512/744/744465.png', // car icon
+      iconSize: [32, 32], // adjusted size for car
+      iconAnchor: [16, 32], 
+      popupAnchor: [0, -28],           
+      className: "marker-car-red"         
+    });            
 
-      const selectedIcon = new L.Icon({
-        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-        shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41],
-        className: "marker-green"
-      });
+    const selectedIcon = new L.Icon({           
+      iconUrl: 'https://cdn-icons-png.flaticon.com/512/744/744465.png', // green car icon
+      iconSize: [32, 32], 
+      iconAnchor: [16, 32], 
+      popupAnchor: [0, -28],           
+      className: "marker-car-green"         
+    });            
+    // 🚗 END CHANGE
 
-      let selectedMarker = null;
+    let selectedMarker = null;            
 
-      places.forEach(p => {
-        const marker = L.marker(p.coords, { icon: defaultIcon, title: p.label }).addTo(map).bindPopup(p.label);
+    places.forEach(p => {           
+      const marker = L.marker(p.coords, { icon: defaultIcon, title: p.label }).addTo(map).bindPopup(p.label);              
 
-        marker.on('click', function() {
-          // reset old selected marker
-          if (selectedMarker) {
-            selectedMarker.setIcon(defaultIcon);
-          }
+      marker.on('click', function() {             
+        // reset old selected marker             
+        if (selectedMarker) {               
+          selectedMarker.setIcon(defaultIcon);             
+        }                
 
-          // set new selected
-          marker.setIcon(selectedIcon);
-          selectedMarker = marker;
+        // set new selected             
+        marker.setIcon(selectedIcon);             
+        selectedMarker = marker;                
 
-          // send name back to React Native
-          if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
-            window.ReactNativeWebView.postMessage(p.label);
-          } else {
-            console.log("ReactNativeWebView not ready");
-          }
-        });
-      });
+        // send name back to React Native             
+        if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {               
+          window.ReactNativeWebView.postMessage(p.label);             
+        } else {               
+          console.log("ReactNativeWebView not ready");             
+        }           
+      });         
+    });            
 
-      // Add zoom control to right side
-      L.control.zoom({ position: 'bottomright' }).addTo(map);
-    </script>
-  </body>
-</html>
+    // Add zoom control to right side         
+    L.control.zoom({ position: 'bottomright' }).addTo(map);       
+  </script>     
+</body>   
+</html>   
 `;
 
   return (
@@ -158,56 +153,12 @@ export default function MapScreen() {
           javaScriptEnabled
           domStorageEnabled
           style={styles.map}
-          onMessage={event => {
-            console.log('📩 Message from WebView:', event.nativeEvent.data);
-            const markerLabel = event.nativeEvent.data;
-            setSelectedMarker(markerLabel);
-            setGarageModal(true);
-          }}
         />
-        {/* Service Filters */}
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.servicesRow}
-        >
-          {all_services.map((item, index) => (
-            <TouchableOpacity
-              key={index}
-              style={[
-                styles.serviceBtn,
-                selected === index && { backgroundColor: 'red' }, // highlight selected
-              ]}
-              onPress={() => handlePress(item, index)}
-            >
-              <Image
-                source={item.icon}
-                style={{ width: 14, height: 14, resizeMode: 'contain' }}
-              />
-              <Text
-                style={{
-                  color:
-                    selected === index ? BASE_COLORS.WHITE : BASE_COLORS.BLACK,
-                  fontSize: 11,
-                }}
-              >
-                {item.name}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+
         <WeatherModal
           visible={modalVisible}
           onClose={() => setModalVisible(false)}
           weatherData={dummyWeather}
-        />
-        {/* 🚀 Bottom Garage Modal */}
-        <GarageModal
-          visible={garageModal}
-          onClose={() => setGarageModal(false)}
-          title={selectedMarker || 'Garage'}
-          buttonLabel="Book Now"
-          onButtonPress={() => console.log('Booking...')}
         />
 
         {/* weather button */}
@@ -254,15 +205,6 @@ export default function MapScreen() {
               style={{ width: 40, height: 40, resizeMode: 'contain' }}
             />
           </TouchableOpacity>
-          <Text
-            style={{
-              color: BASE_COLORS.WHITE,
-              fontWeight: 'bold',
-              fontSize: 10,
-            }}
-          >
-            AI Copilot
-          </Text>
         </View>
         <CopilotModal
           visible={visible}
@@ -280,8 +222,9 @@ export default function MapScreen() {
       </TouchableOpacity>
     </SafeAreaView>
   );
-}
+};
 
+export default MapView;
 const styles = StyleSheet.create({
   container: { flex: 1 },
 
@@ -317,7 +260,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     gap: 6,
     left: 13,
-    top: 54,
+    top: 20,
     paddingVertical: 5,
     paddingHorizontal: 12,
     borderRadius: 12,
