@@ -65,6 +65,9 @@ import EditVehicle from '../screens/Home/HomeScreens/Fleet/EditVehicle';
 import VehicalDetails from '../screens/Home/HomeScreens/Fleet/VehicalDetails';
 import DriverDetails from '../screens/Home/HomeScreens/Fleet/DriverDetails';
 import FleetManagerHome from '../screens/Home/FleetManagerScreens';
+import FleetTripPlanning from '../screens/Home/FleetManagerScreens/MapViewScreens.jsx/FleetTripPlanning';
+import LocationSearch from '../screens/Home/FleetManagerScreens/MapViewScreens.jsx/LocationSearch';
+import DriverSelection from '../screens/Home/FleetManagerScreens/MapViewScreens.jsx/DriverSelection';
 
 const Routes = {
   Splash: {
@@ -609,6 +612,35 @@ const Routes = {
   DriverDetails: {
     name: 'driver_details',
     component: DriverDetails,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+
+  // ===========================fleet manager screens ==================
+  FleetTripPlanning: {
+    name: 'fleet_trip_planning',
+    component: FleetTripPlanning,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  LocationSearch: {
+    name: 'location_search',
+    component: LocationSearch,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  DriverSelection: {
+    name: 'driver_selection',
+    component: DriverSelection,
     options: {
       headerShown: false,
       gestureEnabled: false,

@@ -216,7 +216,7 @@ const MapView = () => {
       {/* Start Trip Button */}
       <TouchableOpacity
         style={styles.tripBtn}
-        onPress={() => navigation.navigate('trip_planning')}
+        onPress={() => navigation.navigate('fleet_trip_planning')}
       >
         <Text style={styles.tripBtnText}>Start Trip Planning</Text>
       </TouchableOpacity>
