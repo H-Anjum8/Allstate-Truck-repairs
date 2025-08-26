@@ -180,7 +180,11 @@ const MapView = () => {
         {/* Emergency button */}
         <TouchableOpacity
           style={styles.emergencyBtn}
-          onPress={() => navigation.navigate('emergency_services')}
+          onPress={() =>
+            navigation.navigate('emergency_services', {
+              type: 'verify',
+            })
+          }
         >
           <Image source={ICONS.EMERGENCY} style={{ width: 30, height: 30 }} />
           <Text
@@ -315,8 +319,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     paddingVertical: 10,
     borderTopWidth: 1,
-    borderColor: '#ddd',
-    backgroundColor: '#fff',
+    borderColor: BASE_COLORS.LIGHT_GRAY,
+    backgroundColor: BASE_COLORS.WHITE,
   },
   navItem: { alignItems: 'center' },
   navText: { fontSize: 12, marginTop: 2 },

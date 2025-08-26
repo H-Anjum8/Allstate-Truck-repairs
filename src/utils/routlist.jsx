@@ -68,6 +68,12 @@ import FleetManagerHome from '../screens/Home/FleetManagerScreens';
 import FleetTripPlanning from '../screens/Home/FleetManagerScreens/MapViewScreens.jsx/FleetTripPlanning';
 import LocationSearch from '../screens/Home/FleetManagerScreens/MapViewScreens.jsx/LocationSearch';
 import DriverSelection from '../screens/Home/FleetManagerScreens/MapViewScreens.jsx/DriverSelection';
+import Emergency_Booking from '../screens/Home/FleetManagerScreens/MapViewScreens.jsx/Emergency_Booking';
+import FleetBookServices from '../screens/Home/FleetManagerScreens/MapViewScreens.jsx/FleetBookServices';
+import FleetEmergencyServices from '../screens/Home/FleetManagerScreens/MapViewScreens.jsx/FleetEmergencyServices';
+import FleetConfirmBooking from '../screens/Home/FleetManagerScreens/MapViewScreens.jsx/FleetEmergencyServices/FleetConfirmBooking';
+import FleetServicesSelection from '../screens/Home/FleetManagerScreens/MapViewScreens.jsx/FleetEmergencyServices/FleetServicesSelection';
+// import FleetServicesSelection from '../screens/Home/FleetManagerScreens/MapViewScreens.jsx/FleetServicesSelection';
 
 const Routes = {
   Splash: {
@@ -641,6 +647,44 @@ const Routes = {
   DriverSelection: {
     name: 'driver_selection',
     component: DriverSelection,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+
+  FleetEmergencyServices: {
+    name: 'fleet_emergency_services',
+    component: FleetEmergencyServices,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  // Emergency_Booking: {
+  //   name: 'fleet_emergency_booking',
+  //   component: Emergency_Booking,
+  //   options: {
+  //     headerShown: false,
+  //     gestureEnabled: false,
+  //   },
+  //   authRequired: false,
+  // },
+
+  FleetServicesSelection: {
+    name: 'fleet_services_selection',
+    component: FleetServicesSelection,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  FleetConfirmBooking: {
+    name: 'fleet_confirm_booking',
+    component: FleetConfirmBooking,
     options: {
       headerShown: false,
       gestureEnabled: false,

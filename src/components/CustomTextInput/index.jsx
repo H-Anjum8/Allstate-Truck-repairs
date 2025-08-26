@@ -19,7 +19,7 @@ const CustomTextInput = ({
   const [showPassword, setShowPassword] = useState(!secure);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, inputContainerStyle]}>
       {leftIcon ? (
         leftIcon
       ) : iconName ? (

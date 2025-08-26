@@ -20,10 +20,10 @@ const FilterGarageCard = ({
   iconStyle,
 }) => {
   const handleBtn = values => {
-    if (type === 'emergency_services') {
-      navigation.navigate('emergency_booking');
+    if (type === 'verify') {
+      navigation.navigate('service_selection');
     } else {
-      navigation.navigate('garage_details');
+      navigation.navigate('fleet_services_selection');
     }
   };
 

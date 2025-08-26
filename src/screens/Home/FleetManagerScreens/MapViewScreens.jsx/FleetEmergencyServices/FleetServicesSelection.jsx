@@ -7,15 +7,15 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import ServiceSelectionCard from '../../../components/DashboardComponents/ServiceSelectionCard';
-import AuthWrapper from '../../../components/AuthWrapper';
-import CustomHeader from '../../../components/CustomHeaders';
-import BASE_COLORS from '../../../utils/colors';
-import CustomButton from '../../../components/CustomButton';
+import ServiceSelectionCard from '../../../../../components/DashboardComponents/ServiceSelectionCard';
+import AuthWrapper from '../../../../../components/AuthWrapper';
+import CustomHeader from '../../../../../components/CustomHeaders';
+import BASE_COLORS from '../../../../../utils/colors';
+import CustomButton from '../../../../../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
-import { initialServices } from '../../../utils/staticData';
+import { initialServices } from '../../../../../utils/staticData';
 
-export default function ServiceSelection() {
+export default function FleetServicesSelection() {
   const [services, setServices] = useState(initialServices);
 
   const toggleService = id => {
@@ -27,13 +27,6 @@ export default function ServiceSelection() {
   const selectedServices = services.filter(s => s.added);
   const total = selectedServices.reduce((sum, s) => sum + s.price, 0);
 
-  // const handleNavigate = () => {
-  //   if (naviagte === 'fleet_book_services') {
-  //     Navigation.navigate('fleet_book_services');
-  //   } else {
-  //     Navigation.navigate('booking_details');
-  //   }
-  // };
   return (
     <AuthWrapper>
       <CustomHeader
@@ -78,7 +71,7 @@ export default function ServiceSelection() {
       </View>
       <CustomButton
         label="Continue to Booking"
-        onPress={() => Navigation.navigate('booking_details')}
+        onPress={() => Navigation.navigate('fleet_confirm_booking')}
         style={{ marginHorizontal: 3, marginTop: 14, height: 56 }}
         textStyle={{ fontSize: 12 }}
       />

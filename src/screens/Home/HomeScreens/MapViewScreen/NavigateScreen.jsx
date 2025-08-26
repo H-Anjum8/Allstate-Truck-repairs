@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
   },
   directionArrow: { fontSize: 24, color: BASE_COLORS.WHITE, marginRight: 10 },
   directionText: { color: BASE_COLORS.WHITE, fontSize: 18, fontWeight: 'bold' },
-  subDirectionText: { color: '#ccc', fontSize: 14 },
+  subDirectionText: { color: BASE_COLORS.GRAYIESH, fontSize: 14 },
   bottomCard: {
     position: 'absolute',
     bottom: 30,
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   timeText: { fontSize: 16, color: BASE_COLORS.WHITE, fontWeight: '600' },
-  distanceText: { fontSize: 14, color: '#ccc' },
+  distanceText: { fontSize: 14, color: BASE_COLORS.GRAYIESH },
   exitBtn: {
     backgroundColor: BASE_COLORS.WHITE,
     paddingVertical: 8,

@@ -152,7 +152,7 @@ const ServicesView = () => {
 
         <CustomButton
           label="Continue to Booking"
-          onPress={() => navigation.navigate('service_selection')}
+          onPress={() => navigation.navigate('fleet_emergency_services')}
           style={{ marginHorizontal: 2, height: 54 }}
           textStyle={{ fontSize: 14, color: 'white' }}
         />

@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   start: null,
   destination: null,
+  origin: null,
 };
 
 const locationSlice = createSlice({
@@ -18,10 +19,12 @@ const locationSlice = createSlice({
     setLocations: (state, action) => {
       state.start = action.payload.start;
       state.destination = action.payload.destination;
+      state.origin = action.payload.origin;
     },
     clearLocations: state => {
       state.start = null;
       state.destination = null;
+      state.origin = null; // reset origin too
     },
   },
 });

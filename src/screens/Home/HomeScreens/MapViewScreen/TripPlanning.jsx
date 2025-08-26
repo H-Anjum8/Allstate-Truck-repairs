@@ -25,7 +25,7 @@ export default function TripPlanning() {
   const route = useRoute();
   const webRef = useRef(null);
   const dispatch = useDispatch();
-
+  const { origin } = route.params || {};
   const { garageLat, garageLon, garageName, startLoc, destLoc } =
     route.params || {};
   const [start, setStart] = useState(startLoc || 'Toronto, Ontario');
@@ -89,7 +89,7 @@ export default function TripPlanning() {
     );
   };
   useEffect(() => {
-    dispatch(setLocations({ start, destination }));
+    dispatch(setLocations({ start, destination, origin }));
     computeRoute();
   }, [start, destination, garageLat, garageLon]);
 
@@ -146,53 +146,71 @@ export default function TripPlanning() {
         </View>
         {/* iNPUT  */}
         <View style={styles.inputCard}>
-          {/* Start Location */}
-          <View style={styles.row}>
-            <View style={styles.iconColumn}>
-              <View style={styles.startCircle} />
-              <View style={styles.dashedLine} />
-            </View>
-            <TextInput
-              style={styles.input}
-              placeholder="Start Location"
-              value={start}
-              onChangeText={setStart}
-              placeholderTextColor="#9aa0a6"
+          <View style={{ position: 'relative' }}>
+            <Ionicons
+              name="swap-vertical-sharp"
+              size={24}
+              color="#000"
+              style={[
+                {
+                  position: 'absolute',
+                  right: -24,
+                },
+                garageLat && garageLon
+                  ? { top: 55, right: -24 }
+                  : { top: 34, right: -20 },
+              ]}
             />
-          </View>
-
-          {/* Garage Stop (if exists) */}
-          {garageLat && garageLon ? (
-            <View style={styles.row}>
+            {/* Start Location */}
+            <TouchableOpacity style={styles.row}>
               <View style={styles.iconColumn}>
-                <View style={styles.midCircle} />
+                <View style={styles.startCircle}>
+                  <View style={styles.innerCircle} />
+                </View>
                 <View style={styles.dashedLine} />
               </View>
               <TextInput
-                style={[styles.input, { marginTop: 8 }]}
-                placeholder="Stop (Garage)"
-                value={garageName || `${garageLat}, ${garageLon}`}
-                editable={false}
+                style={styles.input}
+                placeholder="Start Location"
+                value={start}
+                onChangeText={setStart}
                 placeholderTextColor="#9aa0a6"
               />
-            </View>
-          ) : null}
+            </TouchableOpacity>
+            {/* Garage Stop (if exists) */}
+            {garageLat && garageLon ? (
+              <View style={styles.row}>
+                <View style={styles.iconColumn}>
+                  <View style={styles.midCircle} />
+                  <View style={styles.dashedLine} />
+                </View>
+                <TextInput
+                  style={[styles.input, { marginTop: 8 }]}
+                  placeholder="Stop (Garage)"
+                  value={garageName || `${garageLat}, ${garageLon}`}
+                  editable={false}
+                  placeholderTextColor="#9aa0a6"
+                />
+              </View>
+            ) : null}
 
-          {/* Destination Location */}
-          <View style={styles.row}>
-            <View style={styles.iconColumn}>
-              <Image
-                source={ICONS.LOCATIONiCON}
-                style={{ width: 17, height: 20 }}
+            {/* Destination Location */}
+            <TouchableOpacity style={styles.row}>
+              <View style={styles.iconColumn}>
+                <View style={styles.dashedLine} />
+                <Image
+                  source={ICONS.LOCATIONiCON}
+                  style={{ width: 17, height: 20, marginBottom: 10 }}
+                />
+              </View>
+              <TextInput
+                style={[styles.input1, { marginTop: 8 }]}
+                placeholder="Destination Location"
+                value={destination}
+                onChangeText={setDestination}
+                placeholderTextColor="#9aa0a6"
               />
-            </View>
-            <TextInput
-              style={[styles.input1, { marginTop: 8 }]}
-              placeholder="Destination Location"
-              value={destination}
-              onChangeText={setDestination}
-              placeholderTextColor="#9aa0a6"
-            />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -473,13 +491,14 @@ const styles = StyleSheet.create({
   },
   inputCard: {
     position: 'absolute',
-    width: '90%',
+    width: '93%',
     marginHorizontal: 12,
     top: 55,
     borderRadius: 14,
-    paddingHorizontal: 12,
+    paddingLeft: 6,
+    paddingRight: 30,
     borderWidth: 1,
-    borderColor: '#2c3340',
+    borderColor: BASE_COLORS.BLACK,
     backgroundColor: BASE_COLORS.WHITE,
   },
   row: {
@@ -491,13 +510,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   startCircle: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
+    position: 'relative',
+    width: 16,
+    height: 16,
+    borderRadius: 50,
     borderWidth: 2,
-    borderColor: '#00008B',
-    backgroundColor: BASE_COLORS.PRIMARY,
+    borderColor: BASE_COLORS.PRIMARY,
+    backgroundColor: BASE_COLORS.WHITE,
     marginTop: 8,
+  },
+  innerCircle: {
+    position: 'absolute',
+    left: 1,
+    top: 1,
+    width: 10,
+    height: 10,
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: BASE_COLORS.PRIMARY,
+    backgroundColor: BASE_COLORS.PRIMARY,
   },
   midCircle: {
     width: 12,
@@ -506,21 +537,21 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: BASE_COLORS.PRIMARY,
     backgroundColor: BASE_COLORS.WHITE,
-    marginBottom: 2,
+    marginTop: 20,
   },
   endPin: {
     width: 14,
     height: 14,
     borderRadius: 7,
-    backgroundColor: 'red',
+    backgroundColor: BASE_COLORS.SECONDARY,
 
     marginTop: 8,
   },
   dashedLine: {
     flex: 1,
-    height: 30,
-    borderLeftWidth: 2,
-    borderColor: '#00008B',
+    height: 10,
+    borderLeftWidth: 1.5,
+    borderColor: BASE_COLORS.PRIMARY,
     borderStyle: 'dashed',
     marginTop: 4,
   },
@@ -553,7 +584,7 @@ const styles = StyleSheet.create({
     left: 20,
     position: 'absolute',
   },
-  addStopText: { color: '#fff', fontWeight: '700' },
+  addStopText: { color: BASE_COLORS.WHITE, fontWeight: '700', fontSize: 12 },
   mapWrap: {
     flex: 1,
 
@@ -582,7 +613,7 @@ const styles = StyleSheet.create({
   },
   // tabBtnActive: { backgroundColor: BASE_COLORS.PRIMARY },
   tabText: { color: BASE_COLORS.GRAY, fontWeight: '700' },
-  tabTextActive: { color: '#ff3b30' },
+  tabTextActive: { color: BASE_COLORS.SECONDARY },
   infoCard: {
     backgroundColor: BASE_COLORS.WHITE,
     marginHorizontal: 12,
@@ -597,20 +628,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: 10,
-    borderBottomColor: '#eef1f4',
+    borderBottomColor: BASE_COLORS.WHITE,
     borderBottomWidth: 1,
   },
-  infoLabel: { color: '#6b7280', fontWeight: '600' },
-  infoValue: { color: '#1f2937', fontWeight: '700' },
+  infoLabel: { color: BASE_COLORS.GRAY, fontWeight: '600' },
+  infoValue: { color: BASE_COLORS.BLACK, fontWeight: '700' },
   noData: { textAlign: 'center', paddingVertical: 20, color: '#6b7280' },
   cta: {
-    backgroundColor: '#ff3b30',
+    backgroundColor: BASE_COLORS.SECONDARY,
     margin: 12,
     paddingVertical: 14,
     alignItems: 'center',
     borderRadius: 12,
   },
-  ctaText: { color: '#fff', fontSize: 16, fontWeight: '800' },
+  ctaText: { color: BASE_COLORS.WHITE, fontSize: 13, fontWeight: '800' },
   iconButton: {
     justifyContent: 'center',
     alignItems: 'center',

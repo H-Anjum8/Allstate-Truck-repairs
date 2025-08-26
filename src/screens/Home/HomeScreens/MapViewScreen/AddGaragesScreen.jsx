@@ -22,7 +22,7 @@ export default function AddGaragesScreen() {
   const [garages, setGarages] = useState([]);
   const webViewRef = useRef(null);
   const navigation = useNavigation();
-  const { start, destination } = useSelector(state => state.location);
+  const { start, destination, origin } = useSelector(state => state.location);
   const [startCoords, setStartCoords] = useState(null);
   const [destCoords, setDestCoords] = useState(null);
 
@@ -71,13 +71,19 @@ export default function AddGaragesScreen() {
   };
 
   const handleAddStop = garage => {
-    navigation.navigate('trip_planning', {
+    const params = {
       garageLat: garage.lat,
       garageLon: garage.lon,
       garageName: garage.name,
       startLoc: start,
       destLoc: destination,
-    });
+    };
+
+    if (origin === 'fleet_trip_planning') {
+      navigation.navigate('fleet_trip_planning', params);
+    } else {
+      navigation.navigate('trip_planning', params);
+    }
   };
 
   const leafletHTML = `
