@@ -11,10 +11,11 @@ import {
   Dimensions,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { IMAGES } from '../../../../utils/appAssets';
 import BASE_COLORS from '../../../../utils/colors';
 import { useNavigation } from '@react-navigation/native';
+import CustomButton from '../../../../components/CustomButton';
+import CustomHeader from '../../../../components/CustomHeaders';
 const { width } = Dimensions.get('window');
 const VehicalDetails = () => {
   const navigation = useNavigation();
@@ -28,16 +29,17 @@ const VehicalDetails = () => {
           imageStyle={styles.bgImage}
         >
           <View style={styles.header_container}>
-            <TouchableOpacity
-              style={styles.backButton}
-              onPress={() => navigation.goBack()}
-            >
-              <Ionicons
-                name="chevron-back"
-                size={18}
-                color={BASE_COLORS.WHITE}
-              />
-            </TouchableOpacity>
+            <CustomHeader
+              leftIcon={
+                <Ionicons
+                  name="chevron-back"
+                  size={24}
+                  color={BASE_COLORS.WHITE}
+                />
+              }
+              onLeftPress={() => navigation.goBack()}
+              showWelcomeText={false}
+            />
           </View>
           <Text style={styles.headerTitle}>Freightliner TX-9821</Text>
         </ImageBackground>
@@ -127,17 +129,18 @@ const VehicalDetails = () => {
           >
             <Ionicons
               name="trash-outline"
-              size={18}
+              size={22}
               color={BASE_COLORS.SECONDARY}
             />
           </TouchableOpacity>
 
-          <TouchableOpacity
+          <CustomButton
+            label="Edit"
             style={styles.editBtn}
             onPress={() => navigation.navigate('edit_vehicle')}
           >
             <Text style={styles.editText}>Edit</Text>
-          </TouchableOpacity>
+          </CustomButton>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -162,31 +165,26 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     marginLeft: 20,
   },
-  backButton: {
-    padding: 4,
-    borderWidth: 1,
-    borderRadius: 20,
-    borderColor: BASE_COLORS.WHITE,
-  },
+
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: BASE_COLORS.WHITE,
   },
 
   headerTitle: {
-    color: '#fff',
+    color: BASE_COLORS.WHITE,
     fontSize: 16,
     fontWeight: '600',
     alignSelf: 'center',
     marginBottom: 20,
   },
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: BASE_COLORS.WHITE,
     marginHorizontal: 15,
     marginTop: 15,
     borderRadius: 12,
     padding: 15,
-    shadowColor: '#000',
+    shadowColor: BASE_COLORS.BLACK,
     shadowOpacity: 0.05,
     shadowRadius: 5,
     elevation: 2,
@@ -201,7 +199,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 12,
-    color: '#777',
+    color: BASE_COLORS.GRAY,
   },
   value: {
     fontSize: 14,
@@ -230,7 +228,8 @@ const styles = StyleSheet.create({
   },
   driverContact: {
     fontSize: 10,
-    color: '#777',
+    color: BASE_COLORS.GRAY,
+    paddingLeft: 4,
   },
   serviceRow: {
     flexDirection: 'row',
@@ -243,7 +242,7 @@ const styles = StyleSheet.create({
   },
   serviceSub: {
     fontSize: 12,
-    color: '#777',
+    color: BASE_COLORS.GRAY,
   },
   servicePrice: {
     fontSize: 14,
@@ -251,16 +250,16 @@ const styles = StyleSheet.create({
   },
   serviceDate: {
     fontSize: 12,
-    color: '#777',
+    color: BASE_COLORS.GRAY,
   },
   divider: {
     height: 1,
-    backgroundColor: '#eee',
+    backgroundColor: BASE_COLORS.BORDER_COLOR,
     marginVertical: 10,
   },
   btnRow: {
     flexDirection: 'row',
-    marginHorizontal: 15,
+    marginHorizontal: 22,
     marginTop: 50,
     justifyContent: 'space-between',
   },
@@ -269,18 +268,21 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 12,
     width: 60,
+    height: 55,
     alignItems: 'center',
   },
   editBtn: {
-    backgroundColor: '#E53935',
+    backgroundColor: BASE_COLORS.SECONDARY,
     padding: 15,
     borderRadius: 12,
     flex: 1,
     marginLeft: 10,
     alignItems: 'center',
+    marginHorizontal: 3,
+    height: 54,
   },
   editText: {
-    color: '#fff',
+    color: BASE_COLORS.WHITE,
     fontSize: 14,
     fontWeight: '600',
   },

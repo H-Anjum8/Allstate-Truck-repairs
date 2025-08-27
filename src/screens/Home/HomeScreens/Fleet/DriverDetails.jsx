@@ -14,24 +14,32 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { IMAGES } from '../../../../utils/appAssets';
 import { useNavigation } from '@react-navigation/native';
 import BASE_COLORS from '../../../../utils/colors';
+import CustomButton from '../../../../components/CustomButton';
+import CustomHeader from '../../../../components/CustomHeaders';
 const { width } = Dimensions.get('window');
 export default function DriverDetails() {
   const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header with back button and profile image */}
-      {/* <View style={styles.header}>
-       
-      </View> */}
       <ImageBackground
         source={IMAGES.HEADER_BG}
         style={styles.bg_container}
         resizeMode="cover"
         imageStyle={styles.bgImage}
       >
-        <TouchableOpacity style={styles.backBtn}>
-          <Ionicons name="chevron-back" size={22} color="#fff" />
-        </TouchableOpacity>
+        <View style={styles.header_container}>
+          <CustomHeader
+            leftIcon={
+              <Ionicons
+                name="chevron-back"
+                size={24}
+                color={BASE_COLORS.WHITE}
+              />
+            }
+            onLeftPress={() => navigation.goBack()}
+            showWelcomeText={false}
+          />
+        </View>
       </ImageBackground>
       <Image source={IMAGES.USER1} style={styles.profileImage} />
 
@@ -47,11 +55,11 @@ export default function DriverDetails() {
       <View style={styles.card}>
         <Text style={styles.sectionTitle}>Details</Text>
         <View style={styles.row}>
-          <MaterialIcons name="phone" size={18} color="red" />
+          <MaterialIcons name="phone" size={18} color={BASE_COLORS.SECONDARY} />
           <Text style={styles.infoText}>+1 234 567 890</Text>
         </View>
         <View style={styles.row}>
-          <MaterialIcons name="email" size={18} color="red" />
+          <MaterialIcons name="email" size={18} color={BASE_COLORS.SECONDARY} />
           <Text style={styles.infoText}>George@gmail.com</Text>
         </View>
       </View>
@@ -79,23 +87,24 @@ export default function DriverDetails() {
         <TouchableOpacity style={styles.deleteBtn}>
           <Ionicons
             name="trash-outline"
-            size={18}
+            size={22}
             color={BASE_COLORS.SECONDARY}
           />
         </TouchableOpacity>
-        <TouchableOpacity
+        <CustomButton
+          label="Edit"
           style={styles.editBtn}
           onPress={() => navigation.navigate('edit_driver')}
         >
           <Text style={styles.editText}>Edit</Text>
-        </TouchableOpacity>
+        </CustomButton>
       </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
+  container: { flex: 1, backgroundColor: BASE_COLORS.WHITE },
   bg_container: {
     width,
     borderBottomLeftRadius: 8,
@@ -105,20 +114,16 @@ const styles = StyleSheet.create({
   },
   header: {
     height: 160,
-    backgroundColor: '#0B1033',
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
     alignItems: 'center',
     justifyContent: 'flex-end',
     paddingBottom: 15,
   },
-  backBtn: {
-    position: 'absolute',
-    top: 15,
-    left: 15,
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    borderRadius: 20,
-    padding: 5,
+  header_container: {
+    flexDirection: 'row',
+    paddingVertical: 20,
+    marginLeft: 20,
   },
   profileImage: {
     width: 90,
@@ -127,14 +132,14 @@ const styles = StyleSheet.create({
     marginTop: -50,
     borderRadius: 45,
     borderWidth: 3,
-    borderColor: '#fff',
+    borderColor: BASE_COLORS.WHITE,
   },
 
   nameSection: { alignItems: 'center', marginTop: 10 },
   name: { fontSize: 20, fontWeight: 'bold', color: '#000' },
   roleTag: {
     marginTop: 5,
-    backgroundColor: '#EDEDED',
+    backgroundColor: BASE_COLORS.CHAT,
     paddingHorizontal: 12,
     paddingVertical: 4,
     borderRadius: 15,
@@ -142,14 +147,13 @@ const styles = StyleSheet.create({
   roleText: { fontSize: 12, color: BASE_COLORS.BLACK },
 
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: BASE_COLORS.WHITE,
     borderRadius: 12,
     padding: 15,
     marginHorizontal: 15,
     marginTop: 12,
-
     elevation: 2,
-    shadowColor: '#000',
+    shadowColor: BASE_COLORS.BLACK,
     shadowOpacity: 0.1,
     shadowRadius: 3,
   },
@@ -160,16 +164,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  infoText: { marginLeft: 0, fontSize: 14, color: '#000' },
+  infoText: { marginLeft: 0, fontSize: 14, color: BASE_COLORS.BLACK },
   subText: { fontSize: 12, color: 'gray', marginTop: 4 },
 
   tag: {
-    backgroundColor: '#EDEDED',
+    backgroundColor: BASE_COLORS.CHAT,
     paddingHorizontal: 10,
     paddingVertical: 3,
-    borderRadius: 12,
+    borderRadius: 15,
   },
-  tagText: { fontSize: 12, color: '#000' },
+  tagText: { fontSize: 12, color: BASE_COLORS.BLACK },
 
   footer: {
     flexDirection: 'row',
@@ -177,18 +181,33 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     marginTop: 70,
   },
+  btnRow: {
+    flexDirection: 'row',
+    marginHorizontal: 22,
+    marginTop: 50,
+    justifyContent: 'space-between',
+  },
   deleteBtn: {
     backgroundColor: BASE_COLORS.RED_BG,
     padding: 15,
     borderRadius: 12,
+    width: 60,
+    height: 55,
+    alignItems: 'center',
   },
   editBtn: {
-    flex: 1,
-    backgroundColor: '#E53935',
-    marginLeft: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: BASE_COLORS.SECONDARY,
+    padding: 15,
     borderRadius: 12,
+    flex: 1,
+    marginLeft: 10,
+    alignItems: 'center',
+    marginHorizontal: 3,
+    height: 54,
   },
-  editText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
+  editText: {
+    color: BASE_COLORS.WHITE,
+    fontSize: 14,
+    fontWeight: '600',
+  },
 });

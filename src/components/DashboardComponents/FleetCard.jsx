@@ -28,14 +28,17 @@ const FleetCard = ({ item, type }) => {
     <View style={styles.card}>
       {/* Header */}
       <View style={styles.cardHeader}>
-        <View style={styles.badge}>
-          {type === 'vehicle' && (
-            <Text style={styles.badgeText}>{item.plate}</Text>
-          )}
-        </View>
-        <View style={styles.statusPill}>
-          <Text style={styles.statusText}>{item.status}</Text>
-        </View>
+        {type === 'vehicle' && (
+          <>
+            <View style={styles.badge}>
+              <Text style={styles.badgeText}>{item.plate}</Text>
+            </View>
+
+            <View style={styles.statusPill}>
+              <Text style={styles.statusText}>{item.status}</Text>
+            </View>
+          </>
+        )}
       </View>
 
       {/* Title */}

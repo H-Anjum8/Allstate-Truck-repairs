@@ -23,6 +23,9 @@ const images = {
   USER6: require('../assets/user6.jpeg'),
   USER7: require('../assets/user7.jpeg'),
   USER8: require('../assets/user8.jpeg'),
+  WORK1: require('../assets/WORK1.png'),
+  WORK2: require('../assets/WORK2.png'),
+  WORK3: require('../assets/WORK3.png'),
 };
 
 const icons = {

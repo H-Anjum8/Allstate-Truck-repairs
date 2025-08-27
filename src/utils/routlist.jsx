@@ -73,6 +73,13 @@ import FleetBookServices from '../screens/Home/FleetManagerScreens/MapViewScreen
 import FleetEmergencyServices from '../screens/Home/FleetManagerScreens/MapViewScreens.jsx/FleetEmergencyServices';
 import FleetConfirmBooking from '../screens/Home/FleetManagerScreens/MapViewScreens.jsx/FleetEmergencyServices/FleetConfirmBooking';
 import FleetServicesSelection from '../screens/Home/FleetManagerScreens/MapViewScreens.jsx/FleetEmergencyServices/FleetServicesSelection';
+import FleetBooking from '../screens/Home/FleetManagerScreens/FleetBookingScreens';
+import FleetBookingDetails from '../screens/Home/FleetManagerScreens/FleetBookingScreens/FleetConfirmDetails';
+import FleetConfirmDetails from '../screens/Home/FleetManagerScreens/FleetBookingScreens/FleetConfirmDetails';
+import FleetCompletedDetails from '../screens/Home/FleetManagerScreens/FleetBookingScreens/FleetCompletedDetails';
+import FleetCancelDetails from '../screens/Home/FleetManagerScreens/FleetBookingScreens/FleetCancelDetails';
+import ServicesView from '../screens/Home/FleetManagerScreens/ServicesViewScreens';
+import NotificationsScreen from '../screens/Home/CommonScreens/NotificationsScreen';
 // import FleetServicesSelection from '../screens/Home/FleetManagerScreens/MapViewScreens.jsx/FleetServicesSelection';
 
 const Routes = {
@@ -624,8 +631,35 @@ const Routes = {
     },
     authRequired: false,
   },
-
+  ServicesView: {
+    name: 'services_view',
+    component: ServicesView,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  NotificationsScreen: {
+    name: 'notifications_creen',
+    component: NotificationsScreen,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
   // ===========================fleet manager screens ==================
+  FleetManagerHome: {
+    name: 'fleet_manager_home',
+    component: FleetManagerHome,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+
   FleetTripPlanning: {
     name: 'fleet_trip_planning',
     component: FleetTripPlanning,
@@ -691,6 +725,44 @@ const Routes = {
     },
     authRequired: false,
   },
+
+  //================= Fleet my booking screens ================
+  FleetBooking: {
+    name: 'fleet_booking',
+    component: FleetBooking,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  FleetConfirmDetails: {
+    name: 'fleet_confirm_details',
+    component: FleetConfirmDetails,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  FleetCompletedDetails: {
+    name: 'fleet_completed_details',
+    component: FleetCompletedDetails,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
+  FleetCancelDetails: {
+    name: 'fleet_cancel_details',
+    component: FleetCancelDetails,
+    options: {
+      headerShown: false,
+      gestureEnabled: false,
+    },
+    authRequired: false,
+  },
 };
 export const BOTTOM_ROUTES_USER = [
   {
@@ -747,18 +819,18 @@ export const BOTTOM_ROUTES_MANAGER = [
   },
   {
     name: 'bookings',
-    component: MessagesScreen,
+    component: FleetBooking,
     icon: ICONS.BOOKING,
     label: 'Bookings',
     options: { headerShown: false, gestureEnabled: false },
   },
-  // {
-  //   name: 'fleet',
-  //   component: Fleet,
-  //   icon: ICONS.FLEET,
-  //   label: 'Fleet',
-  //   options: { headerShown: false, gestureEnabled: false },
-  // },
+  {
+    name: 'fleet',
+    component: Fleet,
+    icon: ICONS.FLEET,
+    label: 'Fleet',
+    options: { headerShown: false, gestureEnabled: false },
+  },
   {
     name: 'setting',
     component: Setting,

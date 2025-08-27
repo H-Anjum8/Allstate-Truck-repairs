@@ -40,7 +40,10 @@ const DashboardHeader = () => {
               <Text style={styles.locationAddressText}>Ontario, Canada</Text>
             </View>
           </View>
-          <TouchableOpacity style={styles.notificationButton}>
+          <TouchableOpacity
+            style={styles.notificationButton}
+            onPress={() => navigation.navigate('notifications_creen')}
+          >
             <Ionicons name="notifications-outline" size={20} color="#000" />
           </TouchableOpacity>
         </View>

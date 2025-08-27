@@ -3,9 +3,9 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import BASE_COLORS from '../../utils/colors';
 
-export default function LocationCard() {
+export default function LocationCard({ cardstyle }) {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, cardstyle]}>
       <Ionicons name="location-outline" size={20} color="#fff" />
       <Text style={styles.text}>456 Repair Lane, Springfield, IL</Text>
       <TouchableOpacity style={styles.button}>
