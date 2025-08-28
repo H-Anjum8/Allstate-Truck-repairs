@@ -28,6 +28,24 @@ const NotificationsScreen = () => {
       time: '5 mins ago',
       isCurrent: true,
     },
+    {
+      id: 2,
+      avatar: IMAGES.GARAGE,
+      title: "Dougy's Garage",
+      message: 'added ‘Suspension Alignment’ ($45) to your service.',
+      subText: 'Accept or decline now.',
+      time: '5 mins ago',
+      isCurrent: false,
+    },
+    {
+      id: 3,
+      avatar: IMAGES.USER3,
+      title: "Dougy's Garage",
+      message: 'added ‘Brake Pad Replacement’ ($80) to your service.',
+      subText: 'Accept or decline now.',
+      time: '4 mins ago',
+      isCurrent: false,
+    },
   ];
 
   return (
@@ -100,7 +118,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderColor: BASE_COLORS.BORDER_COLOR,
     padding: 12,
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
   notificationCurrentCard: {
     flexDirection: 'row',
@@ -109,7 +127,7 @@ const styles = StyleSheet.create({
     marginTop: 1,
     borderRadius: 12,
     padding: 12,
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
   avatar: {
     width: 36,

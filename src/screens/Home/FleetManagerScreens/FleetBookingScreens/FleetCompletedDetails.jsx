@@ -12,7 +12,7 @@ import LocationCard from '../../../../components/LocationCard';
 import CompletionProofCard from '../../../../components/DashboardComponents/CompletionProofCard';
 import { fleetCancelDummy } from '../../../../utils/staticData';
 
-const FleetCancelDetails = () => {
+const FleetCompletedDetails = () => {
   const navigation = useNavigation();
   const [reviewModalVisible, setReviewModalVisible] = useState(false);
 
@@ -191,12 +191,13 @@ const FleetCancelDetails = () => {
           onClose={() => setReviewModalVisible(false)}
           onSubmit={handleReviewSubmit}
         />
+
         <CustomButton
           label="Rebook"
           onPress={() => navigation.navigate('fleet_manager_home')}
           style={{
             marginHorizontal: 3,
-            marginTop: 10,
+            marginTop: -6,
             height: 53,
             backgroundColor: BASE_COLORS.WHITE,
             borderWidth: 1,
@@ -390,4 +391,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FleetCancelDetails;
+export default FleetCompletedDetails;

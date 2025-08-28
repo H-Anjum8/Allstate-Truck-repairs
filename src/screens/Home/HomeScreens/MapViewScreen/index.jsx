@@ -18,6 +18,7 @@ import WeatherModal from '../../../../components/modalComponents/WeatherModal';
 import GarageModal from '../../../../components/modalComponents/GarageModal';
 import CopilotModal from '../../../../components/modalComponents/CopilotModal';
 import { all_services, dummyWeather } from '../../../../utils/staticData';
+import FuleModal from '../../../../components/modalComponents/FuleModal';
 
 const { height } = Dimensions.get('window');
 
@@ -29,117 +30,189 @@ export default function MapScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [selected, setSelected] = useState(null);
   const [garageModal, setGarageModal] = useState(false);
+  const [fuelModal, setFuelModal] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [selectedMarker, setSelectedMarker] = useState(null); // 👈 hold clicked marker
+  const [selectedMarker, setSelectedMarker] = useState(null);
+
+  // 👇 serviceType extended
+  const [serviceType, setServiceType] = useState(null); // null = show all
 
   const handlePress = (item, index) => {
     setSelected(index);
 
     if (item.name === 'More') {
       navigation.navigate('categories_screen');
+    } else if (item.name === 'Fuel Station') {
+      setServiceType('Fuel');
+    } else if (item.name === 'Repair') {
+      setServiceType('Repair');
+    } else if (item.name === 'Parking') {
+      setServiceType('Parking');
+    } else if (item.name === 'Truck Stop') {
+      setServiceType('TruckStop');
     }
   };
+
+  // 🚗 Data Sets
+  const garagePlaces = [
+    { coords: [43.6532, -79.3832], label: 'Toronto Garage', type: 'Repair' },
+    { coords: [45.4215, -75.6972], label: 'Ottawa Garage', type: 'Repair' },
+    { coords: [44.2312, -76.486], label: 'Kingston Garage', type: 'Repair' },
+  ];
+
+  const fuelStations = [
+    {
+      coords: [43.7001, -79.4163],
+      label: 'Toronto Fuel Station',
+      type: 'Fuel',
+    },
+    {
+      coords: [45.5017, -73.5673],
+      label: 'Montreal Fuel Station',
+      type: 'Fuel',
+    },
+  ];
+
+  const parkingSpots = [
+    {
+      coords: [43.65107, -79.347015],
+      label: 'Toronto Parking',
+      type: 'Parking',
+    },
+    { coords: [45.4215, -75.6972], label: 'Ottawa Parking', type: 'Parking' },
+  ];
+
+  const truckStops = [
+    { coords: [44.6488, -63.5752], label: 'Halifax Hotel', type: 'TruckStop' },
+    {
+      coords: [49.2827, -123.1207],
+      label: 'Vancouver Hotel',
+      type: 'TruckStop',
+    },
+
+    // ✅ Added more truck stop locations
+    {
+      coords: [43.6532, -79.3832],
+      label: 'Toronto Truck Stop',
+      type: 'TruckStop',
+    },
+    {
+      coords: [45.4215, -75.6972],
+      label: 'Ottawa Truck Plaza',
+      type: 'TruckStop',
+    },
+    {
+      coords: [51.0447, -114.0719],
+      label: 'Calgary Roadhouse',
+      type: 'TruckStop',
+    },
+    {
+      coords: [53.5461, -113.4938],
+      label: 'Edmonton Rest Stop',
+      type: 'TruckStop',
+    },
+    {
+      coords: [46.8139, -71.208],
+      label: 'Quebec City Truck Inn',
+      type: 'TruckStop',
+    },
+  ];
+
+  // 🔀 Logic: choose dataset
+  let placesToShow = [];
+  if (serviceType === 'Fuel') {
+    placesToShow = fuelStations;
+  } else if (serviceType === 'Repair') {
+    placesToShow = garagePlaces;
+  } else if (serviceType === 'Parking') {
+    placesToShow = parkingSpots;
+  } else if (serviceType === 'TruckStop') {
+    placesToShow = truckStops;
+  } else {
+    // default all together
+    placesToShow = [
+      ...fuelStations,
+      ...garagePlaces,
+      ...parkingSpots,
+      ...truckStops,
+    ];
+  }
+
   const mapHtml = `
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Leaflet TomTom Map</title>
-    <link rel="stylesheet" href="leaflet.css"/>
-    <script src="leaflet.js"></script>
-    <style>
-      html, body, #map { margin:0; padding:0; width:100%; height:100%; }
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="utf-8"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <title>Leaflet TomTom Map</title>
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+      <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+      <style>
+        html, body, #map { margin:0; padding:0; width:100%; height:100%; }
+        .leaflet-control-zoom {
+          margin-bottom: 84px !important;
+          margin-right: 20px;
+        }
+      </style>
+    </head>
+    <body>
+      <div id="map"></div>
+      <script>
+        const map = L.map('map', { zoomControl: false, attributionControl: false })
+          .setView([43.6532, -79.3832], 5);
 
-      .leaflet-control-zoom {
-        margin-bottom: 84px !important;
-        margin-right: 20px;
-      }
+        L.tileLayer('https://api.tomtom.com/map/1/tile/basic/night/{z}/{x}/{y}.png?key=${TOMTOM_API_KEY}', {
+          attribution: '© TomTom',
+          maxZoom: 22
+        }).addTo(map);
 
-      /* popup/label style */
-      .marker-label {
-        background:#fff;
-        padding:2px 6px;
-        border-radius:6px;
-        font-size:12px;
-        font-weight:bold;
-        border:1px solid #333;
-        white-space:nowrap;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="map"></div>
-    <script>
-      // Init map without default zoom control
-      const map = L.map('map', { zoomControl: false, attributionControl: false }).setView([43.6532, -79.3832], 6);
+        // icons
+        const icons = {
+          Fuel: new L.Icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+            shadowUrl: 'https://unpkg.com/leaflet/dist/images/marker-shadow.png',
+            iconSize:[25,41], iconAnchor:[12,41]
+          }),
+          Repair: new L.Icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
+            shadowUrl: 'https://unpkg.com/leaflet/dist/images/marker-shadow.png',
+            iconSize:[25,41], iconAnchor:[12,41]
+          }),
+          Parking: new L.Icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png',
+            shadowUrl: 'https://unpkg.com/leaflet/dist/images/marker-shadow.png',
+            iconSize:[25,41], iconAnchor:[12,41]
+          }),
+          TruckStop: new L.Icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png',
+            shadowUrl: 'https://unpkg.com/leaflet/dist/images/marker-shadow.png',
+            iconSize:[25,41], iconAnchor:[12,41]
+          })
+        };
 
-      // Add TomTom tiles
-      L.tileLayer('https://api.tomtom.com/map/1/tile/basic/night/{z}/{x}/{y}.png?key=${TOMTOM_API_KEY}', {
-        attribution: '© TomTom',
-        maxZoom: 22
-      }).addTo(map);
+        const places = ${JSON.stringify(placesToShow)};
 
-      // Add markers
-      const places = [
-        { coords: [43.6532, -79.3832], label: "Toronto Garage" },
-        { coords: [45.4215, -75.6972], label: "Ottawa Garage" },
-        { coords: [44.2312, -76.4860], label: "Kingston Garage" },
-        { coords: [46.8139, -71.2080], label: "Quebec City Garage" },
-        { coords: [49.2827, -123.1207], label: "Vancouver Garage" },
-        { coords: [51.0447, -114.0719], label: "Calgary Garage" },
-      ];
-
-      // default (red) and selected (green) marker icons
-      const defaultIcon = new L.Icon({
-        iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-        shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41],
-        className: "marker-red"
-      });
-
-      const selectedIcon = new L.Icon({
-        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-        shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41],
-        className: "marker-green"
-      });
-
-      let selectedMarker = null;
-
-      places.forEach(p => {
-        const marker = L.marker(p.coords, { icon: defaultIcon, title: p.label }).addTo(map).bindPopup(p.label);
-
-        marker.on('click', function() {
-          // reset old selected marker
-          if (selectedMarker) {
-            selectedMarker.setIcon(defaultIcon);
-          }
-
-          // set new selected
-          marker.setIcon(selectedIcon);
-          selectedMarker = marker;
-
-          // send name back to React Native
-          if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
-            window.ReactNativeWebView.postMessage(p.label);
-          } else {
-            console.log("ReactNativeWebView not ready");
-          }
+        // Render markers and send both label and type back to RN
+        places.forEach(p => {
+          const iconType = p.type || 'Repair';
+          L.marker(p.coords, { icon: icons[iconType], title: p.label })
+            .addTo(map)
+            .bindPopup(p.label)
+            .on('click', () => {
+              if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
+                // send JSON string with label and type
+                window.ReactNativeWebView.postMessage(JSON.stringify({
+                  label: p.label,
+                  type: p.type || null
+                }));
+              }
+            });
         });
-      });
 
-      // Add zoom control to right side
-      L.control.zoom({ position: 'bottomright' }).addTo(map);
-    </script>
-  </body>
-</html>
+        L.control.zoom({ position: 'bottomright' }).addTo(map);
+      </script>
+    </body>
+  </html>
 `;
 
   return (
@@ -148,23 +221,30 @@ export default function MapScreen() {
       <View style={styles.mapContainer}>
         <WebView
           originWhitelist={['*']}
-          source={{
-            html: mapHtml,
-            baseUrl:
-              Platform.OS === 'android'
-                ? 'file:///android_asset/' // Android local path
-                : './assets/leaflet/', // iOS local path
-          }}
+          source={{ html: mapHtml }}
           javaScriptEnabled
           domStorageEnabled
           style={styles.map}
           onMessage={event => {
-            console.log('📩 Message from WebView:', event.nativeEvent.data);
-            const markerLabel = event.nativeEvent.data;
-            setSelectedMarker(markerLabel);
-            setGarageModal(true);
+            const data = JSON.parse(event.nativeEvent.data);
+
+            // Always store label
+            setSelectedMarker(data.label);
+
+            // Show card only for Fuel & Repair
+            if (data.type === 'Repair') {
+              setGarageModal(true); // open garage modal
+              setFuelModal(false);
+            } else if (data.type === 'Fuel') {
+              setFuelModal(true); // open fuel modal
+              setGarageModal(false);
+            } else {
+              setGarageModal(false);
+              setFuelModal(false);
+            }
           }}
         />
+
         {/* Service Filters */}
         <ScrollView
           horizontal
@@ -176,7 +256,7 @@ export default function MapScreen() {
               key={index}
               style={[
                 styles.serviceBtn,
-                selected === index && { backgroundColor: 'red' }, // highlight selected
+                selected === index && { backgroundColor: 'red' },
               ]}
               onPress={() => handlePress(item, index)}
             >
@@ -196,12 +276,13 @@ export default function MapScreen() {
             </TouchableOpacity>
           ))}
         </ScrollView>
+
+        {/* Modals */}
         <WeatherModal
           visible={modalVisible}
           onClose={() => setModalVisible(false)}
           weatherData={dummyWeather}
         />
-        {/* 🚀 Bottom Garage Modal */}
         <GarageModal
           visible={garageModal}
           onClose={() => setGarageModal(false)}
@@ -210,7 +291,13 @@ export default function MapScreen() {
           onButtonPress={() => console.log('Booking...')}
         />
 
-        {/* weather button */}
+        <FuleModal
+          visible={fuelModal}
+          onClose={() => setFuelModal(false)}
+          title={selectedMarker || 'Fuel'}
+          buttonLabel="Book Now"
+          onButtonPress={() => console.log('Booking...')}
+        />
         <TouchableOpacity
           style={styles.weatherBtn}
           onPress={() => setModalVisible(true)}
@@ -226,7 +313,8 @@ export default function MapScreen() {
             31
           </Text>
         </TouchableOpacity>
-        {/* Emergency button */}
+
+        {/* Emergency */}
         <TouchableOpacity
           style={styles.emergencyBtn}
           onPress={() => navigation.navigate('emergency_services')}
@@ -243,7 +331,7 @@ export default function MapScreen() {
           </Text>
         </TouchableOpacity>
 
-        {/* AI Copilot */}
+        {/* Copilot */}
         <View style={styles.mainaiBtn}>
           <TouchableOpacity
             style={styles.aiBtn}
@@ -271,7 +359,7 @@ export default function MapScreen() {
         />
       </View>
 
-      {/* Start Trip Button */}
+      {/* Start Trip */}
       <TouchableOpacity
         style={styles.tripBtn}
         onPress={() => navigation.navigate('trip_planning')}
@@ -284,7 +372,6 @@ export default function MapScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-
   servicesRow: {
     marginVertical: 0,
     paddingHorizontal: 10,
@@ -334,7 +421,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
   mainaiBtn: {
     position: 'absolute',
     right: 10,
@@ -349,7 +435,6 @@ const styles = StyleSheet.create({
     width: 57,
     borderRadius: 8,
   },
-
   tripBtn: {
     position: 'absolute',
     left: 10,
@@ -365,41 +450,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 11,
-  },
-
-  bottomNav: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: 10,
-    borderTopWidth: 1,
-    borderColor: '#ddd',
-    backgroundColor: '#fff',
-  },
-  navItem: { alignItems: 'center' },
-  navText: { fontSize: 12, marginTop: 2 },
-  // 🔽 Modal Styles
-  modalOverlay: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  bottomSheet: {
-    height: height * 0.65,
-    backgroundColor: 'white',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: 16,
-  },
-  modalHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  card: {
-    backgroundColor: BASE_COLORS.WHITE,
-    padding: 10,
-    borderRadius: 8,
-    marginVertical: 5,
   },
 });

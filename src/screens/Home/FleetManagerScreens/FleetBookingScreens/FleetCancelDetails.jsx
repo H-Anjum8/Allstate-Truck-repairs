@@ -196,7 +196,7 @@ const FleetCancelDetails = () => {
           onPress={() => navigation.navigate('fleet_manager_home')}
           style={{
             marginHorizontal: 3,
-            marginTop: 10,
+            marginTop: -6,
             height: 53,
             backgroundColor: BASE_COLORS.WHITE,
             borderWidth: 1,

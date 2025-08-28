@@ -26,7 +26,7 @@ const MyBookings = () => {
         case 'Confirmed':
           return { bg: BASE_COLORS.LIGHT_GREEN, text: BASE_COLORS.GREEN };
         case 'Pending':
-          return { bg: BASE_COLORS.LIGHT_GREEN, text: BASE_COLORS.ORANGE };
+          return { bg: BASE_COLORS.ORANGE_LIGHT, text: BASE_COLORS.ORANGE };
         case 'Completed':
           return { bg: BASE_COLORS.LIGHT_GREEN, text: BASE_COLORS.GREEN };
         case 'Canceled':

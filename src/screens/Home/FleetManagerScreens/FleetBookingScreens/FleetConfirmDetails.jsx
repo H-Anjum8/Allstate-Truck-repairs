@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CustomButton from '../../../../components/CustomButton';
@@ -14,9 +7,8 @@ import BASE_COLORS from '../../../../utils/colors';
 import { FONTS } from '../../../../theme/fonts';
 import AuthWrapper from '../../../../components/AuthWrapper';
 import MyBookingHeader from '../../../../components/DashboardComponents/MyBookingHeader';
-import ReviewModal from '../../../../components/modalComponents/ReviewModal';
 import LocationCard from '../../../../components/LocationCard';
-import CompletionProofCard from '../../../../components/DashboardComponents/CompletionProofCard';
+
 import {
   additional_services,
   fleetCancelDummy,
@@ -24,7 +16,7 @@ import {
 import CancelConfirmationModal from '../../../../components/modalComponents/CancelConfirmationModal';
 import AdditionalServiceCard from '../../../../components/DashboardComponents/AdditionalServiceCard';
 
-const FleetCancelDetails = () => {
+const FleetConfirmDetails = () => {
   const navigation = useNavigation();
   const [reviewModalVisible, setReviewModalVisible] = useState(false);
   const [cancelModalVisible, setCancelModalVisible] = useState(false);
@@ -428,4 +420,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FleetCancelDetails;
+export default FleetConfirmDetails;

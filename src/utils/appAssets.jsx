@@ -26,6 +26,10 @@ const images = {
   WORK1: require('../assets/WORK1.png'),
   WORK2: require('../assets/WORK2.png'),
   WORK3: require('../assets/WORK3.png'),
+  GARAGE: require('../assets/garage.jpeg'),
+  PUMP1: require('../assets/PUMP1.png'),
+  PUMP2: require('../assets/PUMP2.png'),
+  PUMP3: require('../assets/PUMP3.png'),
 };
 
 const icons = {
@@ -81,6 +85,7 @@ const icons = {
   ROUT_TYPE: require('../assets/icons/route.png'),
   STOP: require('../assets/icons/stop.png'),
   LOCATIONiCON: require('../assets/icons/location-colored.png'),
+  FUEL_LOGO: require('../assets/icons/fuel_logo.png'),
 };
 
 // Export assets

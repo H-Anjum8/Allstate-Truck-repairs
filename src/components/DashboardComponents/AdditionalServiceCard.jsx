@@ -14,7 +14,7 @@ const AdditionalServiceCard = ({
 }) => {
   return (
     <View style={styles.additionalCard}>
-      <Text style={styles.additionalTitle}>
+      <Text style={styles.serviceTitle}>
         Additional Service Added by Provider
       </Text>
       <Text style={styles.Title}>
@@ -24,24 +24,24 @@ const AdditionalServiceCard = ({
       {/* Service Item */}
       <View style={styles.additionalServiceBox}>
         <View style={styles.serviceHeaderRow}>
-          <Text style={styles.serviceTitle}>{title}</Text>
+          <Text style={styles.bottomTitle}>{title}</Text>
           <Text style={styles.servicePrice}>{price}</Text>
         </View>
-        <Text style={styles.additionalTitle}>Description</Text>
+        <Text style={styles.desTitle}>Description</Text>
         <Text style={styles.additionalDesc}>{description}</Text>
       </View>
 
-      <Text style={styles.additionalTitle}>
+      <Text style={styles.texttitle}>
         Would you like to approve this additional service?
       </Text>
 
       {/* Accept / Decline Buttons */}
       <View style={styles.additionalBtnRow}>
-        <TouchableOpacity style={styles.rejectBtn} onPress={onAccept}>
-          <Text style={styles.rejectText}>Accept Service</Text>
+        <TouchableOpacity style={styles.acceptBtn} onPress={onAccept}>
+          <Text style={styles.acceptText}>Accept Service</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.acceptBtn} onPress={onDecline}>
-          <Text style={styles.acceptText}>Decline Service</Text>
+        <TouchableOpacity style={styles.rejectBtn} onPress={onDecline}>
+          <Text style={styles.rejectText}>Decline Service</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -70,41 +70,56 @@ const styles = StyleSheet.create({
   },
   serviceTitle: {
     fontSize: 13,
-    fontFamily: FONTS.BOLD,
-    color: BASE_COLORS.BLACK,
+    fontFamily: FONTS.REGULAR,
+    color: BASE_COLORS.DARK_GRAY,
+  },
+  bottomTitle: {
+    fontSize: 14,
+    fontFamily: FONTS.REGULAR,
+    color: BASE_COLORS.DARK_GRAY,
   },
   servicePrice: {
     fontSize: 13,
     fontFamily: FONTS.BOLD,
+    color: BASE_COLORS.DARK_GRAY,
   },
-  additionalTitle: {
-    fontSize: 11,
+  desTitle: {
+    fontSize: 16,
     fontFamily: FONTS.BOLD,
-    color: BASE_COLORS.BLACK,
+    color: BASE_COLORS.DARK_GRAY,
+    marginBottom: 8,
+  },
+  texttitle: {
+    fontSize: 12,
+    color: BASE_COLORS.DARK_GRAY,
     marginBottom: 8,
   },
   additionalDesc: {
     fontSize: 12,
-    color: BASE_COLORS.GRAY,
+    color: BASE_COLORS.DARK_GRAY,
     marginTop: 6,
     lineHeight: 18,
   },
+
   additionalBtnRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+    gap: 12,
   },
+
   rejectBtn: {
     flex: 1,
     borderWidth: 1,
-    borderColor: BASE_COLORS.DANGER,
+    borderColor: BASE_COLORS.SECONDARY,
     paddingVertical: 8,
     borderRadius: 8,
     marginRight: 6,
     alignItems: 'center',
   },
   rejectText: {
-    color: BASE_COLORS.DANGER,
+    color: BASE_COLORS.SECONDARY,
     fontSize: 12,
     fontFamily: FONTS.MEDIUM,
   },
@@ -122,9 +137,17 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.MEDIUM,
   },
   Title: {
-    fontSize: 10,
+    fontSize: 13,
     paddingHorizontal: 4,
     marginBottom: 4,
+    color: BASE_COLORS.DARK_GRAY,
+  },
+  serviceTitle: {
+    fontSize: 16,
+    paddingHorizontal: 4,
+    marginBottom: 4,
+    color: BASE_COLORS.BLACK,
+    fontFamily: FONTS.BOLD,
   },
   additionalTitle: {
     fontSize: 11,

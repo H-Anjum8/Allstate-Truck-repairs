@@ -519,9 +519,10 @@ export const filterTags = [
 ];
 
 export const all_services = [
+  { name: 'Fuel Station', icon: ICONS.FUEL_STATION },
   { name: 'Repair', icon: ICONS.REPAIR },
   { name: 'Parking', icon: ICONS.PARKING },
-  { name: 'Truck Stops', icon: ICONS.TRUCK },
+  { name: 'Truck Stop', icon: ICONS.TRUCK },
   { name: 'More', icon: ICONS.MORE },
 ];
 
