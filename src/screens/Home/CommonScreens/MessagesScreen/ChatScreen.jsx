@@ -9,8 +9,6 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Alert,
-  KeyboardAvoidingView, // 👉 EDIT 1: added for proper keyboard handling
-  Platform,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -48,14 +46,15 @@ const ChatScreen = () => {
   const [inputText, setInputText] = useState('');
 
   // send message handler
-  const sendMessage = () => {
-    if (inputText.trim().length > 0) {
-      setMessages(prev => [
-        ...prev,
-        { id: Date.now().toString(), text: inputText, sender: 'me' },
-      ]); // 👉 EDIT 3: wrapped in functional update to avoid stale state bugs
-      setInputText('');
-    }
+  const handleSend = () => {
+    if (inputText.trim() === '') return;
+    const newMessage = {
+      id: messages.length + 1,
+      text: inputText,
+      type: 'sent',
+    };
+    setMessages([...messages, newMessage]);
+    setInputText('');
   };
 
   // plus button -> open gallery
@@ -154,7 +153,7 @@ const ChatScreen = () => {
             value={inputText}
             onChangeText={setInputText}
           />
-          <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
+          <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
             <Ionicons name="send" size={22} color={BASE_COLORS.WHITE} />
           </TouchableOpacity>
         </View>
@@ -239,7 +238,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     flex: 1,
-    height: 36,
+    height: 40,
     borderRadius: 20,
     paddingHorizontal: 12,
     backgroundColor: BASE_COLORS.CHAT,

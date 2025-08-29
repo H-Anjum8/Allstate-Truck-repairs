@@ -177,7 +177,7 @@ const Setting = () => {
         onRequestClose={() => setShowLogoutModal(false)}
       >
         <View style={styles.modalOverlay}>
-          <View style={styles.modalContainer}>
+          <View style={styles.modalContainer1}>
             <Text style={styles.modalTitle}>
               Are you sure you want to log out?
             </Text>
