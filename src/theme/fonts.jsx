@@ -45,7 +45,7 @@ export const TextStyles = {
 };
 
 export default {
-  FONTS,
+  // FONTS,
   TextStyles,
   createFontStyle,
 };

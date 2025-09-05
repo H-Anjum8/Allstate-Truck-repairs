@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   label: {
-    ...TextStyles.heading1,
+    ...TextStyles.body,
     fontWeight:"500",
     marginBottom: 6,
   },

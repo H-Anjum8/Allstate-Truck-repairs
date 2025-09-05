@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
-import AuthWrapper from '../../components/AuthWrapper';
-import CustomHeader from '../../components/CustomHeaders';
-import CustomButton from '../../components/CustomButton';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import CustomHeader from '../../components/CustomHeader/CustomHeader';
+import CustomButton from '../../components/common/CustomButton';
+import CustomSubscriptionsCard from '../../components/CustomCards/CustomSubscriptionsCard'; // Import the new component
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import BASE_COLORS from '../../utils/colors';
-import { FONTS } from '../../theme/fonts';
-import { allBenefits, plans } from '../../utils/staticData';
+import { FONTS, TextStyles } from '../../theme/fonts';
+import {
+  SUBSCRIPTION_BENEFITS,
+  SUBSCRIPTION_PLANS,
+} from '../../utils/staticData';
+import AppWrapper from '../../components/AuthWrapper/AppWrapper';
 
 const SubscriptionScreen = ({ navigation }) => {
   const [selectedPlanId, setSelectedPlanId] = useState('3');
@@ -22,172 +20,112 @@ const SubscriptionScreen = ({ navigation }) => {
   };
 
   return (
-    <AuthWrapper>
+    <AppWrapper style={styles.container}>
       <CustomHeader
-        username="Choose Your Plan"
-        description="Secure Your Subscription to Unlock Powerful Features"
-        showWelcomeText={false}
-        showDescription={true}
-        showUsername={true}
-        contentContainerStyle={{ alignItems: 'center' }}
-        usernameTextStyle={{
-          textAlign: 'center',
-          alignSelf: 'flex-center',
-          fontSize: 22,
-          marginTop: -35,
-        }}
-        descriptionTextStyle={{
-          textAlign: 'center',
-          height: 30,
-          paddingHorizontal: '50',
-          color: BASE_COLORS.GRAY,
-          marginBottom: 30,
-          fontSize: 11,
-        }}
+        leftIcon={
+          <Ionicons name="chevron-back" size={24} color={BASE_COLORS.BLACK} />
+        }
+        onLeftPress={() => navigation.goBack()}
       />
-      <View>
-        <FlatList
-          data={plans}
-          keyExtractor={item => item.id}
-          renderItem={({ item }) => {
-            const isSelected = item.id === selectedPlanId;
-            return (
-              <TouchableOpacity
-                style={[styles.planBox, isSelected && styles.planBoxSelected]}
-                onPress={() => handleSelectPlan(item.id)}
-              >
-                <View style={styles.planHeader}>
-                  <View style={styles.planLeft}>
-                    <View
-                      style={[
-                        styles.iconWrapper,
-                        isSelected
-                          ? styles.selectedIconBackground
-                          : styles.unselectedIconBackground,
-                      ]}
-                    >
-                      <Ionicons
-                        name={isSelected ? 'checkmark-circle' : 'ellipse'}
-                        size={20}
-                        color={
-                          isSelected
-                            ? BASE_COLORS.SECONDARY
-                            : BASE_COLORS.LIGHT_RED
-                        }
-                      />
-                    </View>
-                    <Text style={styles.planTitle}>{item.title}</Text>
-                  </View>
-                  <View style={styles.planRight}>
-                    {item.price !== '' && (
-                      <>
-                        <Text style={styles.planPrice}>{item.price}</Text>
-                        <Text style={styles.planDiscount}>{item.discount}</Text>
-                      </>
-                    )}
-                  </View>
-                </View>
-                {item.description && item.id === '1' && (
-                  <Text style={styles.planDescriptionBelow}>
-                    {item.description}
-                  </Text>
-                )}
-              </TouchableOpacity>
-            );
-          }}
-          style={{ marginBottom: 20 }}
-        />
-      </View>
 
-      <View style={styles.benefitsSection}>
-        {allBenefits.map((feature, index) => (
-          <View key={index} style={styles.benefitRow}>
-            <Ionicons
-              name="checkmark-sharp"
-              size={17}
-              color={BASE_COLORS.SECONDARY}
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContainer}
+        keyboardShouldPersistTaps="handled"
+      >
+        {/* Header Section */}
+        <View style={styles.headerSection}>
+          <Text style={styles.title}>Choose Your Plan</Text>
+          <Text style={styles.description}>
+            Secure Your Subscription to Unlock Powerful Features
+          </Text>
+        </View>
+
+        {/* Subscription Plans Section */}
+        <View style={styles.plansSection}>
+          {SUBSCRIPTION_PLANS.map(item => (
+            <CustomSubscriptionsCard
+              key={item.id}
+              item={item}
+              isSelected={item.id === selectedPlanId}
+              onPress={handleSelectPlan}
             />
-            <Text style={styles.benefitText}>{feature}</Text>
-          </View>
-        ))}
-      </View>
+          ))}
+        </View>
 
-      <CustomButton
-        label="Continue To Payment"
-        onPress={() => navigation.navigate('payment')}
-        style={{ marginHorizontal: 3, marginTop: 10, height: 53 }}
-        textStyle={{ fontSize: 12 }}
-      />
-    </AuthWrapper>
+        {/* Benefits Section */}
+        <View style={styles.benefitsSection}>
+          {SUBSCRIPTION_BENEFITS.map((feature, index) => (
+            <View key={index} style={styles.benefitRow}>
+              <Ionicons
+                name="checkmark-circle"
+                size={24}
+                color={BASE_COLORS.SUCCESS || BASE_COLORS.SECONDARY}
+              />
+              <Text style={styles.benefitText}>{feature}</Text>
+            </View>
+          ))}
+        </View>
+
+        {/* Continue Button */}
+        <View style={styles.buttonContainer}>
+          <CustomButton
+            label="Continue To Payment"
+            onPress={() => navigation.navigate('payment')}
+          />
+        </View>
+      </ScrollView>
+    </AppWrapper>
   );
 };
 
-export default SubscriptionScreen;
-
 const styles = StyleSheet.create({
-  planBox: {
-    borderWidth: 1,
-    borderColor: BASE_COLORS.LIGHT_RED,
-    borderRadius: 20,
-    padding: 10,
-    marginBottom: 7,
-    backfaceVisibility: BASE_COLORS.GRAYIESH,
-    // alignItems: 'center',
+  container: {
+    paddingHorizontal: 16,
   },
-  planBoxSelected: {
-    borderColor: BASE_COLORS.TEXT_RED,
-    backgroundColor: BASE_COLORS.LIGHT_RED,
+  scrollContainer: {
+    paddingBottom: 100,
+    flexGrow: 1,
   },
-  planHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  headerSection: {
     alignItems: 'center',
+    marginVertical: 24,
+    gap: 8,
   },
-  planLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  planTitle: {
-    fontSize: 14,
-    fontFamily: FONTS.REGULAR,
-    marginLeft: 8,
-    color: BASE_COLORS.TEXT_DARK,
-  },
-  planRight: {
-    alignItems: 'flex-end',
-  },
-  planPrice: {
-    fontSize: 14,
+  title: {
+    ...TextStyles.heading1,
+    fontWeight: '600',
     color: BASE_COLORS.PRIMARY,
+    textAlign: 'center',
   },
-  planDiscount: {
-    fontSize: 9,
-    fontFamily: FONTS.REGULAR,
-    color: BASE_COLORS.TEXT_RED,
+  description: {
+    ...TextStyles.bodySmall,
+    fontWeight: '400',
+    color: BASE_COLORS.DARK_GRAY,
+    textAlign: 'center',
+    paddingHorizontal: 20,
   },
-  planDescriptionBelow: {
-    fontSize: 10,
-    fontFamily: FONTS.REGULAR,
-    color: BASE_COLORS.TEXT_RED,
-    marginTop: -15,
-    textAlign: 'right',
+  plansSection: {
+    marginBottom: 20,
+    gap: 10,
   },
   benefitsSection: {
-    marginBottom: 70,
+    gap: 10,
+    marginBottom: 32,
   },
   benefitRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 8,
+    gap: 12,
   },
   benefitText: {
-    marginLeft: 8,
-    fontSize: 12,
-    fontFamily: FONTS.REGULAR,
-    color: BASE_COLORS.TEXT_SECONDARY,
+    ...TextStyles.bodySmall,
+    color: BASE_COLORS.DARK_GRAY,
+    flex: 1,
   },
-  buttonStyle: {
-    backgroundColor: BASE_COLORS.SECONDARY,
-    marginTop: 10,
+  buttonContainer: {
+    marginTop: 20,
   },
 });
+
+export default SubscriptionScreen;

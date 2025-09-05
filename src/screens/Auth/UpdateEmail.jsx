@@ -1,113 +1,141 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
+  Keyboard,
+  Dimensions,
+  ScrollView,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
-import AuthWrapper from '../../components/AuthWrapper';
-import CustomHeader from '../../components/CustomHeaders';
-import CustomTextInput from '../../components/CustomTextInput';
+import CustomHeader from '../../components/CustomHeader/CustomHeader';
 import CustomButton from '../../components/CustomButton';
-
-import { loginSuccess } from '../../store/slices/authSlice';
 import { getValidationSchema } from '../../utils/validationSchema';
 import BASE_COLORS from '../../utils/colors';
-import { useRoute } from '@react-navigation/native';
+import AppWrapper from '../../components/AuthWrapper/AppWrapper';
+import { isIOS } from '../../utils/helpers';
+import CustomInput from '../../components/common/CustomInput';
+import { TextStyles } from '../../theme/fonts';
+
+const { height, width } = Dimensions.get('window');
 
 const UpdateEmail = () => {
-  const route = useRoute();
-  const { type } = route.params || {};
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const role = useSelector(state => state.auth.role);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
-  const handleLogin = values => {
-    if (type === 'signup_otp_verify') {
-      navigation.navigate('signup_otp_verify');
-    } else {
-      navigation.navigate('verify_otp');
-    }
+  // Keyboard listeners
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      e => {
+        setKeyboardHeight(e.endCoordinates.height);
+        setIsKeyboardVisible(true);
+      },
+    );
+
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardHeight(0);
+        setIsKeyboardVisible(false);
+      },
+    );
+
+    return () => {
+      keyboardDidShowListener?.remove();
+      keyboardDidHideListener?.remove();
+    };
+  }, []);
+
+  const handleSubmit = values => {
+    navigation.goBack();
   };
 
   return (
-    <AuthWrapper>
+    <AppWrapper style={{ paddingHorizontal: 16 }}>
+      <CustomHeader
+        leftIcon={
+          <Ionicons name="chevron-back" size={24} color={BASE_COLORS.BLACK} />
+        }
+        onLeftPress={() => navigation.goBack()}
+      />
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        behavior={isIOS ? 'padding' : 'height'}
+        style={{ flex: 1 }}
+        keyboardVerticalOffset={isIOS ? 0 : 20}
       >
-        <CustomHeader
-          leftIcon={<Ionicons name="chevron-back" size={24} color="black" />}
-          onLeftPress={() => navigation.goBack()}
-          description="It seems like you didn’t receive the email. Please enter a new email address, and we’ll send the verification code again."
-          username="Update Your Email "
-          usernameTextStyle={{ fontSize: 22, marginTop: -4 }}
-          descriptionTextStyle={{
-            textAlign: 'left',
-            fontSize: 10,
-            paddingHorizontal: 2,
-            marginBottom: 25,
-          }}
-          showWelcomeText={false}
-          showDescription={true}
-          showUsername={true}
-        />
-
-        <Formik
-          initialValues={{ email: '' }}
-          validationSchema={getValidationSchema('update_email')}
-          onSubmit={handleLogin}
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={[
+            {
+              paddingBottom: isKeyboardVisible ? keyboardHeight - 200 : 100, // Extra padding when keyboard is visible
+              flexGrow: 1,
+            },
+          ]}
+          keyboardShouldPersistTaps="handled"
         >
-          {({ handleChange, handleSubmit, values, errors, touched }) => (
-            <>
+          <View style={{ gap: 10, marginVertical: 20 }}>
+            <Text style={styles.title}>Update Your Email </Text>
+            <Text style={styles.description}>
+              It seems like you didn’t receive the email. Please enter a new
+              email address, and we’ll send the verification code again.
+            </Text>
+          </View>
+
+          <Formik
+            initialValues={{ email: '' }}
+            validationSchema={getValidationSchema('update_email')}
+            onSubmit={handleSubmit}
+          >
+            {({ handleChange, handleSubmit, values, errors, touched }) => (
               <View
                 style={{
-                  height: 254,
                   justifyContent: 'space-between',
+                  gap: height * 0.2,
                 }}
               >
-                <CustomTextInput
+                <CustomInput
                   placeholder="Enter your email"
-                  iconName="mail-outline"
-                  iconColor={BASE_COLORS.TEXT_RED}
+                  prefixIcon={
+                    <Ionicons
+                      name="mail-outline"
+                      size={24}
+                      color={BASE_COLORS.GRAY}
+                    />
+                  }
                   value={values.email}
                   onChangeText={handleChange('email')}
+                  error={touched.email && errors.email}
                 />
-                {touched.email && errors.email && (
-                  <Text style={styles.errorText}>{errors.email}</Text>
-                )}
 
-                <CustomButton
-                  label="Submit"
-                  onPress={handleSubmit}
-                  style={{ marginHorizontal: 3 }}
-                />
+                <CustomButton label="Submit" onPress={handleSubmit} />
               </View>
-            </>
-          )}
-        </Formik>
+            )}
+          </Formik>
+        </ScrollView>
       </KeyboardAvoidingView>
-    </AuthWrapper>
+    </AppWrapper>
   );
 };
 
 export default UpdateEmail;
 
 const styles = StyleSheet.create({
-  errorText: {
-    color: BASE_COLORS.TEXT_RED,
-    fontSize: 12,
-    marginBottom: 12,
-    marginTop: -4,
+  title: {
+    ...TextStyles.heading1,
+    fontWeight: '500',
+    color: BASE_COLORS.PRIMARY,
   },
-  button: {
-    marginHorizontal: 3,
-    marginBottom: 6,
-    marginVertical: 223,
+  description: {
+    ...TextStyles.bodySmall,
+    fontWeight: '400',
+    color: BASE_COLORS.DARK_GRAY,
   },
 });

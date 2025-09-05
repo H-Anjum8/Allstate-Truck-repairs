@@ -31,7 +31,7 @@ const Login = () => {
   // const {login_status, user_data} = useSelector(state => state.auth);
   // const loading = login_status === ASYNC_STATUS.LOADING;
 
-  const { role } = params;
+  const { role } = params || {};
 
   console.log('Selected Role:', params);
 
@@ -80,7 +80,9 @@ const Login = () => {
   return (
     <AppWrapper style={{ paddingHorizontal: 16 }}>
       <CustomHeader
-        leftIcon={<Ionicons name="chevron-back" size={24} color="black" />}
+        leftIcon={
+          <Ionicons name="chevron-back" size={24} color={BASE_COLORS.BLACK} />
+        }
         onLeftPress={() => navigation.goBack()}
       />
       <KeyboardAvoidingView
@@ -161,7 +163,7 @@ const Login = () => {
                       padding: 0,
                       margin: 0,
                       color: BASE_COLORS.SECONDARY,
-                      fontWeight:"500"
+                      fontWeight: '500',
                     }}
                   />
                 </View>
@@ -197,13 +199,11 @@ const styles = StyleSheet.create({
     ...TextStyles.heading1,
     fontWeight: '500',
     color: BASE_COLORS.PRIMARY,
-    textAlign: 'center',
   },
   description: {
     ...TextStyles.bodySmall,
     fontWeight: '400',
     color: BASE_COLORS.DARK_GRAY,
-    textAlign: 'center',
   },
 
   footerText: {

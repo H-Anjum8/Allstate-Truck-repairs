@@ -13,7 +13,7 @@ import CustomHeader from '../../../../components/CustomHeaders';
 import CustomButton from '../../../../components/CustomButton';
 import CustomTextInput from '../../../../components/CustomTextInput';
 import BASE_COLORS from '../../../../utils/colors';
-import FONTS from '../../../../theme/fonts';
+import {FONTS} from '../../../../theme/fonts';
 import FleetCard from '../../../../components/DashboardComponents/FleetCard';
 
 const Fleet = ({ navigation }) => {

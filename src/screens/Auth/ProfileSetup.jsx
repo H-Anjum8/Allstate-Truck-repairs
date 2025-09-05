@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -7,27 +7,55 @@ import {
   Image,
   KeyboardAvoidingView,
   Platform,
-  ScrollView, // ✅ Added
+  ScrollView,
+  Keyboard, // ✅ Added
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { Formik } from 'formik';
-import * as Yup from 'yup';
 import { Dropdown } from 'react-native-element-dropdown';
-
-import AuthWrapper from '../../components/AuthWrapper';
-import CustomHeader from '../../components/CustomHeaders';
-import CustomTextInput from '../../components/CustomTextInput';
+import CustomHeader from '../../components/CustomHeader/CustomHeader';
 import CustomButton from '../../components/CustomButton';
-import BASE_COLORS from '../../utils/colors';
+import BASE_COLORS, { getColorWithOpacity } from '../../utils/colors';
 import { IMAGES } from '../../utils/appAssets';
 import { getValidationSchema } from '../../utils/validationSchema';
-import { vehicleTypes, locations } from '../../utils/staticData';
+import { locations, VEHICLE_TYPES } from '../../utils/staticData';
+import AppWrapper from '../../components/AuthWrapper/AppWrapper';
+import { isIOS } from '../../utils/helpers';
+import { TextStyles } from '../../theme/fonts';
+import CustomInput from '../../components/common/CustomInput';
 
 const ProfileSetup = () => {
   const navigation = useNavigation();
   const [imageUri, setImageUri] = useState(null);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+
+  // Keyboard listeners
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      e => {
+        setKeyboardHeight(e.endCoordinates.height);
+        setIsKeyboardVisible(true);
+      },
+    );
+
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardHeight(0);
+        setIsKeyboardVisible(false);
+      },
+    );
+
+    return () => {
+      keyboardDidShowListener?.remove();
+      keyboardDidHideListener?.remove();
+    };
+  }, []);
 
   const pickImage = async () => {
     launchImageLibrary(
@@ -50,45 +78,44 @@ const ProfileSetup = () => {
     );
   };
 
+  const handleSubmit = values => {
+    console.log('Form Submitted', values);
+    navigation.navigate('upload_profile_image');
+  };
+
   return (
-    <AuthWrapper>
+    <AppWrapper style={{ paddingHorizontal: 16 }}>
+      <CustomHeader
+        leftIcon={
+          <Ionicons name="chevron-back" size={24} color={BASE_COLORS.BLACK} />
+        }
+        onLeftPress={() => navigation.goBack()}
+      />
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        keyboardVerticalOffset={100}
-        style={{ flex: 1 }} // ✅ Added
+        behavior={isIOS ? 'padding' : 'height'}
+        style={{ flex: 1 }}
+        keyboardVerticalOffset={isIOS ? 0 : 20}
       >
-        <ScrollView keyboardShouldPersistTaps="handled">
-          {' '}
-          {/* ✅ Added */}
-          <CustomHeader
-            leftIcon={
-              <Ionicons
-                name="chevron-back"
-                size={24}
-                color={BASE_COLORS.BLACK}
-              />
-            }
-            onLeftPress={() => navigation.goBack()}
-            username="Profile Setup"
-            usernameTextStyle={{
-              textAlign: 'center',
-              marginTop: 10,
-              alignSelf: 'flex-center',
-              marginTop: 10,
-              fontSize: 22,
-            }}
-            showUsername
-            showDescription={false}
-            showWelcomeText={false}
-          />
-          {/* Profile Image */}
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={[
+            {
+              paddingBottom: isKeyboardVisible ? keyboardHeight - 200 : 100, // Extra padding when keyboard is visible
+              flexGrow: 1,
+            },
+          ]}
+          keyboardShouldPersistTaps="handled"
+        >
+          <View style={{ gap: 10, marginVertical: 20 }}>
+            <Text style={styles.title}>Profile Setup</Text>
+          </View>
           <View style={styles.profileImageContainer}>
             <Image
               source={imageUri ? { uri: imageUri } : IMAGES.PROFILE}
               style={styles.profileImage}
             />
             <TouchableOpacity style={styles.editIcon} onPress={pickImage}>
-              <Ionicons name="pencil" size={14} color={BASE_COLORS.SECONDARY} />
+              <AntDesign name="edit" size={20} color={BASE_COLORS.SECONDARY} />
             </TouchableOpacity>
           </View>
           <Formik
@@ -101,10 +128,7 @@ const ProfileSetup = () => {
               location: '',
             }}
             validationSchema={getValidationSchema('setup_profile')}
-            onSubmit={values => {
-              console.log('Form Submitted', values);
-              navigation.navigate('upload_profile_image');
-            }}
+            onSubmit={handleSubmit}
           >
             {({
               handleChange,
@@ -115,45 +139,52 @@ const ProfileSetup = () => {
               touched,
               setFieldValue,
             }) => (
-              <>
-                <CustomTextInput
+              <View style={{ gap: 20 }}>
+                <CustomInput
                   placeholder="Your Full Name"
-                  iconName="person-outline"
+                  prefixIcon={
+                    <Ionicons
+                      name="person-outline"
+                      size={24}
+                      color={BASE_COLORS.GRAY}
+                    />
+                  }
                   value={values.fullName}
                   onChangeText={handleChange('fullName')}
-                  onBlur={handleBlur('fullName')}
-                  //   error={touched.fullName && errors.fullName}
+                  error={touched.fullName && errors.fullName}
                 />
-                {touched.fullName && errors.fullName && (
-                  <Text style={styles.errorText}>{errors.fullName}</Text>
-                )}
-                <CustomTextInput
+                <CustomInput
                   placeholder="Enter Your Email"
-                  iconName="mail-outline"
+                  prefixIcon={
+                    <Ionicons
+                      name="mail-outline"
+                      size={24}
+                      color={BASE_COLORS.GRAY}
+                    />
+                  }
                   value={values.email}
                   onChangeText={handleChange('email')}
-                  onBlur={handleBlur('email')}
                   error={touched.email && errors.email}
                 />
-                {touched.email && errors.email && (
-                  <Text style={styles.errorText}>{errors.email}</Text>
-                )}
-                <CustomTextInput
+
+                <CustomInput
                   placeholder="Enter Your Phone"
-                  iconName="call-outline"
+                  prefixIcon={
+                    <Ionicons
+                      name="call-outline"
+                      size={24}
+                      color={BASE_COLORS.GRAY}
+                    />
+                  }
                   value={values.phone}
                   onChangeText={handleChange('phone')}
-                  onBlur={handleBlur('phone')}
                   error={touched.phone && errors.phone}
                 />
-                {touched.phone && errors.phone && (
-                  <Text style={styles.errorText}>{errors.phone}</Text>
-                )}
-                {/* Vehicle Type Dropdown */}
+
                 <View style={[styles.dropdownWrapper, { zIndex: 100 }]}>
                   <Dropdown
                     style={styles.dropdown}
-                    data={vehicleTypes}
+                    data={VEHICLE_TYPES}
                     labelField="label"
                     valueField="value"
                     placeholder="Vehicle Type"
@@ -176,17 +207,19 @@ const ProfileSetup = () => {
                   )}
                 </View>
 
-                <CustomTextInput
+                <CustomInput
                   placeholder="Vehicle License Plate"
-                  iconName="clipboard-outline"
+                  prefixIcon={
+                    <Ionicons
+                      name="clipboard-outline"
+                      size={24}
+                      color={BASE_COLORS.GRAY}
+                    />
+                  }
                   value={values.licensePlate}
                   onChangeText={handleChange('licensePlate')}
-                  onBlur={handleBlur('licensePlate')}
                   error={touched.licensePlate && errors.licensePlate}
                 />
-                {touched.licensePlate && errors.licensePlate && (
-                  <Text style={styles.errorText}>{errors.licensePlate}</Text>
-                )}
 
                 {/* Location Dropdown */}
                 <View style={[styles.dropdownWrapper, { zIndex: 50 }]}>
@@ -220,23 +253,32 @@ const ProfileSetup = () => {
                   onPress={handleSubmit}
                   style={{ marginHorizontal: 3, marginTop: 48 }}
                 />
-              </>
+              </View>
             )}
           </Formik>
-        </ScrollView>{' '}
-        {/* ✅ Closed */}
+        </ScrollView>
       </KeyboardAvoidingView>
-    </AuthWrapper>
+    </AppWrapper>
   );
 };
 
 export default ProfileSetup;
 
 const styles = StyleSheet.create({
+  title: {
+    ...TextStyles.heading1,
+    fontWeight: '500',
+    color: BASE_COLORS.PRIMARY,
+    textAlign: 'center',
+  },
   profileImageContainer: {
     alignItems: 'center',
     marginBottom: 28,
     marginTop: 20,
+    position: 'relative',
+    height: 100,
+    width: 100,
+    alignSelf: 'center',
   },
   profileImage: {
     width: 96,
@@ -245,13 +287,13 @@ const styles = StyleSheet.create({
   },
   editIcon: {
     position: 'absolute',
-    right: 106,
-    bottom: 65,
+    right: -10,
+    top: -10,
     backgroundColor: BASE_COLORS.WHITE,
     borderRadius: 50,
-    padding: 4,
+    padding: 7,
     borderWidth: 1,
-    borderColor: BASE_COLORS.SECONDARY,
+    borderColor: getColorWithOpacity(BASE_COLORS.SECONDARY, 0.5),
   },
   dropdownWrapper: {
     marginHorizontal: 2,
@@ -260,15 +302,14 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     height: 50,
-    borderColor: '#ccc',
+    borderColor: BASE_COLORS.BORDER_COLOR,
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 8,
     zIndex: 1000, // ✅ Helps on Android
   },
   errorText: {
-    color: 'red',
-
+    color: BASE_COLORS.STATUS.ERROR,
     fontSize: 12,
     marginLeft: 4,
     marginBottom: 2,

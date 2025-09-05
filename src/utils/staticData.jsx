@@ -106,7 +106,7 @@ export const categories = [
   { icon: IMAGES.CLUTCH, title: 'Clutch Repair' },
 ];
 
-export const plans = [
+export const SUBSCRIPTION_PLANS = [
   {
     id: '1',
     title: 'Free Plan',
@@ -127,7 +127,7 @@ export const plans = [
   },
 ];
 
-export const allBenefits = [
+export const SUBSCRIPTION_BENEFITS = [
   'View nearby mechanics',
   'Book appointments',
   'Promotions / discounts access',
@@ -138,7 +138,7 @@ export const allBenefits = [
   'Customer support priority',
 ];
 
-export const vehicleTypes = [
+export const VEHICLE_TYPES = [
   { label: 'Truck', value: 'truck' },
   { label: 'Car', value: 'car' },
   { label: 'Motorcycle', value: 'motorcycle' },

@@ -16,7 +16,7 @@ import CustomHeader from '../../../../components/CustomHeaders';
 import CustomTextInput from '../../../../components/CustomTextInput';
 import CustomButton from '../../../../components/CustomButton';
 import BASE_COLORS from '../../../../utils/colors';
-import FONTS from '../../../../theme/fonts';
+import { FONTS } from '../../../../theme/fonts';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const EditDriver = ({ navigation, route }) => {

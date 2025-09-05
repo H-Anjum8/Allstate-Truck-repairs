@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -6,196 +6,252 @@ import {
   Platform,
   TouchableOpacity,
   KeyboardAvoidingView,
+  Keyboard,
+  ScrollView,
+  Dimensions,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import DateTimePicker from '@react-native-community/datetimepicker';
-
-import { moderateScale, verticalScale } from 'react-native-size-matters';
+import { verticalScale } from 'react-native-size-matters';
 import { useNavigation } from '@react-navigation/native';
-
 import { Formik } from 'formik';
-import * as Yup from 'yup';
-
-import AuthWrapper from '../../components/AuthWrapper';
-import CustomHeader from '../../components/CustomHeaders';
-import CustomTextInput from '../../components/CustomTextInput';
-import CustomButton from '../../components/CustomButton';
+import CustomHeader from '../../components/CustomHeader/CustomHeader';
+import CustomButton from '../../components/common/CustomButton';
 import BASE_COLORS from '../../utils/colors';
 import { getValidationSchema } from '../../utils/validationSchema';
-import { FONTS } from '../../theme/fonts';
+import { FONTS, TextStyles } from '../../theme/fonts';
+import AppWrapper from '../../components/AuthWrapper/AppWrapper';
+import { isIOS } from '../../utils/helpers';
+import CustomInput from '../../components/common/CustomInput';
+
+const { height, width } = Dimensions.get('window');
 
 const PaymentScreen = () => {
   const navigation = useNavigation();
-  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+
+  // Keyboard listeners
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      e => {
+        setKeyboardHeight(e.endCoordinates.height);
+        setIsKeyboardVisible(true);
+      },
+    );
+
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardHeight(0);
+        setIsKeyboardVisible(false);
+      },
+    );
+
+    return () => {
+      keyboardDidShowListener?.remove();
+      keyboardDidHideListener?.remove();
+    };
+  }, []);
+
+  // Handle
+  const handlePay = values => {
+    console.log('Form Values:', values);
+
+    navigation.navigate('subcription_done');
+  };
+
+  const initialValues = {
+    cardHolderName: '',
+    cardNumber: '',
+    expiryDate: '',
+    cvv: '',
+  };
 
   return (
-    <AuthWrapper>
+    <AppWrapper style={{ paddingHorizontal: 16 }}>
+      <CustomHeader
+        leftIcon={
+          <Ionicons name="chevron-back" size={24} color={BASE_COLORS.BLACK} />
+        }
+        onLeftPress={() => navigation.goBack()}
+      />
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        behavior={isIOS ? 'padding' : 'height'}
         style={{ flex: 1 }}
+        keyboardVerticalOffset={isIOS ? 0 : 20}
       >
-        <CustomHeader
-          leftIcon={
-            <Ionicons name="chevron-back" size={24} color={BASE_COLORS.BLACK} />
-          }
-          onLeftPress={() => navigation.goBack()}
-          username="Secure Your Subscription"
-          description="Unlock exclusive tools and features that help you manage repairs and your fleet effortlessly."
-          showUsername
-          showDescription
-          showWelcomeText={false}
-          usernameTextStyle={styles.headerTitle}
-          descriptionTextStyle={styles.headerDescription}
-          contentContainerStyle={{ alignItems: 'center' }}
-        />
-
-        <Formik
-          initialValues={{
-            cardHolderName: '',
-            cardNumber: '',
-            expiryDate: '',
-            cvv: '',
-          }}
-          validationSchema={getValidationSchema('payment')}
-          onSubmit={values => {
-            console.log(values);
-            navigation.navigate('subcription_done');
-          }}
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={[
+            {
+              paddingBottom: isKeyboardVisible ? keyboardHeight - 200 : 100, // Extra padding when keyboard is visible
+              flexGrow: 1,
+            },
+          ]}
+          keyboardShouldPersistTaps="handled"
         >
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            setFieldValue,
-            values,
-            errors,
-            touched,
-          }) => (
-            <>
-              {/* Card Holder Name */}
-              <Text style={styles.label}>Card Holder Name</Text>
-              <CustomTextInput
-                placeholder="Name"
-                iconName="person-outline"
-                onChangeText={handleChange('cardHolderName')}
-                onBlur={handleBlur('cardHolderName')}
-                value={values.cardHolderName}
-              />
-              {touched.cardHolderName && errors.cardHolderName && (
-                <Text style={styles.errorText}>{errors.cardHolderName}</Text>
-              )}
+          <View style={{ gap: 10, marginVertical: 20 }}>
+            <Text style={styles.title}>Secure Your Subscription</Text>
+            <Text style={styles.description}>
+              Unlock exclusive tools and features that help you manage repairs
+              and your fleet effortlessly.
+            </Text>
+          </View>
 
-              {/* Card Number */}
-              <Text style={styles.label}>Card Number</Text>
-              <CustomTextInput
-                placeholder="Card Number"
-                iconName="card-outline"
-                keyboardType="number-pad"
-                onChangeText={handleChange('cardNumber')}
-                onBlur={handleBlur('cardNumber')}
-                value={values.cardNumber}
-              />
-              {touched.cardNumber && errors.cardNumber && (
-                <Text style={styles.errorText}>{errors.cardNumber}</Text>
-              )}
-
-              {/* Expiry and CVV */}
-              <View style={styles.row}>
-                <View style={styles.halfColumn}>
-                  <Text style={styles.label}>Expiry Date</Text>
-                  <TouchableOpacity onPress={() => setShowDatePicker(true)}>
-                    <CustomTextInput
-                      placeholder="MM/YY"
-                      iconName="calendar-outline"
-                      editable={false}
-                      value={values.expiryDate}
-                    />
-                  </TouchableOpacity>
-                  {touched.expiryDate && errors.expiryDate && (
-                    <Text style={styles.errorText}>{errors.expiryDate}</Text>
-                  )}
-                </View>
-
-                <View style={styles.halfColumn}>
-                  <Text style={styles.label}>CVV</Text>
-                  <CustomTextInput
-                    placeholder="CVV"
-                    iconName="lock-closed-outline"
-                    keyboardType="number-pad"
-                    onChangeText={handleChange('cvv')}
-                    onBlur={handleBlur('cvv')}
-                    value={values.cvv}
-                  />
-                  {touched.cvv && errors.cvv && (
-                    <Text style={styles.errorText}>{errors.cvv}</Text>
-                  )}
-                </View>
-              </View>
-
-              {/* Date Picker */}
-              {showDatePicker && (
-                <DateTimePicker
-                  mode="date"
-                  value={new Date()}
-                  display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-                  minimumDate={new Date()}
-                  onChange={(event, selectedDate) => {
-                    setShowDatePicker(false);
-                    if (selectedDate) {
-                      const formatted = `${
-                        selectedDate.getMonth() + 1
-                      }/${selectedDate.getFullYear()}`;
-                      setFieldValue('expiryDate', formatted);
+          <Formik
+            initialValues={initialValues}
+            validationSchema={getValidationSchema('payment')}
+            onSubmit={handlePay}
+          >
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              setFieldValue,
+              values,
+              errors,
+              touched,
+            }) => {
+              return (
+                <View style={{ gap: 20 }}>
+                  <CustomInput
+                    label="Card Holder Name"
+                    placeholder="Name"
+                    prefixIcon={
+                      <Ionicons
+                        name="person-outline"
+                        size={24}
+                        color={BASE_COLORS.GRAY}
+                      />
                     }
-                  }}
-                />
-              )}
+                    onChangeText={handleChange('cardHolderName')}
+                    value={values.cardHolderName}
+                    error={touched.cardHolderName && errors.cardHolderName}
+                  />
 
-              {/* Secure Message */}
-              <View style={styles.secureRow}>
-                <Ionicons
-                  name="lock-closed"
-                  size={16}
-                  color={BASE_COLORS.TEXT_RED}
-                  style={styles.lockIcon}
-                />
-                <Text style={styles.secureText}>
-                  {'  '}Your payment is encrypted and secure.
-                </Text>
-              </View>
+                  <CustomInput
+                    label="Card Number"
+                    placeholder="Card Number"
+                    prefixIcon={
+                      <Ionicons
+                        name="card-outline"
+                        size={24}
+                        color={BASE_COLORS.GRAY}
+                      />
+                    }
+                    keyboardType="number-pad"
+                    onChangeText={handleChange('cardNumber')}
+                    value={values.cardNumber}
+                    error={touched.cardNumber && errors.cardNumber}
+                  />
+                  <View>
+                    {/* Expiry and CVV */}
+                    <View style={styles.row}>
+                      <View style={styles.halfColumn}>
+                        <CustomInput
+                          label="Expiry Date"
+                          placeholder="MM/YY"
+                          prefixIcon={
+                            <Ionicons
+                              name="calendar-outline"
+                              size={24}
+                              color={BASE_COLORS.GRAY}
+                            />
+                          }
+                          onChangeText={handleChange('expiryDate')}
+                          value={values.expiryDate}
+                          error={touched.expiryDate && errors.expiryDate}
+                        />
+                      </View>
 
-              <CustomButton
-                label="Pay & Activate Account"
-                onPress={handleSubmit}
-                style={{ marginHorizontal: 3, marginTop: 70, height: 54 }}
-                textStyle={{ fontSize: 12 }}
-              />
-            </>
-          )}
-        </Formik>
+                      <View style={styles.halfColumn}>
+                        <CustomInput
+                          label={'CVV'}
+                          placeholder="CVV"
+                          prefixIcon={
+                            <Ionicons
+                              name="lock-closed-outline"
+                              size={24}
+                              color={BASE_COLORS.GRAY}
+                            />
+                          }
+                          keyboardType="number-pad"
+                          onChangeText={handleChange('cvv')}
+                          value={values.cvv}
+                          error={touched.cvv && errors.cvv}
+                        />
+                      </View>
+                    </View>
+                    {/* Secure Message */}
+                    <View style={styles.secureRow}>
+                      <Ionicons
+                        name="lock-closed"
+                        size={16}
+                        color={BASE_COLORS.TEXT_RED}
+                        style={styles.lockIcon}
+                      />
+                      <Text style={styles.secureText}>
+                        {'  '}Your payment is encrypted and secure.
+                      </Text>
+                    </View>
+                  </View>
+                  {/* Date Picker */}
+                  {/* {showDatePicker && (
+                  <DateTimePicker
+                    mode="date"
+                    value={new Date()}
+                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                    minimumDate={new Date()}
+                    onChange={(event, selectedDate) => {
+                      setShowDatePicker(false);
+                      if (selectedDate) {
+                        const formatted = `${
+                          selectedDate.getMonth() + 1
+                        }/${selectedDate.getFullYear()}`;
+                        setFieldValue('expiryDate', formatted);
+                      }
+                    }}
+                  />
+                )} */}
+
+                  <CustomButton
+                    label="Pay & Activate Account"
+                    onPress={handleSubmit}
+                    style={{ marginTop: height * 0.1 }}
+                  />
+                </View>
+              );
+            }}
+          </Formik>
+        </ScrollView>
       </KeyboardAvoidingView>
-    </AuthWrapper>
+    </AppWrapper>
   );
 };
 
 export default PaymentScreen;
 
 const styles = StyleSheet.create({
-  label: {
-    fontSize: 13,
-    marginBottom: 8,
-    marginTop: 10,
-    marginLeft: 4,
-    fontFamily: FONTS.REGULAR,
-    color: BASE_COLORS.TEXT_DARK,
+  title: {
+    ...TextStyles.heading1,
+    fontWeight: '500',
+    color: BASE_COLORS.PRIMARY,
+    textAlign: 'center',
+  },
+  description: {
+    ...TextStyles.bodySmall,
+    fontWeight: '400',
+    color: BASE_COLORS.DARK_GRAY,
+    textAlign: 'center',
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 12,
+    gap: 10,
   },
   halfColumn: {
-    width: '48%',
+    flex: 1,
   },
   secureRow: {
     flexDirection: 'row',
@@ -210,22 +266,5 @@ const styles = StyleSheet.create({
   },
   lockIcon: {
     marginTop: 1,
-  },
-  headerTitle: {
-    textAlign: 'center',
-    fontSize: 24,
-    marginLeft: 4,
-  },
-  headerDescription: {
-    textAlign: 'center',
-    paddingHorizontal: 4,
-    marginBottom: 10,
-  },
-  errorText: {
-    fontSize: 11,
-    color: 'red',
-    marginTop: -6,
-    marginBottom: 6,
-    marginLeft: 6,
   },
 });

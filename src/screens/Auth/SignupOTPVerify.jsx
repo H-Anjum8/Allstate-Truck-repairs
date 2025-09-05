@@ -1,192 +1,342 @@
-import React, { useRef } from 'react';
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   View,
-  Text,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
+  ScrollView,
   KeyboardAvoidingView,
+  TouchableOpacity,
+  Dimensions,
+  StyleSheet,
+  Text,
+  Keyboard,
 } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Formik } from 'formik';
-import { moderateScale, verticalScale } from 'react-native-size-matters';
+import CustomOTPInput from '../../components/common/CustomOTPInput';
 import { useNavigation } from '@react-navigation/native';
-import AuthWrapper from '../../components/AuthWrapper';
-import CustomHeader from '../../components/CustomHeaders';
-import CustomButton from '../../components/CustomButton';
+import { useDispatch, useSelector } from 'react-redux';
+import { Formik } from 'formik';
+import { FONTS, TextStyles } from '../../theme/fonts';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+// import { ASYNC_STATUS } from '../../utils/constants';
+// import {
+//   resendSignupOTPAsync,
+//   verifySignupOTPAsync,
+// } from '../../store/services/authService';
+// import {
+//   setResendSignupOtpStatus,
+//   setVerifySignupOtpStatus,
+// } from '../../store/slices/authSlice';
+import CustomHeader from '../../components/CustomHeader/CustomHeader';
 import BASE_COLORS from '../../utils/colors';
-import { FONTS } from '../../theme/fonts';
+import CustomButton from '../../components/common/CustomButton';
+import { isIOS } from '../../utils/helpers';
 import { getValidationSchema } from '../../utils/validationSchema';
+import AppWrapper from '../../components/AuthWrapper/AppWrapper';
 
-const VerifyOTP = () => {
+const { height, width } = Dimensions.get('window');
+
+const SignupOTPVerify = () => {
   const navigation = useNavigation();
-  const inputs = useRef([]);
+  const dispatch = useDispatch();
+  const [countdown, setCountdown] = useState(60); // 60 seconds countdown
+  const [canResend, setCanResend] = useState(false);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
-  const handleChangeDigit = (text, index, values, setFieldValue) => {
-    if (text.length > 1) return;
+  const timerRef = useRef(null);
 
-    const updatedOtp = [...values.otp];
-    updatedOtp[index] = text;
-    setFieldValue('otp', updatedOtp);
+  // const { verify_signup_otp_status, resend_signup_otp_status, user_data } =
+  //   useSelector(state => state.auth);
 
-    if (text !== '' && index < 5) {
-      // Move to next box if not last one
-      inputs.current[index + 1].focus();
-    }
-  };
+  // const loading =
+  //   verify_signup_otp_status === ASYNC_STATUS.LOADING ||
+  //   resend_signup_otp_status === ASYNC_STATUS.LOADING;
 
-  const handleSubmit = values => {
-    const finalCode = values.otp.join('');
-    console.log('Entered Code:', finalCode);
+  // Keyboard listeners
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      e => {
+        setKeyboardHeight(e.endCoordinates.height);
+        setIsKeyboardVisible(true);
+      },
+    );
+
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardHeight(0);
+        setIsKeyboardVisible(false);
+      },
+    );
+
+    return () => {
+      keyboardDidShowListener?.remove();
+      keyboardDidHideListener?.remove();
+    };
+  }, []);
+
+  // Setup countdown timer
+  useEffect(() => {
+    startCountdownTimer();
+
+    // Clear timer on component unmount
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, []);
+
+  const startCountdownTimer = useCallback(() => {
+    setCanResend(false);
+    setCountdown(60);
+
+    if (timerRef.current) clearInterval(timerRef.current);
+
+    timerRef.current = setInterval(() => {
+      setCountdown(prev => {
+        if (prev <= 1) {
+          clearInterval(timerRef.current);
+          setCanResend(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  }, []);
+
+  // Format time to display as 00:59, 00:58, etc.
+  const formatTime = useCallback(seconds => {
+    const mins = Math.floor(seconds / 60)
+      .toString()
+      .padStart(2, '0');
+    const secs = (seconds % 60).toString().padStart(2, '0');
+    return `${mins}:${secs}`;
+  }, []);
+
+  // Handle OTP verification
+  const handleVerifyOTP = useCallback(values => {
+    const dataObj = {
+      // email: user_data?.email || '',
+      code: values.otp || '',
+    };
+    console.log('OTP Values:', dataObj);
+    // navigation.navigate('upload_profile_picture');
+    // dispatch(verifySignupOTPAsync(dataObj));
     navigation.navigate('profile_setup');
-  };
+  }, []);
 
-  return (
-    <Formik
-      initialValues={{ otp: ['', '', '', '', '', ''] }}
-      validationSchema={getValidationSchema('signup_verify_otp')}
-      onSubmit={handleSubmit}
-    >
-      {({ values, errors, touched, handleSubmit, setFieldValue }) => (
-        <AuthWrapper>
-          <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          >
-            <CustomHeader
-              leftIcon={
-                <Ionicons name="chevron-back" size={24} color="black" />
-              }
-              onLeftPress={() => navigation.goBack()}
-              showWelcomeText={false}
-              showDescription={true}
-              showUsername={true}
-              username="Email Verification"
-              description="Enter the 6-digit code sent to your email/phone"
-              descriptionTextStyle={{
-                textAlign: 'left',
-                fontSize: 11,
-                marginTop: 2,
+  // Handle resend OTP
+  const handleResendCode = useCallback(() => {
+    // if (!canResend) return;
+    const dataObj = {
+      email: 'user_data?.email' || '',
+    };
+    // dispatch(resendSignupOTPAsync(dataObj));
+
+    // Add your resend OTP API call here
+  }, [
+    canResend,
+    // user_data,
+    startCountdownTimer,
+  ]);
+
+  // Handle trying another email
+  const handleTryAnotherEmail = useCallback(() => {
+    navigation.navigate('update_email');
+  }, [navigation]);
+
+  // useEffect(() => {
+  //   if (verify_signup_otp_status === ASYNC_STATUS.SUCCEEDED) {
+  //     navigation.navigate('upload_profile_picture');
+  //     dispatch(setVerifySignupOtpStatus());
+  //   }
+  // }, [verify_signup_otp_status]);
+
+  // useEffect(() => {
+  //   if (resend_signup_otp_status === ASYNC_STATUS.SUCCEEDED) {
+  //     startCountdownTimer();
+  //     dispatch(setResendSignupOtpStatus());
+  //   }
+  // }, [resend_signup_otp_status]);
+
+  // Create memoized form render function to prevent unnecessary re-renders
+  const renderForm = useCallback(
+    ({
+      handleSubmit,
+      values,
+      errors,
+      touched,
+      setFieldValue,
+      setFieldTouched,
+    }) => {
+      // Only pass error to OTP input if the field is touched AND has an error
+      const otpError = touched.otp && errors.otp;
+
+      return (
+        <View style={styles.formSection}>
+          <View style={{ width: '100%', marginBottom: height * 0.05 }}>
+            {/* OTP Input - Using existing component */}
+            <CustomOTPInput
+              length={4}
+              onOTPComplete={otp => {
+                setFieldValue('otp', otp);
               }}
-              usernameTextStyle={{
-                textAlign: 'left',
-                fontSize: 24,
+              onChangeOTP={otp => {
+                setFieldValue('otp', otp);
               }}
-              onNotificationPress={() =>
-                navigation.navigate('all_notifications_screen')
-              }
-              contentContainerStyle={{ alignItems: 'flex-start' }}
+              error={otpError}
+              autoFocus={true}
+              containerStyle={styles.otpContainer}
             />
 
-            {/* 5 Digit Code Boxes */}
-            <View style={styles.codeContainer}>
-              {values.otp.map((digit, index) => (
-                <TextInput
-                  key={index}
-                  ref={el => (inputs.current[index] = el)}
-                  style={[
-                    styles.codeInput,
-                    digit !== '' && { backgroundColor: BASE_COLORS.SECONDARY },
-                  ]}
-                  keyboardType="number-pad"
-                  maxLength={1}
-                  value={digit}
-                  onChangeText={text =>
-                    handleChangeDigit(text, index, values, setFieldValue)
-                  }
-                />
-              ))}
+            {/* Resend OTP with Timer */}
+            <View style={styles.resendContainer}>
+              {canResend ? (
+                <TouchableOpacity onPress={handleResendCode}>
+                  <Text style={styles.resendActiveText}>Re-send code</Text>
+                </TouchableOpacity>
+              ) : (
+                <View style={styles.timerContainer}>
+                  <Text style={styles.resendText}>Re-send code in </Text>
+                  <Text style={styles.timerText}>{formatTime(countdown)}</Text>
+                </View>
+              )}
             </View>
-            {errors.otp && touched.otp && (
-              <Text style={styles.errorText}>{errors.otp}</Text>
-            )}
-            <Text style={styles.phoneMessage}>Resend Code</Text>
 
             <CustomButton
-              label="Submit"
+              label="Verify"
               onPress={handleSubmit}
-              style={{
-                marginHorizontal: 3,
-                marginTop: 70,
-                marginBottom: 0,
-                height: 54,
-              }}
+              style={{ marginTop: 20 }}
             />
+          </View>
 
-            <Text style={styles.resendText}>
-              Didn't receive the email? Check your spam filter or try {'\n'}
-              <Text
-                style={styles.resendLink}
-                // navigation.navigate('UpdateEmail', { type: 'signup_otp_verify' });
-                onPress={() =>
-                  navigation.navigate('update_email', {
-                    type: 'signup_otp_verify',
-                  })
-                }
-              >
-                another email address.
+          {/* Additional Help */}
+          <View style={styles.helpContainer}>
+            <Text style={styles.helpText}>
+              Didn't receive the email? Check your spam filter or try{' '}
+              <Text onPress={handleTryAnotherEmail} style={styles.linkText}>
+                another email address
               </Text>
             </Text>
-          </KeyboardAvoidingView>
-        </AuthWrapper>
-      )}
-    </Formik>
+          </View>
+        </View>
+      );
+    },
+    [
+      canResend,
+      countdown,
+      formatTime,
+      handleResendCode,
+      handleTryAnotherEmail,
+      height,
+    ],
+  );
+
+  return (
+    <AppWrapper style={{ paddingHorizontal: 16 }}>
+      <CustomHeader
+        leftIcon={
+          <Ionicons name="chevron-back" size={24} color={BASE_COLORS.BLACK} />
+        }
+        onLeftPress={() => navigation.goBack()}
+      />
+      <KeyboardAvoidingView
+        behavior={isIOS ? 'padding' : 'height'}
+        style={{ flex: 1 }}
+        keyboardVerticalOffset={isIOS ? 0 : 20}
+      >
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={[
+            {
+              paddingBottom: isKeyboardVisible ? keyboardHeight - 200 : 100, // Extra padding when keyboard is visible
+            },
+          ]}
+          keyboardShouldPersistTaps="handled"
+        >
+          <View style={{ gap: 10, marginVertical: 20 }}>
+            <Text style={styles.title}>Verify OTP</Text>
+            <Text style={styles.description}>
+              Enter the 4-digit code sent to info@gmail.com
+              {/* {user_data?.email} */}
+            </Text>
+          </View>
+          {/* Form Section */}
+          <Formik
+            initialValues={{ otp: '' }}
+            validationSchema={getValidationSchema('signup_verify_otp')}
+            onSubmit={handleVerifyOTP}
+          >
+            {renderForm}
+          </Formik>
+        </ScrollView>
+      </KeyboardAvoidingView>
+      {/* <CustomLoader visible={loading} /> */}
+    </AppWrapper>
   );
 };
 
-export default VerifyOTP;
-
 const styles = StyleSheet.create({
-  codeContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginHorizontal: moderateScale(5),
-    marginTop: 38,
-  },
-  codeInput: {
-    width: moderateScale(49),
-    height: moderateScale(49),
-    borderWidth: 1,
-    borderColor: BASE_COLORS.LIGHT_RED,
-    borderRadius: 10,
-    textAlign: 'center',
-    fontSize: moderateScale(20),
-    color: BASE_COLORS.WHITE,
-  },
-  phoneMessage: {
-    textAlign: 'center',
-    marginTop: verticalScale(18),
-    fontSize: moderateScale(10),
-    color: BASE_COLORS.TEXT_SECONDARY,
-    fontFamily: FONTS.MEDIUM,
-    fontWeight: 700,
-  },
-  phoneNumber: {
+  title: {
+    ...TextStyles.heading1,
+    fontWeight: '500',
     color: BASE_COLORS.PRIMARY,
   },
+  description: {
+    ...TextStyles.bodySmall,
+    fontWeight: '400',
+    color: BASE_COLORS.DARK_GRAY,
+  },
+  otpContainer: {
+    marginBottom: height * 0.03,
+    width: '80%',
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
+  resendContainer: {
+    alignItems: 'center',
+    marginBottom: height * 0.04,
+  },
   resendText: {
-    textAlign: 'left',
-    marginHorizontal: 4,
-    marginTop: verticalScale(13),
-    fontSize: moderateScale(10),
-    color: BASE_COLORS.TEXT_GRAY,
+    fontSize: 14,
     fontFamily: FONTS.REGULAR,
   },
-  emailText: {
-    textAlign: 'left',
-    marginHorizontal: 4,
-    marginBottom: verticalScale(30),
-    fontSize: moderateScale(12),
-    color: BASE_COLORS.TEXT_SECONDARY,
+  timerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  timerText: {
+    fontSize: 14,
+    fontFamily: FONTS.MEDIUM,
+    color: BASE_COLORS.PRIMARY,
+  },
+  resendActiveText: {
+    fontSize: 14,
     fontFamily: FONTS.REGULAR,
   },
-  resendLink: {
+  submitButton: {
+    marginBottom: height * 0,
+  },
+  helpContainer: {
+    marginTop: height * 0.01,
+  },
+  helpText: {
+    ...TextStyles.bodySmall,
+    fontFamily: FONTS.REGULAR,
+  },
+  linkText: {
+    ...TextStyles.bodySmall,
+    fontWeight: '500',
     color: BASE_COLORS.SECONDARY,
-    fontFamily: FONTS.REGULAR,
-  },
-  errorText: {
-    color: 'red',
-    textAlign: 'center',
-    marginTop: verticalScale(10),
-    fontSize: moderateScale(12),
+    textDecorationLine: 'underline',
   },
 });
+
+export default memo(SignupOTPVerify);

@@ -1,137 +1,158 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
   View,
+  Keyboard,
+  ScrollView,
+  Dimensions,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { Formik } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import AuthWrapper from '../../../components/AuthWrapper';
-import CustomHeader from '../../../components/CustomHeaders';
-import CustomTextInput from '../../../components/CustomTextInput';
-import CustomButton from '../../../components/CustomButton';
-import BASE_COLORS from '../../../utils/colors';
 import { getValidationSchema } from '../../../utils/validationSchema';
-import { FONTS } from '../../../theme/fonts';
+import BASE_COLORS from '../../../utils/colors';
+import { TextStyles } from '../../../theme/fonts';
+import AppWrapper from '../../../components/AuthWrapper/AppWrapper';
+import CustomHeader from '../../../components/CustomHeader/CustomHeader';
+import { isIOS } from '../../../utils/helpers';
+import CustomButton from '../../../components/common/CustomButton';
+import CustomInput from '../../../components/common/CustomInput';
+
+const { height, width } = Dimensions.get('window');
 
 const ResetPassword = () => {
   const navigation = useNavigation();
-  const role = useSelector(state => state.auth.role);
+  const dispatch = useDispatch();
+  const { params } = useRoute();
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+
+  // Keyboard listeners
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      e => {
+        setKeyboardHeight(e.endCoordinates.height);
+        setIsKeyboardVisible(true);
+      },
+    );
+
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardHeight(0);
+        setIsKeyboardVisible(false);
+      },
+    );
+
+    return () => {
+      keyboardDidShowListener?.remove();
+      keyboardDidHideListener?.remove();
+    };
+  }, []);
 
   const handlePasswordUpdate = values => {
     navigation.navigate('login_screen');
   };
 
   return (
-    <AuthWrapper>
+    <AppWrapper style={{ paddingHorizontal: 16 }}>
+      <CustomHeader
+        leftIcon={
+          <Ionicons name="chevron-back" size={24} color={BASE_COLORS.BLACK} />
+        }
+        onLeftPress={() => navigation.goBack()}
+      />
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        behavior={isIOS ? 'padding' : 'height'}
+        style={{ flex: 1 }}
+        keyboardVerticalOffset={isIOS ? 0 : 20}
       >
-        <CustomHeader
-          leftIcon={<Ionicons name="chevron-back" size={24} color="black" />}
-          onLeftPress={() => navigation.goBack()}
-          description="Your new password will be different from the existing & previous ones."
-          username="New Password"
-          usernameTextStyle={{
-            marginTop: -4,
-            fontSize: 24,
-          }}
-          descriptionTextStyle={{
-            textAlign: 'left',
-            marginTop: 6,
-            fontSize: 11,
-            color: BASE_COLORS.BLACK,
-          }}
-          showWelcomeText={false}
-          showDescription
-          showUsername
-        />
-
-        <Formik
-          initialValues={{ password: '', confirmPassword: '' }}
-          validationSchema={getValidationSchema('newpassword')}
-          onSubmit={handlePasswordUpdate}
-          validateOnMount
-          validateOnBlur
-          validateOnChange
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={[
+            {
+              paddingBottom: isKeyboardVisible ? keyboardHeight - 200 : 100, // Extra padding when keyboard is visible
+              flexGrow: 1,
+            },
+          ]}
+          keyboardShouldPersistTaps="handled"
         >
-          {({ handleChange, handleSubmit, values, errors, touched }) => (
-            <>
-              {/* Password Label + Input */}
-              <View style={styles.inputGroup}>
-                <Text style={styles.inputLabel}>Password</Text>
-                <CustomTextInput
+          <View style={{ gap: 10, marginVertical: 20 }}>
+            <Text style={styles.title}>New Password</Text>
+            <Text style={styles.description}>
+              Your new password will be different from the existing & previous
+              ones.
+            </Text>
+          </View>
+
+          <Formik
+            initialValues={{ password: '', confirmPassword: '' }}
+            validationSchema={getValidationSchema('newpassword')}
+            onSubmit={handlePasswordUpdate}
+          >
+            {({ handleChange, handleSubmit, values, errors, touched }) => (
+              <View style={{ gap: 20 }}>
+                <CustomInput
+                  label="Password"
                   placeholder="Enter your password"
-                  iconName="lock-closed"
-                  iconColor={BASE_COLORS.TEXT_RED}
+                  prefixIcon={
+                    <Ionicons
+                      name="lock-closed-outline"
+                      size={24}
+                      color={BASE_COLORS.GRAY}
+                    />
+                  }
                   value={values.password}
                   onChangeText={handleChange('password')}
-                  secureTextEntry
+                  secure
+                  error={touched.password && errors.password}
                 />
-                {touched.password && errors.password && (
-                  <Text style={styles.errorText}>{errors.password}</Text>
-                )}
-
-                {/* Confirm Password Label + Input */}
-
-                <Text style={styles.inputLabel}>Confirm Password</Text>
-                <CustomTextInput
+                <CustomInput
+                  label="Confirm Password"
                   placeholder="Confirm your password"
-                  iconName="lock-closed"
-                  iconColor={BASE_COLORS.TEXT_RED}
+                  prefixIcon={
+                    <Ionicons
+                      name="lock-closed-outline"
+                      size={24}
+                      color={BASE_COLORS.GRAY}
+                    />
+                  }
                   value={values.confirmPassword}
                   onChangeText={handleChange('confirmPassword')}
-                  secureTextEntry
+                  secure
+                  error={touched.confirmPassword && errors.confirmPassword}
                 />
-                {touched.confirmPassword && errors.confirmPassword && (
-                  <Text style={styles.errorText}>{errors.confirmPassword}</Text>
-                )}
+
+                <CustomButton
+                  label="Confirm"
+                  onPress={handleSubmit}
+                  style={{ marginVertical: height * 0.1 }}
+                />
               </View>
-              <CustomButton
-                label="Confirm"
-                onPress={handleSubmit}
-                style={{
-                  marginHorizontal: 3,
-                  marginTop: 4,
-                  height: 54,
-                  marginBottom: 0,
-                }}
-              />
-            </>
-          )}
-        </Formik>
+            )}
+          </Formik>
+        </ScrollView>
       </KeyboardAvoidingView>
-    </AuthWrapper>
+    </AppWrapper>
   );
 };
 
 export default ResetPassword;
 
 const styles = StyleSheet.create({
-  inputGroup: {
-    marginTop: 30,
-    marginBottom: 16,
+  title: {
+    ...TextStyles.heading1,
+    fontWeight: '500',
+    color: BASE_COLORS.PRIMARY,
   },
-  inputLabel: {
-    fontSize: 14,
-    fontFamily: FONTS.MEDIUM,
-    color: '#000',
-    marginTop: 4,
-    marginBottom: 6,
-    marginLeft: 4,
-  },
-  errorText: {
-    color: BASE_COLORS.TEXT_RED,
-    fontSize: 12,
-    marginTop: 4,
-    marginLeft: 4,
-  },
-  button: {
-    marginHorizontal: 3,
-    marginTop: 24,
+  description: {
+    ...TextStyles.bodySmall,
+    fontWeight: '400',
+    color: BASE_COLORS.DARK_GRAY,
   },
 });

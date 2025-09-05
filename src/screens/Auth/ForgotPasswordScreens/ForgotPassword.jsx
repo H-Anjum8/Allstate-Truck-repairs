@@ -1,102 +1,139 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
+  Keyboard,
+  ScrollView,
+  Dimensions,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import AuthWrapper from '../../../components/AuthWrapper';
-import CustomHeader from '../../../components/CustomHeaders';
-import CustomButton from '../../../components/CustomButton';
-import CustomTextInput from '../../../components/CustomTextInput';
+import CustomHeader from '../../../components/CustomHeader/CustomHeader';
 import BASE_COLORS from '../../../utils/colors';
 import { getValidationSchema } from '../../../utils/validationSchema';
+import AppWrapper from '../../../components/AuthWrapper/AppWrapper';
+import { isIOS } from '../../../utils/helpers';
+import CustomButton from '../../../components/common/CustomButton';
+import CustomInput from '../../../components/common/CustomInput';
+import { TextStyles } from '../../../theme/fonts';
+
+const { height, width } = Dimensions.get('window');
 
 const ForgotPassword = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const role = useSelector(state => state.auth.role);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
-  const handleLogin = values => {
+  // Keyboard listeners
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      e => {
+        setKeyboardHeight(e.endCoordinates.height);
+        setIsKeyboardVisible(true);
+      },
+    );
+
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardHeight(0);
+        setIsKeyboardVisible(false);
+      },
+    );
+
+    return () => {
+      keyboardDidShowListener?.remove();
+      keyboardDidHideListener?.remove();
+    };
+  }, []);
+
+  const handleSubmit = values => {
     navigation.navigate('verify_otp');
   };
 
   return (
-    <AuthWrapper>
+    <AppWrapper style={{ paddingHorizontal: 16 }}>
+      <CustomHeader
+        leftIcon={
+          <Ionicons name="chevron-back" size={24} color={BASE_COLORS.BLACK} />
+        }
+        onLeftPress={() => navigation.goBack()}
+      />
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        behavior={isIOS ? 'padding' : 'height'}
+        style={{ flex: 1 }}
+        keyboardVerticalOffset={isIOS ? 0 : 20}
       >
-        <CustomHeader
-          leftIcon={<Ionicons name="chevron-back" size={24} color="black" />}
-          onLeftPress={() => navigation.goBack()}
-          description="Kindly provide the registered email to change the passcode."
-          username="Enter Your Email"
-          showWelcomeText={false}
-          usernameTextStyle={{ fontSize: 20, marginTop: 10 }}
-          descriptionTextStyle={{
-            textAlign: 'left',
-            fontSize: 11,
-            marginTop: 4,
-            marginBottom: 30,
-          }}
-          showDescription
-          showUsername
-        />
-
-        <Formik
-          initialValues={{ email: '' }}
-          validationSchema={getValidationSchema('add_email')}
-          onSubmit={handleLogin}
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={[
+            {
+              paddingBottom: isKeyboardVisible ? keyboardHeight - 200 : 100, // Extra padding when keyboard is visible
+              flexGrow: 1,
+            },
+          ]}
+          keyboardShouldPersistTaps="handled"
         >
-          {({ handleChange, handleSubmit, values, errors, touched }) => (
-            <>
+          <View style={{ gap: 10, marginVertical: 20 }}>
+            <Text style={styles.title}>Enter Your Email </Text>
+            <Text style={styles.description}>
+              kindly provide your email for account creation
+            </Text>
+          </View>
+          <Formik
+            initialValues={{ email: '' }}
+            validationSchema={getValidationSchema('add_email')}
+            onSubmit={handleSubmit}
+          >
+            {({ handleChange, handleSubmit, values, errors, touched }) => (
               <View
                 style={{
-                  height: 252,
                   justifyContent: 'space-between',
+                  gap: height * 0.2,
                 }}
               >
-                <CustomTextInput
+                <CustomInput
                   placeholder="Enter your email"
-                  iconName="mail-outline"
-                  iconColor={BASE_COLORS.TEXT_RED}
+                  prefixIcon={
+                    <Ionicons
+                      name="mail-outline"
+                      size={24}
+                      color={BASE_COLORS.GRAY}
+                    />
+                  }
                   value={values.email}
                   onChangeText={handleChange('email')}
+                  error={touched.email && errors.email}
                 />
-                {touched.email && errors.email && (
-                  <Text style={styles.errorText}>{errors.email}</Text>
-                )}
-                <CustomButton
-                  label="Submit"
-                  onPress={handleSubmit}
-                  style={{ marginHorizontal: 3, height: 56 }}
-                />
+
+                <CustomButton label="Submit" onPress={handleSubmit} />
               </View>
-            </>
-          )}
-        </Formik>
+            )}
+          </Formik>
+        </ScrollView>
       </KeyboardAvoidingView>
-    </AuthWrapper>
+    </AppWrapper>
   );
 };
 
 export default ForgotPassword;
 
 const styles = StyleSheet.create({
-  errorText: {
-    color: BASE_COLORS.TEXT_RED,
-    fontSize: 12,
-    marginBottom: 12,
-    marginTop: -4,
+  title: {
+    ...TextStyles.heading1,
+    fontWeight: '500',
+    color: BASE_COLORS.PRIMARY,
   },
-  button: {
-    marginHorizontal: 3,
-    marginBottom: 6,
-    marginVertical: 223,
+  description: {
+    ...TextStyles.bodySmall,
+    fontWeight: '400',
+    color: BASE_COLORS.DARK_GRAY,
   },
 });

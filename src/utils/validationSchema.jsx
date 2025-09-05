@@ -4,18 +4,19 @@ const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,6}$/;
 
 export const getValidationSchema = formType => {
   switch (formType) {
-    case 'signup':
-      return Yup.object().shape({
-        fullName: Yup.string().required('Full name required'),
-        email: Yup.string().email('Invalid email').required('Email required'),
-        phone: Yup.string().required('Phone number required'),
-        password: Yup.string()
-          .min(6, 'Minimum 6 characters')
-          .required('Password required'),
-        confirmPassword: Yup.string()
-          .oneOf([Yup.ref('password'), null], 'Passwords must match')
-          .required('Confirm your password'),
-      });
+    // case 'signup':
+    //   return Yup.object().shape({
+    //     fullName: Yup.string().required('Full name required'),
+    //     email: Yup.string().email('Invalid email').required('Email required'),
+    //     phone: Yup.string().required('Phone number required'),
+    //     password: Yup.string()
+    //       .min(6, 'Minimum 6 characters')
+    //       .required('Password required'),
+    //     confirmPassword: Yup.string()
+    //       .oneOf([Yup.ref('password'), null], 'Passwords must match')
+    //       .required('Confirm your password'),
+    //     term_conditions: Yup.boolean().required('Check terms and conditions'),
+    //   });
     case 'login':
       return Yup.object().shape({
         email: Yup.string()
@@ -62,26 +63,21 @@ export const getValidationSchema = formType => {
       });
     case 'signup_verify_otp':
       return Yup.object().shape({
-        otp: Yup.array()
-          .of(
-            Yup.string().required(''), // Empty string means no per-digit error
-          )
-          .test('all-filled', 'Please enter all 6 digits', value => {
-            if (!value) return false;
-            return value.every(v => v !== '');
-          }),
+        otp: Yup.string()
+          .required('OTP is required')
+          .matches(/^\d{4}$/, 'Enter a valid 4-digit OTP'),
       });
-    case 'payment':
-      return Yup.object().shape({
-        cardHolderName: Yup.string().required('Card holder name is required'),
-        cardNumber: Yup.string()
-          .matches(/^\d{16}$/, 'Card number must be 16 digits')
-          .required('Card number is required'),
-        expiryDate: Yup.string().required('Expiry date is required'),
-        cvv: Yup.string()
-          .matches(/^\d{3}$/, 'CVV must be 3 digits')
-          .required('CVV is required'),
-      });
+    // case 'payment':
+    //   return Yup.object().shape({
+    //     cardHolderName: Yup.string().required('Card holder name is required'),
+    //     cardNumber: Yup.string()
+    //       .matches(/^\d{16}$/, 'Card number must be 16 digits')
+    //       .required('Card number is required'),
+    //     expiryDate: Yup.string().required('Expiry date is required'),
+    //     cvv: Yup.string()
+    //       .matches(/^\d{3}$/, 'CVV must be 3 digits')
+    //       .required('CVV is required'),
+    //   });
     case 'personal_information':
       return Yup.object().shape({
         name: Yup.string().required('Name is required'),
@@ -135,19 +131,19 @@ export const getValidationSchema = formType => {
           .required('Images are required'),
         isFeatured: Yup.boolean(),
       });
-    case 'setup_profile':
-      return Yup.object().shape({
-        fullName: Yup.string().required('Full name is required'),
-        email: Yup.string()
-          .email('Invalid email')
-          .required('Email is required'),
-        phone: Yup.string()
-          .matches(/^[0-9]{10,15}$/, 'Phone must be 10-15 digits')
-          .required('Phone number is required'),
-        vehicleType: Yup.string().required('Vehicle type is required'),
-        licensePlate: Yup.string().required('License plate is required'),
-        location: Yup.string().required('Location is required'),
-      });
+    // case 'setup_profile':
+    //   return Yup.object().shape({
+    //     fullName: Yup.string().required('Full name is required'),
+    //     email: Yup.string()
+    //       .email('Invalid email')
+    //       .required('Email is required'),
+    //     phone: Yup.string()
+    //       .matches(/^[0-9]{10,15}$/, 'Phone must be 10-15 digits')
+    //       .required('Phone number is required'),
+    //     vehicleType: Yup.string().required('Vehicle type is required'),
+    //     licensePlate: Yup.string().required('License plate is required'),
+    //     location: Yup.string().required('Location is required'),
+    //   });
     case 'edit_profile':
       return Yup.object().shape({
         name: Yup.string().required('Name is required'),
