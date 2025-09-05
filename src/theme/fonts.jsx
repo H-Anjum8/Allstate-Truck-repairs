@@ -1,29 +1,30 @@
 export const FONTS = {
-  // Italic variants
-  BLACKITALIC: 'SFPRODISPLAYBLACKITALIC',
+  // Black variants
+  BLACK: 'Inter_18pt-Black',
 
   // Bold variants
-  BOLD: 'SFPRODISPLAYBOLD',
-  // Heavy Italic variants
-  HEAVYITALIC: 'SFPRODISPLAYHEAVYITALIC',
+  BOLD: 'Inter_18pt-Bold',
+
+  // Extra Bold variants
+  EXTRA_BOLD: 'Inter_18pt-ExtraBold',
+
+  // Extra Light variants
+  EXTRA_LIGHT: 'Inter_18pt-ExtraLight',
 
   // Light variants
-  LIGHT_ITALIC: 'SFPRODISPLAYLIGHTITALIC',
+  LIGHT: 'Inter_18pt-Light',
 
   // Medium variants
-  // MEDIUM: 'SF Pro Display Medium',
-  MEDIUM: 'SFPRODISPLAYMEDIUM',
-  // Regular variants
-  REGULAR: 'SFPRODISPLAYREGULAR',
+  MEDIUM: 'Inter_18pt-Medium',
 
-  // Semi Italic variants
-  SEMI_ITALIC: 'SFPRODISPLAYSEMIBOLDITALIC',
+  // Regular variants
+  REGULAR: 'Inter_18pt-Regular',
+
+  // Semi Bold variants
+  SEMI_BOLD: 'Inter_18pt-SemiBold',
 
   // Thin variants
-  THIN_ITALIC: 'SFPRODISPLAYTHINITALIC',
-
-  // Ultra thin variants
-  ULTRA_THIN_ITALIC: 'SFPRODISPLAYULTRALIGHTITALIC',
+  THIN: 'Inter_18pt-Thin',
 };
 
 // Font style generator function

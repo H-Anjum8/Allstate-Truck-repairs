@@ -5,69 +5,64 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
-  KeyboardAvoidingView,
-  Platform,
+  ScrollView,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
-
 import BASE_COLORS from '../utils/colors';
-import { setUserRole } from '../store/slices/authSlice';
 import { IMAGES } from '../utils/appAssets';
-import AuthWrapper from '../components/AuthWrapper';
-import CustomHeader from '../components/CustomHeaders';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import CustomButton from '../components/CustomButton';
+import AppWrapper from '../components/AuthWrapper/AppWrapper';
+import CustomHeader from '../components/CustomHeader/CustomHeader';
+import { TextStyles } from '../theme/fonts';
+import CustomButton from '../components/common/CustomButton';
+import { ROLES } from '../utils/constants';
 
 const RoleSelection = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState(ROLES.OWNER);
 
   const handleSelect = role => {
     setSelected(role);
-    dispatch(setUserRole(role));
+    // dispatch(setUserRole(role));
     console.log('Selected Role:', role);
   };
-
   const handleContinue = () => {
     if (selected) {
-      navigation.navigate('login_screen');
+      navigation.navigate('login_screen', { role: selected || ROLES });
     }
   };
 
   return (
-    <AuthWrapper>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        style={{ flex: 1 }}
+    <AppWrapper style={{ paddingHorizontal: 16 }}>
+      <CustomHeader
+        leftIcon={<Ionicons name="chevron-back" size={22} color="black" />}
+        onLeftPress={() => navigation.goBack()}
+      />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          flexGrow: 1,
+          justifyContent: 'space-between',
+        }}
       >
-        <CustomHeader
-          leftIcon={<Ionicons name="chevron-back" size={22} color="black" />}
-          onLeftPress={() => navigation.goBack()}
-          showWelcomeText={false}
-          showDescription={true}
-          showUsername={true}
-          username="Let’s Get You Started"
-          description="Whether you're a truck owner looking for help, or a mechanic ready to provide service—we’ve got you covered."
-          usernameTextStyle={{
-            fontSize: 24,
-            alignSelf: 'center',
-          }}
-          descriptionTextStyle={{ textAlign: 'center' }}
-          onNotificationPress={() =>
-            navigation.navigate('all_notifications_screen')
-          }
-        />
+        <View style={{ gap: 10, marginVertical: 20 }}>
+          <Text style={styles.title}>Let’s Get You Started</Text>
+          <Text style={styles.description}>
+            Whether you're a truck owner looking for help, or a mechanic ready
+            to provide service—we’ve got you covered.
+          </Text>
+        </View>
 
         <View style={styles.container}>
           <View>
             <TouchableOpacity
               style={[
                 styles.roleButton,
-                selected === 'truck_owner' && styles.selectedButton,
+                selected === ROLES.OWNER && styles.selectedButton,
               ]}
-              onPress={() => handleSelect('truck_owner')}
+              onPress={() => handleSelect(ROLES.OWNER)}
             >
               <Image
                 source={IMAGES.OWNER}
@@ -79,7 +74,7 @@ const RoleSelection = () => {
                   styles.roleText,
                   {
                     color:
-                      selected === 'truck_owner'
+                      selected === ROLES.OWNER
                         ? BASE_COLORS.WHITE
                         : BASE_COLORS.PRIMARY,
                   },
@@ -92,9 +87,9 @@ const RoleSelection = () => {
             <TouchableOpacity
               style={[
                 styles.roleButton,
-                selected === 'mechanic' && styles.selectedButton,
+                selected === ROLES.MECHANIC && styles.selectedButton,
               ]}
-              onPress={() => handleSelect('mechanic')}
+              onPress={() => handleSelect(ROLES.MECHANIC)}
             >
               <Image
                 source={IMAGES.MACHANIC}
@@ -106,7 +101,7 @@ const RoleSelection = () => {
                   styles.roleText,
                   {
                     color:
-                      selected === 'mechanic'
+                      selected === ROLES.MECHANIC
                         ? BASE_COLORS.WHITE
                         : BASE_COLORS.PRIMARY,
                   },
@@ -116,17 +111,10 @@ const RoleSelection = () => {
               </Text>
             </TouchableOpacity>
           </View>
-
-          <View style={styles.footer}>
-            <CustomButton
-              label="Continue"
-              onPress={handleContinue}
-              style={{ marginHorizontal: 3 }}
-            />
-          </View>
+          <CustomButton label="Continue" onPress={handleContinue} />
         </View>
-      </KeyboardAvoidingView>
-    </AuthWrapper>
+      </ScrollView>
+    </AppWrapper>
   );
 };
 
@@ -137,6 +125,18 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     marginTop: 10,
   },
+  title: {
+    ...TextStyles.heading1,
+    fontWeight: '500',
+    color: BASE_COLORS.PRIMARY,
+    textAlign: 'center',
+  },
+  description: {
+    ...TextStyles.bodySmall,
+    fontWeight: '400',
+    color: BASE_COLORS.DARK_GRAY,
+    textAlign: 'center',
+  },
   roleButton: {
     padding: 16,
     marginVertical: 6,
@@ -145,6 +145,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderColor: BASE_COLORS.LIGHT_GRAY,
+    gap: 10,
   },
   selectedButton: {
     backgroundColor: BASE_COLORS.PRIMARY,
@@ -157,9 +158,6 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     marginBottom: 4,
-  },
-  footer: {
-    // marginTop: 20,
   },
 });
 

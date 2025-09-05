@@ -1,5 +1,11 @@
 const images = {
-  SPLASH_SCREEN: require('../assets/splash_screen.png'),
+  LOGO: require('../assets/logo.png'),
+
+  INTRO_IMG_1: require('../assets/intro_img_1.png'),
+  INTRO_IMG_2: require('../assets/intro_img_2.png'),
+  INTRO_IMG_3: require('../assets/intro_img_3.png'),
+
+
   TIRE: require('../assets/tire.png'),
   BRAKE: require('../assets/brake.png'),
   BATTERY: require('../assets/battery.png'),

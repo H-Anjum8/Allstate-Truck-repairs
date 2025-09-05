@@ -9,15 +9,7 @@ import BASE_COLORS from '../utils/colors';
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
-  const [showSplash, setShowSplash] = useState(true);
   const isAuthenticated = useSelector(selectIsAuthenticated);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowSplash(false);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <NavigationContainer>
@@ -33,24 +25,15 @@ const AppNavigator = () => {
           headerBackTitleVisible: false,
         }}
       >
-        {showSplash ? (
-          <Stack.Screen
-            name={Routes.Splash.name}
-            component={Routes.Splash.component}
-            options={Routes.Splash.options}
-          />
-        ) : !isAuthenticated ? (
-          getAuthScreens().map(
-            route =>
-              route.name !== Routes.Splash.name && (
-                <Stack.Screen
-                  key={route.name}
-                  name={route.name}
-                  component={route.component}
-                  options={route.options}
-                />
-              ),
-          )
+        {!isAuthenticated ? (
+          getAuthScreens().map(route => (
+            <Stack.Screen
+              key={route.name}
+              name={route.name}
+              component={route.component}
+              options={route.options}
+            />
+          ))
         ) : (
           <>
             <Stack.Screen

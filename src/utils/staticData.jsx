@@ -1,26 +1,26 @@
 import { ICONS, IMAGES } from './appAssets';
 
-export const splashData = [
+export const INTRO_DATA = [
   {
-    title: 'Truck Trouble? Help is Just a Tap Away',
+    title: 'Assistance at Your Fingertips',
     description:
-      'Whether it’s a breakdown or routine maintenance, find trusted mechanics and assistance nearby in minutes – anytime, anywhere.',
+      'No matter the problem, discover reliable service providers near your location in real time ready to help when you need it most.',
     button: 'Next',
-    image: IMAGES.RED_SEMITRUCK,
+    image: IMAGES.INTRO_IMG_1,
   },
   {
-    title: 'Mechanics You Can Trust',
+    title: 'Manage Your Fleet with Ease',
     description:
-      'We connect you with experienced, verified service providers who specialize in repairs, towing, diagnostics, and more.',
+      'Keep track of all your vehicles, drivers, and bookings in one simple dashboard. Add, edit, or view details instantly to stay on top of operations.',
     button: 'Next',
-    image: IMAGES.FRIENDLY_MECHANIC,
+    image: IMAGES.INTRO_IMG_2,
   },
   {
-    title: 'Your Journey Starts Here',
+    title: 'Your Business, Simplified',
     description:
-      'Whether you’re a driver needing roadside help or a mechanic offering repair services – this app is built for you.',
+      'Monitor bookings, earnings, and ratings in real time. Manage your work seamlessly and grow with confidence.',
     button: 'Get Started',
-    image: IMAGES.TWO_CHARACTERS,
+    image: IMAGES.INTRO_IMG_3,
   },
 ];
 

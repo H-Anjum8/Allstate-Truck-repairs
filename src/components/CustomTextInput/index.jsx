@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import COLORS, { BASE_COLORS } from '../../utils/colors';
+import BASE_COLORS from '../../utils/colors';
 
 const CustomTextInput = ({
   placeholder,
@@ -26,14 +26,14 @@ const CustomTextInput = ({
         <Ionicons
           name={iconName}
           size={20}
-          color={iconColor || COLORS.TEXT_INPUT_FIELD}
+          color={iconColor || BASE_COLORS.TEXT_INPUT_FIELD}
           style={styles.icon}
         />
       ) : null}
       <TextInput
         style={[styles.input, textInputStyle]}
         placeholder={placeholder}
-        placeholderTextColor={COLORS.TEXT_INPUT_FIELD}
+        placeholderTextColor={BASE_COLORS.TEXT_INPUT_FIELD}
         secureTextEntry={!showPassword}
         value={value}
         onChangeText={onChangeText}
@@ -47,7 +47,7 @@ const CustomTextInput = ({
           <Ionicons
             name={showPassword ? 'eye-off-outline' : 'eye-outline'}
             size={20}
-            color={COLORS.TEXT_INPUT_FIELD}
+            color={BASE_COLORS.TEXT_INPUT_FIELD}
           />
         </TouchableOpacity>
       )}
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     borderWidth: 1,
-    borderColor: COLORS.LIGHT_GRAY,
+    borderColor: BASE_COLORS.LIGHT_GRAY,
     borderRadius: 10,
     paddingHorizontal: 10,
     alignItems: 'center',
@@ -73,6 +73,6 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontSize: 14,
-    color: COLORS.TEXT_INPUT_FIELD,
+    color: BASE_COLORS.TEXT_INPUT_FIELD,
   },
 });

@@ -83,15 +83,15 @@ import NotificationsScreen from '../screens/Home/CommonScreens/NotificationsScre
 // import FleetServicesSelection from '../screens/Home/FleetManagerScreens/MapViewScreens.jsx/FleetServicesSelection';
 
 const Routes = {
-  Splash: {
-    name: 'splash_screen',
-    component: SplashScreen,
-    options: {
-      headerShown: false,
-      gestureEnabled: false,
-    },
-    authRequired: false,
-  },
+  // Splash: {
+  //   name: 'splash_screen',
+  //   component: SplashScreen,
+  //   options: {
+  //     headerShown: false,
+  //     gestureEnabled: false,
+  //   },
+  //   authRequired: false,
+  // },
 
   IntroductionScreen: {
     name: 'introduction',

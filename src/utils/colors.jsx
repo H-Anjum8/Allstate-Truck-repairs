@@ -1,5 +1,5 @@
 // Base colors
-export const BASE_COLORS = {
+const BASE_COLORS = {
   // Brand Primary Colors
   PRIMARY: '#000654',
   PRIMARY_DARK: '',
@@ -52,6 +52,69 @@ export const BASE_COLORS = {
   DISABLED: '#CCCCCC',
   TRANSPARENT: 'transparent',
   TEXT_INVERSE: '#FFFFFF',
+
+  // Status colors
+  SUCCESS_DARK: '#388E3C',
+  SUCCESS_LIGHT: '#C8E6C9',
+  WARNING_DARK: '#F57C00',
+  WARNING_LIGHT: '#FFE0B2',
+  ERROR_DARK: '#D32F2F',
+  ERROR_LIGHT: '#FFCDD2',
+  INFO_DARK: '#1976D2',
+  INFO_LIGHT: '#BBDEFB',
+  // Status Colors
+  STATUS: {
+    SUCCESS: '#4CAF50',
+    SUCCESS_BACKGROUND: 'rgba(76, 175, 80, 0.1)',
+    WARNING: '#FF9800',
+    WARNING_BACKGROUND: 'rgba(255, 152, 0, 0.1)',
+    ERROR: '#F44336',
+    ERROR_BACKGROUND: 'rgba(244, 67, 54, 0.1)',
+    INFO: '#2196F3',
+    INFO_BACKGROUND: 'rgba(33, 150, 243, 0.1)',
+    PRIMARY: '#000654', // Purple/pink status
+    PRIMARY_BACKGROUND: 'rgba(215, 61, 209, 0.1)',
+    SECONDARY: '#EC1C24', // Light purple status
+    SECONDARY_BACKGROUND: '#EC1C2433',
+  },
+};
+
+// Color utility functions
+export const hexToRgba = (hex, alpha = 1) => {
+  // Remove # if present
+  hex = hex.replace('#', '');
+
+  // Handle 3-character hex codes
+  if (hex.length === 3) {
+    hex = hex
+      .split('')
+      .map(char => char + char)
+      .join('');
+  }
+
+  const r = parseInt(hex.substr(0, 2), 16);
+  const g = parseInt(hex.substr(2, 2), 16);
+  const b = parseInt(hex.substr(4, 2), 16);
+
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
+
+export const getColorWithOpacity = (color, opacity = 1) => {
+  if (typeof color !== 'string') return color;
+
+  // If it's already rgba, return as is
+  if (color.startsWith('rgba')) return color;
+
+  // If it's hex, convert to rgba
+  if (color.startsWith('#')) {
+    return hexToRgba(color, opacity);
+  }
+
+  // If it's a color key, try to get from BASE_COLORS
+  const colorValue = BASE_COLORS[color] || color;
+  return colorValue.startsWith('#')
+    ? hexToRgba(colorValue, opacity)
+    : colorValue;
 };
 
 // export default BASE_COLORS;

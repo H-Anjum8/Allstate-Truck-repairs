@@ -5,13 +5,14 @@ import {
   StyleSheet,
   TouchableOpacity,
   StatusBar,
-  SafeAreaView,
   Platform,
+  SafeAreaView,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { isIOS } from '../../utils/helpers';
 import BASE_COLORS from '../../utils/colors';
 import { TextStyles, FONTS } from '../../theme/fonts';
+import { isIOS } from '../../utils/helpers';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const CustomHeader = ({
   // Welcome Section Props
@@ -36,6 +37,7 @@ const CustomHeader = ({
   onLeftPress,
   onRightPress,
   rightIconStyle,
+  leftIconStyle,
 
   // Notification
   hasNewNotifications = false,
@@ -67,6 +69,7 @@ const CustomHeader = ({
   // Header Layout
   backgroundColor = BASE_COLORS.TRANSPARENT,
   showShadow = false,
+  // height = 46,
 }) => {
   // Text alignment styles
   const getTitleAlignmentStyle = () => {
@@ -92,17 +95,9 @@ const CustomHeader = ({
       style={[
         styles.safeArea,
         { backgroundColor },
-        showStatusBar ? null : { paddingTop: 0 },
+        // showStatusBar ? null : { paddingTop: 0 },
       ]}
     >
-      {showStatusBar && (
-        <StatusBar
-          backgroundColor={statusBarColor}
-          barStyle={statusBarStyle}
-          translucent={statusBarTranslucent}
-        />
-      )}
-
       <View
         style={[
           styles.container,
@@ -116,7 +111,7 @@ const CustomHeader = ({
           <View style={styles.sideContainer}>
             {leftIcon && (
               <TouchableOpacity
-                style={styles.iconButton}
+                style={[styles.iconButton, leftIconStyle]}
                 onPress={onLeftPress}
                 activeOpacity={0.7}
                 disabled={!onLeftPress}
@@ -207,12 +202,12 @@ const CustomHeader = ({
 const styles = StyleSheet.create({
   safeArea: {
     backgroundColor: '#151B28',
-    paddingTop: isIOS ? 0 : StatusBar.currentHeight,
+    // paddingTop: isIOS ? 0 : StatusBar.currentHeight,
   },
   container: {
     flexDirection: 'column',
     // alignItems: 'center',
-    marginTop: 16,
+    // marginTop: 16,
     paddingHorizontal: 2,
   },
   shadowEffect: {
@@ -229,8 +224,8 @@ const styles = StyleSheet.create({
     }),
   },
   sideContainer: {
-    width: 40,
-    height: 40,
+    // width: 40,
+    // height: 40,
     justifyContent: 'center',
     alignItems: 'flex-start',
     marginTop: -6,
@@ -239,8 +234,9 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   iconButton: {
-    minWidth: 30,
-    height: 30,
+    // minWidth: 30,
+    // height: 30,
+    padding: 7,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 50,

@@ -9,9 +9,9 @@ import AuthWrapper from '../../../../components/AuthWrapper';
 import CustomHeader from '../../../../components/CustomHeaders';
 import CustomTextInput from '../../../../components/CustomTextInput';
 import CustomButton from '../../../../components/CustomButton';
-import { BASE_COLORS } from '../../../../utils/colors';
 import { FONTS } from '../../../../theme/fonts';
 import { getValidationSchema } from '../../../../utils/validationSchema';
+import BASE_COLORS from '../../../../utils/colors';
 
 const EditVehicle = ({ navigation }) => {
   const [isActive, setIsActive] = useState(false);
